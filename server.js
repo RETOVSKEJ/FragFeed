@@ -1,12 +1,13 @@
 require('dotenv').config()
 
 const express = require('express');
-const db = require('mongoose');
+const connectDB = require('./db')
 const cors = require('cors')
 const path = require('path')
 const cookieParser = require('cookie-parser')
 const { errorHandler } = require('./middleware/errors.js')
 
+connectDB()
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -22,12 +23,6 @@ app.use(express.static(path.join(__dirname, 'public'), {index: '_'}))  // index 
 // app.use(cookieParser())
 // app.use(cors{ origin: '*' })
 
-// ERROR HANDLERS
-
-app.use((err, req, res, next) => {
-    res.status(404).render('homePage')
-})
-
 
 // ROUTES
 const userRouter = require(path.join(__dirname, 'routes/user'))
@@ -35,6 +30,7 @@ const postsRouter = require(path.join(__dirname, 'routes/posts'))
 app.use('/user', userRouter) // skraca nam url ktory musimy wpisac w crudach w routerze i podpowiada aplikacji zeby dla url /user, szuka w userRoutach
 app.use('/posts', postsRouter)
 
+// ERROR HANDLER
 
 app.use(errorHandler)
 
