@@ -6,18 +6,18 @@ const mongoose = require('mongoose');
 
 
 const postSchema = mongoose.Schema({
-    id: {type: Number, default: 0},
+    id: {type: Number, index: true, unique: true},
     author: {
         type: mongoose.SchemaTypes.ObjectId,
         ref: "User"
     },
     title: {
         type: String,
-        required: [true, 'Error MSG']
+        required: [true, 'ERROR: brak tytulu - Dodaj tytul']
     },
     body: {
         type: String,
-        required: true,
+        required: [true, 'ERROR: brak zawartosci - dodaj zawartosc posta']
     }
     // createdAt: {
     //     type: Date,
@@ -29,12 +29,12 @@ const postSchema = mongoose.Schema({
     //     default: () => Date.now()
     // }
 }, {
-    timestamps: true
+    timestamps: true  // tworzy createdAt i updatedAt
 }
 ) 
 
 postSchema.pre('save', function(next) {
-    updatedAt = Date.now();
+    this.updatedAt = Date.now();
     next()
 })
 

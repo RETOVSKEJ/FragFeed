@@ -132,3 +132,49 @@ try {
   }
 
   console.log("Dalszy kod")
+
+
+const str = "hell"
+console.log(str.concat("deee"))
+console.log(str.padEnd(2, "eeeeeee")) // maxymalna dlugosc stringa (jesli mniejsza, to nie doda paddingu)
+
+console.log(str.match('de|le|ke|el'))
+console.log(str.search('ll')) 
+
+for(let i = 0, e = 35; i != 15; i++, e++){
+    console.log(i,e)
+}
+
+const fibi = (n) => {
+    let n1 = 0, n2 = 1, nextTerm;
+    for(let i = 0; i < n; i++)
+    { 
+        nextTerm = n1 + n2;
+        n1 = n2;
+        n2 = nextTerm
+    }
+    return nextTerm
+}
+
+let a = 5;
+let b = 3;
+[a,b] = [b,a]
+console.log(a,b)
+
+console.log(fibi(5))
+
+console.info('1')
+{
+    setTimeout(() => console.log("timeout1"),5)
+    setTimeout(() => console.log("timeout4"), 0)
+    console.log('2')
+}
+console.info('3')
+
+async function Kolejnosc(){
+    console.log("1")
+    setTimeout(async () =>await console.log("2"), 0)
+    console.log('3')
+}
+
+Kolejnosc()
