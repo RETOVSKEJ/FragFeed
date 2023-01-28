@@ -10,6 +10,7 @@ function errorHandler(err, req, res, next){
     console.log(res.statusCode)
     console.log(err.stack)
     if (err.name == 'ValidationError'){
+        req.flash('error', `${err.message}`)
         console.info("Redirecting...")
         return res.redirect(req.path)
     }

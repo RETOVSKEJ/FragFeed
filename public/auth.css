@@ -1,0 +1,36 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #202122;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: whitesmoke;
+}
+
+.error{
+    display: block;        
+    color: red;
+}
+
+h1{
+    color: whitesmoke;
+}
+
+form{
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+}
+
+div.labels{
+    display: flex;
+    flex-direction: column;
+}
+
+div.inputs{
+    display: flex;
+    flex-direction: column;
+}

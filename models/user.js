@@ -3,12 +3,12 @@ const mongoose = require('mongoose')
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const userSchema = mongoose.Schema({
-    nickname: {
+    nick: {
         type: String,
-        minLength: [2, "This nickname is too short"],
-        maxLength: [30, "This nickname is too long, max 30 characters"],
-        unique: [true, "This nickname is already taken"],
-        required: [true, "you must provide nickname"]
+        minLength: [2, "This nick is too short"],
+        maxLength: [30, "This nick is too long, max 30 characters"],
+        unique: [true, "This nick is already taken"],
+        required: [true, "you must provide nick"]
     },
     password:{
         type: String,
@@ -28,5 +28,13 @@ const userSchema = mongoose.Schema({
 },{
     timestamps: true
 })
+
+userSchema.statics.findByNick = function(nick){
+    return this.where({nick: nick})
+}
+userSchema.statics.findByEmail = function(email){
+    return this.where({email: email})
+}
+
 
 module.exports = mongoose.model('User', userSchema)

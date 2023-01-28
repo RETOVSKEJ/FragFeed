@@ -6,6 +6,6 @@ const { catchAsync } = require('../middleware/errors')
 const { getUsers, getUser, postUser, deleteUser, updateUser} = require('../controllers/users')
 
 router.route('/').get(catchAsync(getUsers)).post(catchAsync(postUser))
-router.route('/:nickname').get(catchAsync(getUser)).delete(catchAsync(deleteUser)).patch(catchAsync(updateUser))
+router.route('/:nick').get(catchAsync(getUser)).delete(catchAsync(deleteUser)).patch(catchAsync(updateUser))
 
 module.exports = router
