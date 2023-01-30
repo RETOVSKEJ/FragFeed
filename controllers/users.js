@@ -14,6 +14,14 @@ async function getUser(req, res){
 }
 
 
+////////// DELETE ALL USERS FROM DATABASE ///////////
+async function clearUsersDB(){
+    let amount = await User.countDocuments()
+    await User.deleteMany({})
+    let left = await User.countDocuments()
+    console.log(`DELETED ${amount-left} users`)
+}
+
 module.exports = {
     getUsers,
     getUser

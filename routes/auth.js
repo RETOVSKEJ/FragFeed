@@ -13,6 +13,6 @@ router.route('/login').get(catchAsync(getLogin))
     badRequestMessage: 'Wrong Request / missing credentials',  // wyswietli sie nad errorem
     failureFlash: true
 }))
-router.route('/register').get(getRegister).post(catchAsync(postRegister))
+router.route('/register').get(catchAsync(getRegister)).post(catchAsync(postRegister))
 
 module.exports = router

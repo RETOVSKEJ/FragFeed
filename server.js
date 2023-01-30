@@ -63,6 +63,7 @@ app.get('/', (req, res) => {
     res.render('homePage', { msg: req.flash('logInfo') })
 })
 
+
 //////////// ERROR HANDLERS /////////////
 app.all('*', (req, res, next) => {     // wczytuje regex do url, jesli jakakolwiek sciezka inna niz w routeach, to error 404
     res.status(404)  
@@ -70,6 +71,8 @@ app.all('*', (req, res, next) => {     // wczytuje regex do url, jesli jakakolwi
     // req.accepts('html') ? res.sendFile('public/404.html', {root: __dirname}) : res.json({error: "404 json"})
 })
 app.use(errorHandler)
+
+
 
 
 app.listen(PORT, () => console.log(`listening on ${PORT}`))

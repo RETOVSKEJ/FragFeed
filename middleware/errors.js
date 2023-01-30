@@ -9,22 +9,29 @@ function errorHandler(err, req, res, next){
 
     console.log(res.statusCode)
     console.log(err.stack)
-    if (err.name == 'ValidationError'){
+    if (err.name = 'MongoServerError')
+        res.render('500', {err})
+
+    if (err.name == 'ValidationError' && req.originalUrl == '/register') {
         req.flash('error', `${err.message}`)
         console.info("Redirecting...")
-        return res.redirect(req.path)
+        return res.status(400).redirect(req.originalUrl)
     }
+
     if ((req.path).match('.css|.html|.jpg|.png')) 
         console.error(`NIE UDALO SIE WCZYTAC PLIKU STATYCZNEGO ${req.path}`)
         // res.status(500).render('500', {err})
-    if(err.message == 400 || res.statusCode == 400)
-        return res.render('400', {err})                               // DEV - domyslnie modal popup
-    if(err.message == 404 || res.statusCode == 404) {
+        
+    if (err.message == 400 || res.statusCode == 400)
+        return res.render('400', {err})              // DEV - domyslnie modal popup
+
+    if (err.message == 404 || res.statusCode == 404) {
         if(req.accepts('html')) 
             return res.sendFile(path.resolve('public/404.html'))
         else 
             return res.json({error: "404 json"})
     }
+
     res.status(500).sendFile(path.resolve('public/error.html')) // resolve to join, ale zwraca ABSOLUTE path do glownej sciezki projektu
 }
 

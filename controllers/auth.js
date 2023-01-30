@@ -1,8 +1,9 @@
 const User = require('../models/User')
 const bcrypt = require('bcrypt')
-const { findById } = require('../models/User')
 
-function getLogin(req, res){
+const MIN_PASSWORD_LENGTH = 5
+
+async function getLogin(req, res){
     res.render('login', { msg: req.flash('logInfo') })
 }
 // function postLogin(passport){
@@ -12,28 +13,33 @@ function getLogin(req, res){
 // }
 
 
-function getRegister(req, res){
+async function getRegister(req, res){
     res.render('register', { msg: req.flash('error')})
 }
 
 async function postRegister(req, res, next){
     const {nick, password, email} = req.body
-    
     console.time()
 
-    // if(await User.findByNick(nick).length != 0)
-    // {
-    //     console.log('zajety nick')
-    //     req.flash('error', 'ten nick jest zajety')
-    //     res.redirect('/register')
-    // }
+    if(await User.findByNick(nick))
+    {
+        req.flash('error', 'ten nick jest zajety')
+        return res.redirect('/register')
+    }
 
-    // if(await User.findByEmail(email).length != 0)
-    // {
-    //     console.log('zajety email')
-    //     req.flash('error', 'ten nick jest zajety')
-    //     res.redirect('/register')
-    // }
+    if(await User.findByEmail(email))
+    {
+        console.error('zajety email')
+        req.flash('error', 'ten email jest zajety')
+        return res.redirect('/register')
+    }
+
+    if(password.length < MIN_PASSWORD_LENGTH)
+    {
+        console.error('zbyt krotkie haslo')
+        req.flash('error', 'To haslo jest za krotkie, min. 5 znakow')
+        return res.redirect('/register')
+    }
 
 
     const salt = await bcrypt.genSalt(10)
@@ -49,6 +55,9 @@ async function postRegister(req, res, next){
     req.flash('logInfo', 'Registered successfully')
     res.status(201).redirect(`/login`)   
 }
+
+
+
 
 module.exports = {
     getLogin,

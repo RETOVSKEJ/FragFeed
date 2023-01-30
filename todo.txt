@@ -1,7 +1,6 @@
+validation mongoose jakos ogarnac zeby nie wyskakiwal error 500
+tutorial na YT z formsow/rejestracji z mongodb
 Musze zrobic app.post(/login)
 dokonczyc passport-config.js
-
-wyswietlanie ze taka nazwa uzytkownika juz istnieje ( logika jest juz w schemie! unique)
-
 
 Do dodania .where .is w boiler css

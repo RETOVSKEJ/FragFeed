@@ -7,17 +7,17 @@ const userSchema = mongoose.Schema({
         type: String,
         minLength: [2, "This nick is too short"],
         maxLength: [30, "This nick is too long, max 30 characters"],
-        unique: [true, "This nick is already taken"],
+        unique: true,   // unique is not a VALIDATOR, no err message
         required: [true, "you must provide nick"]
     },
     password:{
         type: String,
-        minLength: [6, "This password is too short, please provide min. 6 characters"],
-        required: [true, "you must provide password"]
+        minLength: [6, "This password is too short, please provide min. 6 characters"], // nie dziala bo jest hashowane przed
+        required: [true, "you must provide password"],
     },
     email: {
         type: String,
-        unique: [true, "This email is already taken"],
+        unique: true,  // unique is not a VALIDATOR, no err message
         required: [true, "you must provide email"],
         lowercase: true,
         validate: {
@@ -29,11 +29,12 @@ const userSchema = mongoose.Schema({
     timestamps: true
 })
 
-userSchema.statics.findByNick = function(nick){
-    return this.where({nick: nick})
+
+userSchema.statics.findByNick = async function(nick){
+    return await this.exists({nick: nick})
 }
-userSchema.statics.findByEmail = function(email){
-    return this.where({email: email})
+userSchema.statics.findByEmail = async function(email){
+    return await this.exists({email: email})
 }
 
 
