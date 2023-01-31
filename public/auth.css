@@ -10,9 +10,19 @@ body {
     color: whitesmoke;
 }
 
-.error{
-    display: block;        
+
+.message{
+    display: block;
+    color: lawngreen;
+}
+.errors{
+    display: block;
+    margin: 0.5em;
     color: red;
+}
+.error{
+    display: block;
+    margin:0.25em;
 }
 
 a{
@@ -29,16 +39,16 @@ h1{
 
 form{
     display: flex;
+    flex-direction: column;
+    gap: 1em;
+    padding: 1.25em;
+    margin: 1em;
+    border-radius: 6px;
+}
+
+form div{
+    display: flex;
     flex-direction: row;
-    gap: 1rem;
-}
-
-div.labels{
-    display: flex;
-    flex-direction: column;
-}
-
-div.inputs{
-    display: flex;
-    flex-direction: column;
+    justify-content: space-between;
+    gap: 1em;
 }

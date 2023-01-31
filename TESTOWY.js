@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 const Test = require('./TESTOWY2')
 mongoose.set('strictQuery', false);
+mongoose.set('debug', true);
 
 mongoose.connect('mongodb://127.0.0.1/testowaDB',  
 () => console.log("connected"), 
@@ -63,6 +64,24 @@ async function testWhere(){
     console.log(testWhere().then(v => console.log(v)))
 }) ();
 
+async function testNull(){
+    const user = await Test.findOne({ name: "starye"}).maxTimeMS(5000).exec()
+    await console.log("EEEE")
+    await console.log(user)
+}
 
+testNull()
 let str1 = 'arekrk'
-console.log(str1.length)
+console.log(str1.length);
+
+const objX = {
+    objXX: {
+        nazwa: {
+            age: 15
+        }
+    }
+}
+
+const testStr = 'nazwa'
+
+console.log(objX.objXX[testStr].age)

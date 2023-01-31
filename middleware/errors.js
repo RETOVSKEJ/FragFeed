@@ -1,27 +1,46 @@
 
 const path = require('path')
 
-// @ desc error handler musi miec 4 argumenty, inaczej nie bedzie dzialac
-function errorHandler(err, req, res, next){ 
+
     // if (res.headersSent) {
     //     return next(err)
     // }
+// @ desc error handler musi miec 4 argumenty, inaczej nie bedzie dzialac
+function errorHandler(err, req, res, next){ 
+    console.error(res.statusCode)
+    console.error(err.stack)
 
-    console.log(res.statusCode)
-    console.log(err.stack)
-    if (err.name = 'MongoServerError')
-        res.render('500', {err})
+    /////// LOGIN REGISTER INPUTS //////////////
+    if (err.name == 'ValidationError') {
+        let type;
+        for(let i in err.errors) { 
+            type = i; 
+            const message = err.errors[type].properties.message
+            req.flash('error', `${message}`)
+        }
 
-    if (err.name == 'ValidationError' && req.originalUrl == '/register') {
-        req.flash('error', `${err.message}`)
-        console.info("Redirecting...")
-        return res.status(400).redirect(req.originalUrl)
+        console.info("Refreshing back after register mistake...")
+        return res.redirect('back')
     }
+
+    if(err.name === 'MongoServerError' && err.code === 11000){
+        if(!!err.keyValue['email'])
+            req.flash('error', 'This email is already taken')
+        if(!!err.keyValue['nick'])
+            req.flash('error', 'This nick is already taken')
+        return res.redirect('back')
+    }
+    if (err.name == 'MongoServerError'){
+        return res.render('500')
+    }
+
+    //////// STATIC FILES //////////////
 
     if ((req.path).match('.css|.html|.jpg|.png')) 
         console.error(`NIE UDALO SIE WCZYTAC PLIKU STATYCZNEGO ${req.path}`)
         // res.status(500).render('500', {err})
         
+    /////// DEFAULT HANDLERS ////////////    
     if (err.message == 400 || res.statusCode == 400)
         return res.render('400', {err})              // DEV - domyslnie modal popup
 

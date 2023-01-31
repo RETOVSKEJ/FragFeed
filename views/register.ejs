@@ -5,19 +5,26 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="auth.css"></style>
+    <link rel="stylesheet" href="/auth.css"></style>
 </head>
 <body>
-    <p class="error"><%= msg %></p>
+    <div class="errors">
+        <% for(let message of msg) { %>
+            <span class="error"><%= message %></span>
+        <% } %>
+    </div>
     <form action="/register" method="POST">
         <div>
-            <label for="nick">Nick</label><input id="nick" name="nick" type="text" required>
+            <label for="nick">Nick:</label><input id="nick" name="nick" type="text" required>
         </div>
         <div>
-            <label for="password">Password</label><input id="password" name="password" type="password" required>
+            <label for="password">Password:</label><input id="password" name="password" type="password" required>
         </div>
         <div>
-            <label for="email">email</label><input id="email" name="email" type="email" required>
+            <label for="conf_password">Confirm Password:</label><input id="conf_password" name="conf_password" type="password" required>
+        </div>
+        <div>
+            <label for="email">Email:</label><input id="email" name="email" type="email" required>
         </div>
         <button type="submit">Register</button>
     </form>

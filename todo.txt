@@ -1,6 +1,9 @@
-validation mongoose jakos ogarnac zeby nie wyskakiwal error 500
-tutorial na YT z formsow/rejestracji z mongodb
-Musze zrobic app.post(/login)
-dokonczyc passport-config.js
-
-Do dodania .where .is w boiler css
+TODO logowanie emailem
+TODO PROSTy form do postowania postów, żeby można było przetestować permisje (i posty polaczone z baza danych)
+TODO JWT
+TODO LIKES POD POSTAMI
+TODO sprawdzic user == null vs !user
+TODO caly frontend
+TODO PROSTE TESTY
+TODO DARK/light mode
+TODO Do dodania .where .is w boiler css
