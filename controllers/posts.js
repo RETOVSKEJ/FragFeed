@@ -1,26 +1,18 @@
 const Post = require('../models/Post')
 
 
-
-
-async function getPosts(req, res){
-    // retrieve from database
-    res.status(200).render('posts')
-}
-
 async function getPost(req, res, next){
     if(isNaN(req.params.id)) {res.status(400); throw new Error('Nie istnieje taki post, podaj numer')} 
-    let post;
-    post = await Post.findOne({id: req.params.id}).exec()
+    const post = await Post.findOne({id: req.params.id}).exec()
     // if(!post) return next()
     if(!post) {res.status(400); throw new Error('Nie istnieje taki post')}
-    res.status(200).render('post', { post })
+    res.status(200).render('post', { post: post })
 }
 
-// @ route PATCH /posts/:id
+// @ route PATCH /:id
 function updatePost(req, res){
     // retrieve from database
-    res.redirect(`/posts/${req.params.id}`)
+    res.redirect(`/${req.params.id}`)
 }
 
 async function postPost(req, res){
@@ -31,7 +23,7 @@ async function postPost(req, res){
         body: req.body.body
     }) 
     console.log("POSTED")
-    res.redirect(`/posts/${post.id}`)
+    res.redirect(`/${post.id}`)
 }
 
 
@@ -41,7 +33,7 @@ async function deletePost(req, res){
         throw new Error("Nie ma posta o takim ID!")
     else 
         console.log("usunieto post o id: ", post.id)
-    res.redirect(`/posts`)
+    res.redirect(`/`)
 }
 
 // WYWOLANIE USUNIE CALA BAZE DANYCH
@@ -53,7 +45,6 @@ async function deleteAllPosts(){
 }
 
 module.exports = {
-    getPosts,
     getPost,
     updatePost,
     postPost,

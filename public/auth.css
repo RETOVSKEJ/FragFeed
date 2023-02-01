@@ -1,15 +1,12 @@
+@import "./boilerplate.css";
 body {
-    margin: 0;
-    padding: 0;
-    background-color: #202122;
-    height: 100vh;
     display: flex;
+    height: 100vh;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     color: whitesmoke;
 }
-
 
 .message{
     display: block;
@@ -30,7 +27,7 @@ a{
     text-decoration: none;
     border: 1px solid #060;
     border-radius: 0.25em;
-    padding: 0.25em;
+    padding: var(--small);
 }
 
 h1{

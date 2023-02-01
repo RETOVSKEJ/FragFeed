@@ -57,14 +57,7 @@ const usersRouter = require(path.join(__dirname, 'routes/users'))
 const postsRouter = require(path.join(__dirname, 'routes/posts'))
 app.use('', authRouter)
 app.use('/users', usersRouter) // skraca nam url ktory musimy wpisac w crudach w routerze i podpowiada aplikacji zeby dla url /user, szuka w userRoutach
-app.use('/posts', postsRouter)
-
-
-
-//////////// HOMEPAGE  ////////////////
-app.get('/', (req, res) => {
-    res.render('homePage', { msg: req.flash('logInfo') })
-})
+app.use('', postsRouter)
 
 
 //////////// ERROR HANDLERS /////////////

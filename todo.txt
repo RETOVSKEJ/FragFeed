@@ -1,9 +1,18 @@
-TODO logowanie emailem
+TODO hiding UI buttons if not auth
+
 TODO PROSTy form do postowania postów, żeby można było przetestować permisje (i posty polaczone z baza danych)
-TODO JWT
+TODO JWT   JWT WebDevSimplified    https://www.youtube.com/watch?v=jI4K7L-LI58&t=668s&ab_channel=WebDevSimplified
+
+TODO logowanie emailem, Veryfikacja emaila
+TODO newsleterry -> wysylanie emailow
+
 TODO LIKES POD POSTAMI
+TODO Wszystkie dobre praktyki od overmenta z fillmikow
 TODO sprawdzic user == null vs !user
-TODO caly frontend
+
 TODO PROSTE TESTY
+
+TODO caly frontend
 TODO DARK/light mode
+TODO how to handle images / css / assets
 TODO Do dodania .where .is w boiler css

@@ -41,7 +41,7 @@ postSchema.pre('save', function(next) {
 })
 
 postSchema.statics.findByPostId = function(id){
-    return this.where('id').equals(id)
+    return this.where('id').equals(id).exec()
 }
 
 module.exports = mongoose.model('Post', postSchema)

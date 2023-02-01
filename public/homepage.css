@@ -1,0 +1,37 @@
+@import "./boilerplate.css";
+
+body{
+    display: grid;
+    grid-template-columns: 300px 600px 300px; /* TODO zrobic tu porzadny grid */
+}
+
+.posts-wrapper{
+    display: flex;
+    flex-direction: column;
+    gap: 2em;
+}
+
+.post{
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--accent-clr);
+    border-radius: 4px;
+    gap: 1em;
+    padding: 1em;
+}
+
+.post-title{
+    padding: 0.5em;
+    display: block;
+    font-size: var(--fs-lg);
+    color: whitesmoke;            /* TODO find&replace dla wszystkich whiteSmoke na var(--text-clr) ITP. */
+}
+
+.post-body{
+    font-size: var(--fs-btn);
+}
+
+
+
+
+
