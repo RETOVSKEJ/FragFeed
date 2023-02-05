@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "connect-mongo": "^4.6.0",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
@@ -11,7 +12,8 @@
     "mongoose": "^6.8.3",
     "nodemon": "^2.0.20",
     "passport": "^0.6.0",
-    "passport-local": "^1.0.0"
+    "passport-local": "^1.0.0",
+    "passport-remember-me": "^0.0.1"
   },
   "name": "spikerush",
   "version": "1.0.0",

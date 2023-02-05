@@ -64,27 +64,27 @@ e => console.error(e))
 //     console.log(testWhere().then(v => console.log(v)))
 // }) ();
 
-async function testNull2(){
-    const user = await Test.findOne({ name: "starye"}).maxTimeMS(5000).exec()
-    await console.log("EEEE")
-    await console.log(user)
-}
+// async function testNull2(){
+//     const user = await Test.findOne({ name: "starye"}).maxTimeMS(5000).exec()
+//     await console.log("EEEE")
+//     await console.log(user)
+// }
 
-async function testNull(){
-    const user = await Test.find({ name: "starye"}).exec()
-    await console.log("EE@@@")
-    await console.log(user)
-}
+// async function testNull(){
+//     const user = await Test.find({ name: "starye"}).exec()
+//     await console.log("EE@@@")
+//     await console.log(user)
+// }
 
 
-testowa()
-async function testowa(){
-    console.log('1TEST')
-    testNull()
-    console.log('2TEST')
-    testNull2()
-    console.log('3TEST')
-}
+// testowa()
+// async function testowa(){
+//     console.log('1TEST')
+//     testNull()
+//     console.log('2TEST')
+//     testNull2()
+//     console.log('3TEST')
+// }
 
 
 // let str1 = 'arekrk'
@@ -102,3 +102,34 @@ async function testowa(){
 
 // console.log(objX.objXX[testStr].age)
 
+async function TESTING(){
+    return await Test.findOne({name: "starye"})
+}
+
+const user = TESTING()
+lognijUsera()
+async function lognijUsera(){
+    console.log(await user)
+}
+
+// let x = 5 ?? 3;
+// console.log(x)
+// x ||= 3;
+// y ||= 3;
+// console.log(x)
+// x &&= 4;
+// z &&= 5;
+// console.log(y,z)
+// console.log(x)
+
+(async function(){
+if (user == null) {
+    console.log("sema")
+}})();
+
+
+// generate IIFE example
+// (async () => {
+//     await run()
+//     console.log(testWhere().then(v => console.log(v)))
+// }) ();

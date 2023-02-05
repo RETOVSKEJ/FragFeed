@@ -1,4 +1,5 @@
 const LocalStrategy = require('passport-local').Strategy
+// const RememberMeStrategy = require('passport-remember-me').Strategy
 const bcrypt = require('bcrypt')
 
 
@@ -22,8 +23,27 @@ function initialize(passport, getUserByNick)
     }
 
     passport.use(new LocalStrategy({usernameField: 'nick'}, authenticateUser))
+
+    // passport.use(new RememberMeStrategy(
+    //     (token, done) => { Token.consume(token, 
+    //         (err, user) => {
+    //             if (err)  return done(err); 
+    //             if (!user)  return done(null, false);
+    //             return done(null, user);
+    //         });
+    //         },
+    //     (user, done) => {
+    //           const token = utils.generateToken(64);
+    //           Token.save(token, { userId: user.id }, 
+    //             (err)=> {
+    //                 if (err) return done(err); 
+    //                 return done(null, token);
+    //           });
+    //         }
+    //       ));
+
     passport.serializeUser((user, done) => done(null, user.nick))
-    passport.deserializeUser((nick, done) => done(null, getUserByNick(nick)))
+    passport.deserializeUser(async (nick, done) => done(null, await getUserByNick(nick)))
 }
 
 module.exports = initialize

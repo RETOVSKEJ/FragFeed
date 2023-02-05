@@ -1,6 +1,8 @@
 const mongoose = require('mongoose')
+const ROLES = require('../permissions/roles')
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
 
 const userSchema = mongoose.Schema({
     nick: {
@@ -26,11 +28,15 @@ const userSchema = mongoose.Schema({
             validator: mail => emailRegex.test(mail),
             message: props => `${props.value} is not an valid email!`
         }
+    },
+    role: {
+        type: String,
+        enum: ROLES,
+        default: ROLES.USER
     }
 },{
     timestamps: true
 })
-
 
 // userSchema.post('save', function(error, doc, next){
 //     if(error.name === 'MongoServerError' && error.code === 11000){
@@ -54,11 +60,11 @@ const userSchema = mongoose.Schema({
 //         next()
 // })
 
-userSchema.statics.findByNick2 = async function(nick){
+userSchema.statics.findByNick = async function(nick){
     return await this.findOne({nick: nick}).exec()
 }
 
-userSchema.statics.findByNick = async function(nick){
+userSchema.statics.nickExists = async function(nick){
     return await this.exists({nick: nick})
 }
 userSchema.statics.findByEmail = async function(email){

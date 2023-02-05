@@ -5,10 +5,8 @@ const Post = require('../models/Post')
 // }
 
 async function getHomepage(req, res){
-    res.session.loggedIn = true   // TODO 
-
     const posts = await Post.find({}).exec()
-    res.status(200).render('homePage', {posts: posts, msg: req.flash('logInfo')})
+    res.status(200).render('homePage', {posts: posts, msg: req.flash('logInfo'), user: req.user})
 }
 
 module.exports = {

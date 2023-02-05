@@ -1,18 +1,20 @@
 const express = require('express')
 const router = express.Router();
 
+const ROLES = require('../permissions/roles')
 const { updatePost, postPost, getPost, deletePost } = require('../controllers/posts')
 const { getHomepage } = require('../controllers/home')
 const { catchAsync } = require('../middleware/errors')
-const { checkAuthenticated, checkNotAuthenticated } = require('../controllers/auth')
+const { authUser, notAuthUser, authRoles } = require('../permissions/auth')
+
 
 router.route('/')
 .get(catchAsync(getHomepage))
-.post(checkAuthenticated, catchAsync(postPost))
+.post(authUser, authRoles(ROLES.ADMIN), catchAsync(postPost))
 
-router.route('/:id')
+router.route('/posts/:id')
 .get(catchAsync(getPost))
-.patch(checkAuthenticated, catchAsync(updatePost))
-// .delete(checkAuthenticated, catchAsync(deletePost))
+.patch(authUser, catchAsync(updatePost))
+// .delete(authUser, catchAsync(deletePost))
 
 module.exports = router

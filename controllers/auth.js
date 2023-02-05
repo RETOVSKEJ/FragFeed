@@ -10,11 +10,11 @@ async function getLogin(req, res){
         req.flash('logInfo', 'You have logged out Succesfully')
     }
 
-    res.render('login', { msg: req.flash('logInfo') })
+    return res.render('login', { msg: req.flash('logInfo') })
 }
 
 async function getRegister(req, res){
-    res.render('register', { msg: req.flash('error')})
+    return res.render('register', { msg: req.flash('logInfo')})
 }
 
 async function postRegister(req, res, next){
@@ -23,14 +23,14 @@ async function postRegister(req, res, next){
     console.log(req.body)
 
     if(password !== conf_password){
-        req.flash('error', 'Hasła nie są takie same')
+        req.flash('logInfo', 'Hasła nie są takie same')
         res.status(400);
         return res.redirect('/register')
     }
 
     if(password.length < MIN_PASSWORD_LENGTH)
     {
-        req.flash('error', 'To haslo jest za krotkie, min. 5 znakow')
+        req.flash('logInfo', 'To haslo jest za krotkie, min. 5 znakow')
         res.status(400);
         return res.redirect('/register')
     }
@@ -61,27 +61,10 @@ async function logOut(req, res){
     return res.redirect('/login')
 }
 
-function checkAuthenticated(req,res,next){
-    console.info("checking if auth")
-    if(req.isAuthenticated())
-        return next();
-    else
-        return res.redirect('/login')
-}
-function checkNotAuthenticated(req,res,next){
-    console.info("checking if not auth")
-    if(!req.isAuthenticated())
-        return next();
-    else
-        return res.redirect('/')
-}
-
 
 module.exports = {
     getLogin,
     getRegister,
     postRegister,
     logOut,
-    checkAuthenticated,
-    checkNotAuthenticated
 }

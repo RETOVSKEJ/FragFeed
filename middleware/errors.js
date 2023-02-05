@@ -16,7 +16,7 @@ function errorHandler(err, req, res, next){
         for(let i in err.errors) { 
             type = i; 
             const message = err.errors[type].properties.message
-            req.flash('error', `${message}`)
+            req.flash('logInfo', `${message}`)
         }
 
         console.info("Refreshing back after register mistake...")
@@ -25,9 +25,9 @@ function errorHandler(err, req, res, next){
 
     if(err.name === 'MongoServerError' && err.code === 11000){
         if(!!err.keyValue['email'])
-            req.flash('error', 'This email is already taken')
+            req.flash('logInfo', 'This email is already taken')
         if(!!err.keyValue['nick'])
-            req.flash('error', 'This nick is already taken')
+            req.flash('logInfo', 'This nick is already taken')
         return res.redirect('back')
     }
     if (err.name == 'MongoServerError'){

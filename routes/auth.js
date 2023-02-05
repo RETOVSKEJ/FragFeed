@@ -3,23 +3,29 @@ const router = express.Router()
 const passport = require('passport')
 
 // todo getLogin etc.
+const ROLES = require('../permissions/roles')
 const { catchAsync } = require('../middleware/errors') 
-const { getLogin, getRegister, postRegister, logOut, checkAuthenticated, checkNotAuthenticated } = require('../controllers/auth')
+const { getLogin, getRegister, postRegister, logOut } = require('../controllers/auth')
+const { authUser, notAuthUser, authRoles } = require('../permissions/auth')
 
 router.route('/login')
-.get(checkNotAuthenticated, catchAsync(getLogin))
-.post(checkNotAuthenticated, passport.authenticate('local', {
-    successRedirect: '/',
+.get(notAuthUser, catchAsync(getLogin))
+.post(notAuthUser, passport.authenticate('local', {
     failureRedirect: '/login',
     badRequestMessage: 'Wrong Request / missing credentials',  // wyswietli sie nad errorem
-    failureFlash: true
-}))
+    failureFlash: true 
+  }),(req, res) => {
+    (req.body.remember_me)
+      ? req.session.cookie.maxAge = 1000 * 60 * 60 * 24 * 30 // remember me checked 30 days
+      : req.session.cookie.maxAge = null                    // remember me unchecked
+    return res.redirect('/')
+  })
 
-router.delete('/logout', checkAuthenticated, logOut)
+router.delete('/logout', authUser, logOut)
 
 router.route('/register')
-.get(checkNotAuthenticated, catchAsync(getRegister))
-.post(checkNotAuthenticated, catchAsync(postRegister))
+.get(notAuthUser, catchAsync(getRegister))
+.post(notAuthUser, catchAsync(postRegister))
 
 
 

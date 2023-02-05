@@ -2,9 +2,8 @@ const Post = require('../models/Post')
 
 
 async function getPost(req, res, next){
-    if(isNaN(req.params.id)) {res.status(400); throw new Error('Nie istnieje taki post, podaj numer')} 
+    // if(isNaN(req.params.id)) {res.status(400); throw new Error('Nie istnieje taki post, podaj numer')} 
     const post = await Post.findOne({id: req.params.id}).exec()
-    // if(!post) return next()
     if(!post) {res.status(400); throw new Error('Nie istnieje taki post')}
     res.status(200).render('post', { post: post })
 }
@@ -12,7 +11,7 @@ async function getPost(req, res, next){
 // @ route PATCH /:id
 function updatePost(req, res){
     // retrieve from database
-    res.redirect(`/${req.params.id}`)
+    res.redirect(`/posts/${req.params.id}`)
 }
 
 async function postPost(req, res){
@@ -23,7 +22,7 @@ async function postPost(req, res){
         body: req.body.body
     }) 
     console.log("POSTED")
-    res.redirect(`/${post.id}`)
+    return res.redirect(`/posts/${post.id}`)
 }
 
 
@@ -37,12 +36,10 @@ async function deletePost(req, res){
 }
 
 // WYWOLANIE USUNIE CALA BAZE DANYCH
-
-
-async function deleteAllPosts(){
-    await Post.deleteMany({})
-    console.log("Wszystko usuniete")
-}
+// async function deleteAllPosts(){
+//     await Post.deleteMany({})
+//     console.log("Wszystko usuniete")
+// }
 
 module.exports = {
     getPost,

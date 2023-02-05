@@ -14,9 +14,10 @@ const bcrypt = require('bcrypt')
 const methodOverride = require('method-override');
 const User = require('./models/User')
 const passport = require('passport');
-const initializePassword = require('./passport-config')
+const initializePassword = require('./passport-config');
+const MongoStore = require('connect-mongo');
 initializePassword(passport,
-    nick => User.findByNick2(nick)
+    nick => User.findByNick(nick)
 );
 
 
@@ -36,15 +37,25 @@ app.use(logEvents)
 app.use(express.urlencoded({ extended :true}))  // extended true - moge postować nested objekty, false - flat
 app.use(express.json())
 app.use(express.static(path.join(__dirname, '/public'), {index: '_'}))  // index zeby nie czytalo index.html jako strony glownej, pomaga obslugiwac html css i obrazki
+app.use(cookieParser())
 app.use(flash())
 app.use(session({
     secret: process.env.SESSION_SECRET,
-    resave: false,
+    resave: true,
     saveUninitialized: false,
-    cookie: {maxAge: 60000}
-}))
+    // cookie: {
+    //     secure: true,                        // DZIAŁA TYLKO DLA HTTPS, NARAZIE NIE DZIALA
+    //     maxAge: 30 * 24 * 60 * 60 * 1000           // 30 days of cookie
+    // },
+    store: MongoStore.create({
+        mongoUrl: process.env.MONGO_URI,
+    })
+}, 
+
+))
 app.use(passport.initialize())
 app.use(passport.session())
+// app.use(passport.authenticate('remember-me'));
 app.use(methodOverride('_method'))
 // app.use(cookieParser())
 // app.use(cors{ origin: '*' })
