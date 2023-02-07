@@ -8,8 +8,13 @@
     <link rel="stylesheet" href="/homepage.css">
 </head>
 <body>
-    <div class="sidebar"></div>
+    <%= msg %>
+    <div class="sidebar">
+        <a href="/">Strona Główna</a>
+    </div>
+    <!--  TODO MIEJSCE NA UI HANDLE EJS-->
     <div class="posts-wrapper">
+        <%- include('./partials/postButtons') %>
         <%- include('./partials/post') %>
     </div>
     <%- include('./partials/logoutButton') %>

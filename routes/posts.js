@@ -1,20 +1,37 @@
 const express = require('express')
 const router = express.Router();
 
-const ROLES = require('../permissions/roles')
-const { updatePost, postPost, getPost, deletePost } = require('../controllers/posts')
+const ROLES = require('../models/roles')
+const { postPost, getPost, deletePost, editPost,  getPostForm, getEditForm } = require('../controllers/posts')
 const { getHomepage } = require('../controllers/home')
 const { catchAsync } = require('../middleware/errors')
-const { authUser, notAuthUser, authRoles } = require('../permissions/auth')
+const {
+  authUser,
+  notAuthUser,
+  authRoles,
+  canAddPost,
+  canEditPost,
+  canDeletePost,
+  canLikePost,
+  canCommentPost,
+} = require("../middleware/permissions");
 
 
 router.route('/')
 .get(catchAsync(getHomepage))
-.post(authUser, authRoles(ROLES.ADMIN), catchAsync(postPost))
 
-router.route('/posts/:id')
+router.route(`/:id(\\d+)`)
 .get(catchAsync(getPost))
-.patch(authUser, catchAsync(updatePost))
-// .delete(authUser, catchAsync(deletePost))
+.delete(authUser, catchAsync(canDeletePost), catchAsync(deletePost))
+
+router.route(`/:id(\\d+)/edit`)
+.get(authUser, catchAsync(canEditPost), catchAsync(getEditForm))   // calls .put from /:id route
+.patch(authUser, catchAsync(canEditPost), catchAsync(editPost))
+
+router.route('/new')
+.get(authUser, catchAsync(canAddPost), catchAsync(getPostForm))
+.post(authUser, catchAsync(canAddPost), catchAsync(postPost))
+
+
 
 module.exports = router

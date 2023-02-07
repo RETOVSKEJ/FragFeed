@@ -1,24 +1,28 @@
 require('dotenv').config()
 
 const express = require('express');
-const connectDB = require('./db')
-const cors = require('cors')
 const path = require('path')
-const cookieParser = require('cookie-parser')
-const { errorHandler } = require('./middleware/errors');
-const logEvents = require('./middleware/logEvents');
+const connectDB = require('./db')
+const MongoStore = require('connect-mongo');
+const cors = require('cors')
 const flash = require('express-flash');
+const { errorHandler } = require('./middleware/errors');
+const { logEvents, logOtherEvents } = require('./middleware/logEvents');
+const { setUser } = require('./middleware/utils')
+
 ////////// login auth  //////////
 const session = require('express-session');
+const cookieParser = require('cookie-parser')
 const bcrypt = require('bcrypt')
 const methodOverride = require('method-override');
 const User = require('./models/User')
 const passport = require('passport');
 const initializePassword = require('./passport-config');
-const MongoStore = require('connect-mongo');
 initializePassword(passport,
     nick => User.findByNick(nick)
 );
+///////////////////////////////////
+
 
 
 
@@ -57,9 +61,11 @@ app.use(passport.initialize())
 app.use(passport.session())
 // app.use(passport.authenticate('remember-me'));
 app.use(methodOverride('_method'))
-// app.use(cookieParser())
 // app.use(cors{ origin: '*' })
 
+//////////// CUSTOM MIDDLEWARES 2 /////////////////
+
+app.use(setUser)
 
 //////////// ROUTES ///////////////
 

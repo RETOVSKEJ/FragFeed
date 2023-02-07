@@ -1,4 +1,11 @@
 <!-- HIDDEN FOR NOT AUTHENTICATED USERS -->
-<form action="/logout?_method=DELETE" method="POST">
-    <button type=submit>Log Out</button>
-</form>
+<% if (locals.user) { %>
+    <p>Welcome, <%= locals.user.nick %></p>
+    <form action="/logout?_method=DELETE" method="POST">
+        <button type=submit>Log Out</button>
+    </form>
+<% } else { %>
+    <a href="/login">Log In</a>
+<% } %>
+
+

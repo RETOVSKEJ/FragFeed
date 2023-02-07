@@ -1,0 +1,7 @@
+@import "./boilerplate.css";
+
+
+textarea{
+    margin: 1rem;
+    display: block;
+}

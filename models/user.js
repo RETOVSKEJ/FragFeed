@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const ROLES = require('../permissions/roles')
+const ROLES = require('./roles')
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 

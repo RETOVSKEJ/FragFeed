@@ -14,12 +14,33 @@ function createUpdateTXT(log){
 
 function logEvents(req,res,next){
     const dateTime = new Date().toLocaleString('pl', {dateStyle: 'short', timeStyle: 'long'})
-    let log = `\n${dateTime}\t${req.headers.origin}\t${req.method} ${req.path}`;
+    let log = `\n${dateTime}\t${req.headers.origin}\t${req.method} ${req.path}`;  
+
     if (log.match('.css|.html|.jpg|.png'))
         log = `${log}\tSTATIC`
+
     createUpdateTXT(log)
+
+    // if (otherLog){
+    //     log = `\n${dateTime}\t${otherLog}`;
+    //     createUpdateTXT(log);
+    //     console.error(log)
+    //     return;
+    // }
+
     console.log(log)   // GET users/1234
-    next()
+    return next()
 }
 
-module.exports = logEvents
+
+function logOtherEvents(req,res,otherLog){
+    const dateTime = new Date().toLocaleString('pl', {dateStyle: 'short', timeStyle: 'long'})
+    let log = `\n${dateTime}\t${otherLog}`;
+    createUpdateTXT(log)
+
+    console.log(log)   // GET users/1234
+    return ;
+}
+
+
+module.exports = { logEvents, logOtherEvents } 

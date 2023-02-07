@@ -3,10 +3,10 @@ const router = express.Router()
 const passport = require('passport')
 
 // todo getLogin etc.
-const ROLES = require('../permissions/roles')
+const ROLES = require('../models/roles')
 const { catchAsync } = require('../middleware/errors') 
 const { getLogin, getRegister, postRegister, logOut } = require('../controllers/auth')
-const { authUser, notAuthUser, authRoles } = require('../permissions/auth')
+const { authUser, notAuthUser, authRoles } = require('../middleware/permissions')
 
 router.route('/login')
 .get(notAuthUser, catchAsync(getLogin))
@@ -14,12 +14,7 @@ router.route('/login')
     failureRedirect: '/login',
     badRequestMessage: 'Wrong Request / missing credentials',  // wyswietli sie nad errorem
     failureFlash: true 
-  }),(req, res) => {
-    (req.body.remember_me)
-      ? req.session.cookie.maxAge = 1000 * 60 * 60 * 24 * 30 // remember me checked 30 days
-      : req.session.cookie.maxAge = null                    // remember me unchecked
-    return res.redirect('/')
-  })
+}), rememberMe)
 
 router.delete('/logout', authUser, logOut)
 
@@ -28,5 +23,12 @@ router.route('/register')
 .post(notAuthUser, catchAsync(postRegister))
 
 
-
 module.exports = router
+
+function rememberMe(req, res)
+{
+    (req.body.remember_me)
+      ? req.session.cookie.maxAge = 1000 * 60 * 60 * 24 * 30 // remember me checked 30 days
+      : req.session.cookie.maxAge = null                    // remember me unchecked
+    return res.redirect('/')
+}

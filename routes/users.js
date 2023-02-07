@@ -1,10 +1,10 @@
 const express = require("express");
 const router = express.Router();
 
-const ROLES = require('../permissions/roles')
+const ROLES = require('../models/roles')
 const { catchAsync } = require('../middleware/errors')
 const { getUsers, getUser, postUser, deleteUser, updateUser} = require('../controllers/users')
-const { authUser, notAuthUser } = require('../permissions/auth')
+const { authUser, notAuthUser } = require('../middleware/permissions')
 
 
 router.route('/')

@@ -15,7 +15,9 @@
     <!-- <link rel="shortcut icon" type="image/png" sizes="16x16" href="/favicon.ico"> -->
 </head>
 <body>
-<div class="sidebar"></div>
+<div class="sidebar">
+    <a href="/new">Dodaj Post</a>
+</div>
     <div class="posts-wrapper">  
     <% for(post of posts) { %>
         <%- include('./partials/post') %>
@@ -23,12 +25,7 @@
     </div>
     <%= msg %>
     <div class="navbar">
-    <% if (locals.user) { %>
-    Welcome, <%= locals.user.nick %>
-    <%- include('./partials/logoutButton') %>
-    <% } else { %>
-    <a href="/login">Log In</a>
-    <% } %>
+        <%- include('./partials/logoutButton') %>
     </div>
 </body>
 </html>

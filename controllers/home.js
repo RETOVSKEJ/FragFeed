@@ -5,8 +5,8 @@ const Post = require('../models/Post')
 // }
 
 async function getHomepage(req, res){
-    const posts = await Post.find({}).exec()
-    res.status(200).render('homePage', {posts: posts, msg: req.flash('logInfo'), user: req.user})
+    const posts = await Post.find({}).populate('author', '-password').exec()
+    res.status(200).render('homePage', {posts: posts, msg: req.flash('logInfo')})
 }
 
 module.exports = {

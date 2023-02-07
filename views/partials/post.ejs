@@ -3,6 +3,11 @@
         <h5 class="post-title"><%= post.title %></h5>
         <img src="<%= post.img %>">
         <p class="post-body"><%= post.body %></p>
+        <div class="post-author">
+            <p><% if(post.author){ %>Autor: <%= post.author.nick %> <%= post.createdAtString %><%}%></p>
+            <p><% if(post.edited_by){ %>Edytowane przez: <%= post.edited_by.nick %> <%= post.updatedAtString %><%}%></p> 
+        </div>
+                   <!-- MIEJSCE NA TAGI --> 
         <div class="post-likes"></div>
         <div class="post-comments"><span>Like</span></div>
     </div>

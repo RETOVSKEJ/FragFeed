@@ -1,4 +1,4 @@
-
+const { logOtherEvents } = require('./logEvents');
 const path = require('path')
 
 
@@ -9,14 +9,21 @@ const path = require('path')
 function errorHandler(err, req, res, next){ 
     console.error(res.statusCode)
     console.error(err.stack)
+    const errorLog = `${res.statusCode}\t${err.name}`
+    logOtherEvents(req, res, errorLog)    // TODO optimiaztion, nie trzeba przesylac req i res raczej
 
     /////// LOGIN REGISTER INPUTS //////////////
     if (err.name == 'ValidationError') {
+        // console.log(err.errors.author.properties, "\n", err.errors.author)
         let type;
         for(let i in err.errors) { 
-            type = i; 
-            const message = err.errors[type].properties.message
-            req.flash('logInfo', `${message}`)
+            try{
+                type = i; 
+                const message = err.errors[type].properties.message
+                req.flash('logInfo', `${message}`)
+            } catch (err) {
+                console.error(err)
+            }
         }
 
         console.info("Refreshing back after register mistake...")
@@ -34,11 +41,26 @@ function errorHandler(err, req, res, next){
         return res.render('500')
     }
 
+    ////// ROLES /////
+
+    if (err.message === 401 || res.statusCode === 401)
+    {
+        req.flash('logInfo', `You must log in`)          // TODO popUp message instead of flash
+        return res.redirect('/login');
+    }
+
+    if (err.message === 403 || res.statusCode === 403)
+    {
+        req.flash('logInfo', `You are not allowed`)          // TODO popUp message instead of flash
+        return res.redirect('back');
+    }
+
+
     //////// STATIC FILES //////////////
 
-    if ((req.path).match('.css|.html|.jpg|.png')) 
+    if ((req.path).match('.css|.html|.jpg|.png'))      // TODO DO PRZENIESIENIA DO LOGEVENTS
         console.error(`NIE UDALO SIE WCZYTAC PLIKU STATYCZNEGO ${req.path}`)
-        // res.status(500).render('500', {err})
+
         
     /////// DEFAULT HANDLERS ////////////    
     if (err.message == 400 || res.statusCode == 400)
