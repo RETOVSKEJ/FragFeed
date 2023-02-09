@@ -15,7 +15,7 @@
         <textarea id="title" name="title" placeholder="Tytuł posta..." rows="1" required></textarea>
         <textarea id="body" name='body' placeholder="Text..." rows="20" required></textarea>
         <!-- MIEJSCE NA TAGI -->     
-        <button type="preview">Podgląd</button>
+        <button type="submit" formaction="/preview" formmethod="POST">Podgląd</button>
         <button type="submit">Dodaj Post</button>
     </form>
     <%- include('./partials/logoutButton') %>

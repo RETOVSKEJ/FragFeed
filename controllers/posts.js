@@ -1,4 +1,5 @@
 const Post = require('../models/Post')
+const Joi = require('joi');
 
 ///////////// GET ////////////////
 
@@ -12,6 +13,7 @@ async function getPost(req, res){
     post.createdAtString = post.createdAt.toLocaleString('pl', {dateStyle: 'long', timeStyle: 'short'})   // local variable for templates
     post.updatedAtString = post.updatedAt.toLocaleString('pl', {dateStyle: 'long', timeStyle: 'short'})   // local variable for templates
     req.session.post = post
+    req.session.preview = null;
     if(!post) {res.status(400); throw new Error('Nie istnieje taki post')}
     return res.status(200).render('post', { post: post, msg: req.flash('logInfo')})
 }
@@ -29,20 +31,73 @@ async function getEditForm(req, res){
     req.session.post = post
     return res.status(200).render('editPost', { post: post, msg: req.flash('logInfo')})
 }
-///////////// POST ////////////////
 
 
-// @route /
-async function postPost(req, res){
-    const LAST_ID = (await Post.findOne().sort('-id'))?.id ?? 0 // przypisuje id 0 jesli zaden post nie istnieje // Lepsze od countDocuments, bo nie zmienia ID w przypadku usuniecia
-    const post = await Post.create({
-        id: LAST_ID + 1,
+/////////// PREVIEW FUNC ////////////
+
+//@route /preview
+function getPostPreview(req, res){
+    if(req.headers.referer === undefined) return res.redirect('back');
+    if(req.headers.referer.includes('/new') || req.headers.referer.includes('/edit')){
+        res.locals.referer = req.headers.referer;
+        res.locals.post_id = req.session.post.id;
+        return res.render('preview', {post: req.session.preview, msg: req.flash('logInfo')})
+    }
+
+    return res.redirect('back')
+}
+
+
+//@route /preview POST
+function passPostPreview(req, res){
+    const { minlength: titleMinLength, maxlength: titleMaxLength } = Post.schema.paths.title.options
+    const { minlength: bodyMinLength, maxlength: bodyMaxLength } = Post.schema.paths.body.options
+    console.log(req.headers.referer)
+
+    const Schema = Joi.object({
+        title: Joi.string().min(titleMinLength[0]).max(titleMaxLength[0]).required(),
+        body: Joi.string().min(bodyMinLength[0]).max(bodyMaxLength[0]).required(),
+    })
+    const { error } = Schema.validate(req.body)
+    if (error) {
+        req.flash('logInfo', error.details[0].message)
+        return res.redirect('back')
+    }
+
+    req.session.preview = {
+        author: req.user,
         title: req.body.title,
         body: req.body.body,
-        author: req.user
-    }) 
+    }
+    return res.redirect('/preview')
+}
 
-    console.log("POSTED")
+
+///////////// POST ////////////////
+
+// @route /new
+async function postPost(req, res){
+    const LAST_ID = (await Post.findOne().sort('-id'))?.id ?? 0 // przypisuje id 0 jesli zaden post nie istnieje // Lepsze od countDocuments, bo nie zmienia ID w przypadku usuniecia
+    let post;
+    console.log(req.session.preview)
+    const POST_PREVIEW = req.session.preview ?? {};
+
+    if(Object.keys(POST_PREVIEW).length > 0){
+        post = await Post.create({
+            id: LAST_ID + 1,
+            title: POST_PREVIEW.title,
+            body: POST_PREVIEW.body,
+            author: req.user
+        })
+    } else {
+        post = await Post.create({
+            id: LAST_ID + 1,
+            title: req.body.title,
+            body: req.body.body,
+            author: req.user
+        })
+    }
+    
     res.status(201);
     return res.redirect(`/${post.id}`)
 }
@@ -51,11 +106,22 @@ async function postPost(req, res){
 
 // @route /:id/edit    PATCH
 async function editPost(req, res){
-    await Post.updateOne({id: req.params.id}, {
-        title: req.body.title,
-        body: req.body.body,
-        edited_by: req.user
-    })
+    const POST_PREVIEW = req.session.preview ?? {};
+
+    if(Object.keys(POST_PREVIEW).length > 0){
+        await Post.updateOne({id: req.params.id}, {
+            title: POST_PREVIEW.title,
+            body: POST_PREVIEW.body,
+            edited_by: req.user
+        })
+    } else {
+        await Post.updateOne({id: req.params.id}, {
+            title: req.body.title,
+            body: req.body.body,
+            edited_by: req.user
+        })
+    }
+
     req.flash('logInfo', 'Edited Succesfully')
     return res.redirect(`/${req.params.id}`)
 }
@@ -75,6 +141,8 @@ async function deletePost(req, res){
 module.exports = {
     getPost,
     getPostForm,
+    getPostPreview,
+    passPostPreview,
     getEditForm,
     postPost,
     editPost,

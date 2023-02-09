@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router();
 
 const ROLES = require('../models/roles')
-const { postPost, getPost, deletePost, editPost,  getPostForm, getEditForm } = require('../controllers/posts')
+const { postPost, getPost, getPostPreview, passPostPreview, deletePost, editPost,  getPostForm, getEditForm, } = require('../controllers/posts')
 const { getHomepage } = require('../controllers/home')
 const { catchAsync } = require('../middleware/errors')
 const {
@@ -32,6 +32,8 @@ router.route('/new')
 .get(authUser, catchAsync(canAddPost), catchAsync(getPostForm))
 .post(authUser, catchAsync(canAddPost), catchAsync(postPost))
 
-
+router.route('/preview')
+.get(authUser, catchAsync(canAddPost), getPostPreview)
+.post(passPostPreview)
 
 module.exports = router

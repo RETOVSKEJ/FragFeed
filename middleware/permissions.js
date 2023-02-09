@@ -19,7 +19,7 @@ function notAuthUser(req,res,next)
     res.status(403); throw new Error('You are not allowed')
 }
 
-
+/// OGOLNA FUNKCJA DO SPRAWDZANIA ROLI UZYTKOWNIKA
 function authRoles(role){
     return (req, res, next) => {
         console.log(req.user)

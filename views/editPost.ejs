@@ -15,8 +15,8 @@
         <textarea id="title" name="title"  rows="1" required><%= post.title %></textarea>
         <textarea id="body" name='body'  rows="20" required><%= post.body %></textarea>
         <!-- MIEJSCE NA TAGI -->     
-        <button type="preview">Podgląd</button>
-        <button type="submit">Edytuj Post</button>
+        <button type="submit" formaction="/preview" formmethod="POST">Podgląd</button>
+        <button type="submit" >Edytuj Post</button>
     </form>
     <%- include('./partials/logoutButton') %>
     <footer>Zieleniec development team</footer>

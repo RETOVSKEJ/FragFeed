@@ -27,9 +27,10 @@ TODO how to handle images / css / assets
 TODO Do dodania .where .is w boiler css
 
 
-1. PO POWROCIE DO ZROBIENIA:  wszysktie permisje jak canEdit, canRemove, canPost, canComment itp, w permissions.js
-2. Komentarze, lajki, tagi, preview posta, akceptacja postow
+1. JUTRO PIERWSZA RZECZ --> SPRAWDZAM CZY MOGE DODAC req.session.post zamiast flash w postPostform, i naprawiam edit posta
+
+1. PERMISJE
+2. zdjęcia w postach
+3. Komentarze, lajki, tagi, preview posta, akceptacja postow
 3. weryfkacja emaila
-
-
-1. PO POWROCIE nr 2 DO ZROBIENAI: Tworzenie branchy feature na gicie
+4. newslettery
