@@ -18,16 +18,19 @@ const postSchema = mongoose.Schema({
     },
     title: {
         type: String,
+        trim: true,
         minlength: [4, 'Zbyt krótki tytuł - min. 4 znaki'],
         maxlength: [200, 'Zbyt długi tytuł - max. 200 znaków'],
         required: [true, 'Brak tytulu - Dodaj tytul']
     },
     body: {
         type: String,
+        trim: true,
         minlength: [15, 'Zbyt krótki post - min. 15 znaków'],
         maxlength: [10000, 'Zbyt długi post - max. 10000 znaków'],
         required: [true, 'Brak zawartosci - Dodaj zawartosc posta']
-    }
+    },
+    image: String
 }, {
     timestamps: true  // tworzy createdAt i updatedAt
 }

@@ -1,0 +1,16 @@
+@import "./boilerplate.css";
+
+
+textarea{
+    margin: 1rem;
+    display: block;
+}
+
+.hidden{
+    display: none;
+}
+
+.img-preview{
+    height: 200px; width: 200px;
+}
+

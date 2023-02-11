@@ -1,0 +1,43 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/postForm.css">
+    <script src="https://kit.fontawesome.com/c780166e7c.js" crossorigin="anonymous"></script>
+    <script src="/postUtils.js" defer></script>
+</head>
+<body>
+    <div class="sidebar">
+        <a href="/">Strona Główna</a>
+    </div>
+    <%= msg %>
+    <% if (path.includes('/edit')) { %>
+        <form id="postForm" action="/<%=post.id%>/edit?_method=PATCH" method="POST" enctype="multipart/form-data" onsubmit="validate()">
+            <textarea id="title" name="title"  rows="1" required><%= post.title %></textarea>
+            <textarea id="body" name='body'  rows="20" required><%= post.body %></textarea>
+            <label for="image">Upload Image</label>
+            <input type="file" name="image" onchange="
+            document.getElementById('img-preview').src = window.URL.createObjectURL(this.files[0]);
+            document.getElementById('img-preview').style.display = 'block'"> 
+            <img id="img-preview" class="img-preview hidden" alt="uploaded image preview" onchange="this.style.display = 'block'"/> 
+            <!-- MIEJSCE NA TAGI -->
+            <button type="submit" formaction="/preview">Podgląd</button>
+            <button type="submit">Edytuj Post</button>
+        </form>
+    <% } else { %>
+        <form id="postForm" action="/new" method="POST" enctype="multipart/form-data">
+            <textarea id="title" name="title" placeholder="Tytuł posta..." rows="1" required></textarea>
+            <textarea id="body" name='body' placeholder="Text..." rows="20" required></textarea>
+            <label for="image">Upload Image</label>
+            <input type="file" id="image" name="image" onchange="previewImg()" accept='image/*'>
+            <div id="preview"><img id="img-preview" class="img-preview hidden" alt="uploaded image preview"/></div>
+            <!-- MIEJSCE NA TAGI -->     
+            <button type="submit" formaction="/preview">Preview</button>
+            <button type="submit">Dodaj Post</button>
+        </form>
+    <% } %>
+    <%- include('./partials/logoutButton') %>
+    <footer></footer>
+</body>
+</html>

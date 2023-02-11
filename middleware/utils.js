@@ -8,5 +8,5 @@ function setUser(req,res,next){
 
 
 module.exports = {
-    setUser
+    setUser,
 }

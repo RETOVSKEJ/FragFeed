@@ -19,8 +19,8 @@
     <a href="/new">Dodaj Post</a>
 </div>
     <div class="posts-wrapper">  
-    <% for(post of posts) { %>
-        <%- include('./partials/post') %>
+    <% for(post of posts.reverse()) { %>
+        <a href="/<%= post.id %>"><%- include('./partials/postComponent') %></a>
     <% } %>
     </div>
     <%= msg %>

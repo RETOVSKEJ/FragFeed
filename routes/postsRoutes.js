@@ -2,9 +2,10 @@ const express = require('express')
 const router = express.Router();
 
 const ROLES = require('../models/roles')
-const { postPost, getPost, getPostPreview, passPostPreview, deletePost, editPost,  getPostForm, getEditForm, } = require('../controllers/posts')
+const { postPost, getPost, getPostPreview, passPostPreview, deletePost, editPost,  getPostForm, getEditForm, postUpload } = require('../controllers/posts')
 const { getHomepage } = require('../controllers/home')
 const { catchAsync } = require('../middleware/errors')
+const { uploadDisk, uploadMemory } = require('../middleware/imageHandler')
 const {
   authUser,
   notAuthUser,
@@ -16,7 +17,6 @@ const {
   canCommentPost,
 } = require("../middleware/permissions");
 
-
 router.route('/')
 .get(catchAsync(getHomepage))
 
@@ -26,14 +26,17 @@ router.route(`/:id(\\d+)`)
 
 router.route(`/:id(\\d+)/edit`)
 .get(authUser, catchAsync(canEditPost), catchAsync(getEditForm))   // calls .put from /:id route
-.patch(authUser, catchAsync(canEditPost), catchAsync(editPost))
+.patch(authUser, catchAsync(canEditPost), uploadDisk.single('image'), catchAsync(editPost))
 
 router.route('/new')
 .get(authUser, catchAsync(canAddPost), catchAsync(getPostForm))
-.post(authUser, catchAsync(canAddPost), catchAsync(postPost))
+.post(authUser, catchAsync(canAddPost), uploadDisk.single('image'), catchAsync(postPost))
 
 router.route('/preview')
 .get(authUser, catchAsync(canAddPost), getPostPreview)
-.post(passPostPreview)
+.post(catchAsync(canAddPost), uploadMemory.single('image'), passPostPreview)
+
+// router.route('/upload')
+// .post(, postUpload) // catchAsync(canUploadImage)
 
 module.exports = router

@@ -127,9 +127,21 @@ if (user == null) {
     console.log("sema")
 }})();
 
+const path = require('path')
+const strTest = "polskapl"
+console.log(path.extname(strTest))
+
 
 // generate IIFE example
 // (async () => {
 //     await run()
 //     console.log(testWhere().then(v => console.log(v)))
 // }) ();
+
+
+const data = {
+    filename: 5,
+    path: data.filename,
+}
+
+console.log(data)

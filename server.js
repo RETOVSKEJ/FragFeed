@@ -41,6 +41,7 @@ app.use(logEvents)
 app.use(express.urlencoded({ extended :true}))  // extended true - moge postować nested objekty, false - flat
 app.use(express.json())
 app.use(express.static(path.join(__dirname, '/public'), {index: '_'}))  // index zeby nie czytalo index.html jako strony glownej, pomaga obslugiwac html css i obrazki
+app.use('*/uploads', express.static(path.join(__dirname, '/public/assets/uploads')))
 app.use(cookieParser())
 app.use(flash())
 app.use(session({
@@ -69,9 +70,9 @@ app.use(setUser)
 
 //////////// ROUTES ///////////////
 
-const authRouter = require(path.join(__dirname, 'routes/auth'))
-const usersRouter = require(path.join(__dirname, 'routes/users'))
-const postsRouter = require(path.join(__dirname, 'routes/posts'))
+const authRouter = require(path.join(__dirname, 'routes/authRoutes'))
+const usersRouter = require(path.join(__dirname, 'routes/usersRoutes'))
+const postsRouter = require(path.join(__dirname, 'routes/postsRoutes'))
 app.use('', authRouter)
 app.use('/users', usersRouter) // skraca nam url ktory musimy wpisac w crudach w routerze i podpowiada aplikacji zeby dla url /user, szuka w userRoutach
 app.use('', postsRouter)

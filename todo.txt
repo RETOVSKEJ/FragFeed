@@ -2,18 +2,10 @@ TODO Wszystkie dobre praktyki od overmenta z fillmikow
 TODO sprawdzic user == null vs !user        => po prostu mongoose zawsze zwraca null jesli nic nie znajdzie, nawet jak bedzie blad
 TODO remember me  // DONE
 TODO routingi // DONE  =>   uzywac regexow
+TODO preview posta  // DONE   -> nowe routy
+TODO PROSTy form do postowania postów, żeby można było przetestować permisje (i posty polaczone z baza danych) // DONE
 
-
-TODO hiding UI buttons if not auth
-TODO preview posta
-
-TODO PROSTy form do postowania postów, żeby można było przetestować permisje (i posty polaczone z baza danych)
 TODO JWT   JWT WebDevSimplified    https://www.youtube.com/watch?v=jI4K7L-LI58&t=668s&ab_channel=WebDevSimplified
-TODO LIKES POD POSTAMI
-TODO KOMENTARZE POD POSTAMI
-TODO TAGI POD POSTAMI
-TODO akceptacja postow przez admina przed publikacja
-
 TODO logowanie emailem, Veryfikacja emaila
 TODO newsleterry -> wysylanie emailow
 
@@ -27,10 +19,14 @@ TODO how to handle images / css / assets
 TODO Do dodania .where .is w boiler css
 
 
-1. JUTRO PIERWSZA RZECZ --> SPRAWDZAM CZY MOGE DODAC req.session.post zamiast flash w postPostform, i naprawiam edit posta
-
-1. PERMISJE
 2. zdjęcia w postach
 3. Komentarze, lajki, tagi, preview posta, akceptacja postow
 3. weryfkacja emaila
 4. newslettery
+
+
+TODO 1. WRZUCAJA SIE ROZNE ZDJECIA --> za wolny bufer(?) albo cos 
+TODO 2. ERRORY multera, ogólnie łapanie błedow i poprawki tych formow
+
+TODO 11.02
+1. clientside preview with fileReader i validacja rozmiaru i store w sessionStorage / url
