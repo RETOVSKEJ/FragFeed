@@ -47,7 +47,6 @@ async function getEditForm(req, res){
 function getPostPreview(req, res){
     if(req.headers.referer === undefined) return res.redirect('back');
     if(req.headers.referer.includes('/new') || req.headers.referer.includes('/edit')){
-        console.log(req.session)
         res.locals.referer = req.headers.referer;
         res.locals.post_id = req.session?.post?.id ?? null
         res.locals.urlPath = req.path
@@ -73,26 +72,19 @@ function passPostPreview(req, res){
         req.flash('logInfo', error.details[0].message)
         return res.redirect('back')   
     } 
-    // convert Buffer of data into an displayable image
-    if(req.file?.buffer){
-        const buffer = req.file.buffer
-        const b64 = new Buffer.from(buffer).toString('base64')
-        const mimeType = req.file.mimetype;
-    
-        req.session.preview = {
-            author: req.user,
-            title: req.body.title,
-            body: req.body.body,
-            image: `data:${mimeType};base64,${b64}`,
-            image_ext: path.extname(req.file.originalname)
-        }
-    } else {
-        req.session.preview = {
-            author: req.user,
-            title: req.body.title,
-            body: req.body.body,
-        }
+    // if(){
+    req.session.preview = {
+        author: req.user,
+        title: req.body.title,
+        body: req.body.body,
     }
+    // } else {
+    //     req.session.preview = {
+    //         author: req.user,
+    //         title: req.body.title,
+    //         body: req.body.body,
+    //     }
+    // }
 
     req.session.post = null;
     return res.redirect('/preview')
@@ -112,23 +104,10 @@ async function postPost(req, res){
     const LAST_ID = (await Post.findOne().sort('-id'))?.id ?? 0 // przypisuje id 0 jesli zaden post nie istnieje // Lepsze od countDocuments, bo nie zmienia ID w przypadku usuniecia
     let post;
     const POST_PREVIEW = req.session.preview ?? {};
-
+    console.log(req.session.preview)
 
     if(Object.keys(POST_PREVIEW).length > 0){
-        // Save image from MemoryStorage to diskStorage
-        const filename = `${Date.now()}_${POST_PREVIEW.title}${POST_PREVIEW.image_ext}`
-        const imgPath = path.join(process.cwd(), 'public', 'assets', 'uploads', filename)
-        const data = {
-        filename,
-        imgPath,
-        buffer: POST_PREVIEW.image
-        }
-
-        fs.writeFile(data.imgPath, data.buffer, (err) => {
-            if(err)
-                throw new Error("Wystapil bład zapisu zdjęcia")
-        })
-        console.log(data)
+        //fetch() TODO 
 
 
         post = await Post.create({
@@ -139,6 +118,7 @@ async function postPost(req, res){
             image: req?.file?.path
         })
     } else {
+        // fetch() TODO
         post = await Post.create({
             id: LAST_ID + 1,
             title: req.body.title,
@@ -160,6 +140,8 @@ async function editPost(req, res){
     const POST_PREVIEW = req.session.preview ?? {};
 
     if(Object.keys(POST_PREVIEW).length > 0){
+        // fetch() TODO
+
         await Post.updateOne({id: req.params.id}, {
             title: POST_PREVIEW.title,
             body: POST_PREVIEW.body,
@@ -167,6 +149,7 @@ async function editPost(req, res){
             image: req?.file?.path,
         })
     } else {
+        // fetch() TODO
         await Post.updateOne({id: req.params.id}, {
             title: req.body.title,
             body: req.body.body,

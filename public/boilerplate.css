@@ -91,3 +91,8 @@
     color: var(--text-clr);
     scroll-behavior: smooth;
 }
+
+/* GENERIC CLASES */
+
+:where(.hidden) {display: none;}
+:where(.disabled) {opacity: 0.5; cursor: not-allowed;}

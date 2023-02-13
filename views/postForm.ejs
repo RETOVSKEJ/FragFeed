@@ -13,7 +13,7 @@
     </div>
     <%= msg %>
     <% if (path.includes('/edit')) { %>
-        <form id="postForm" action="/<%=post.id%>/edit?_method=PATCH" method="POST" enctype="multipart/form-data" onsubmit="validate()">
+        <form id="postForm" action="/<%=post.id%>/edit?_method=PATCH" method="POST" enctype="multipart/form-data">
             <textarea id="title" name="title"  rows="1" required><%= post.title %></textarea>
             <textarea id="body" name='body'  rows="20" required><%= post.body %></textarea>
             <label for="image">Upload Image</label>
@@ -31,10 +31,10 @@
             <textarea id="body" name='body' placeholder="Text..." rows="20" required></textarea>
             <label for="image">Upload Image</label>
             <input type="file" id="image" name="image" onchange="previewImg()" accept='image/*'>
-            <div id="preview"><img id="img-preview" class="img-preview hidden" alt="uploaded image preview"/></div>
-            <!-- MIEJSCE NA TAGI -->     
-            <button type="submit" formaction="/preview">Preview</button>
-            <button type="submit">Dodaj Post</button>
+            <div id="preview"><!-- Image preview // INSERTED with JS--></div>
+            <!-- MIEJSCE NA TAGI -->
+            <button id="previewBtn" type="submit" formaction="/preview">Podgląd</button>
+            <button id="sendBtn" type="submit">Dodaj Post</button>
         </form>
     <% } %>
     <%- include('./partials/logoutButton') %>

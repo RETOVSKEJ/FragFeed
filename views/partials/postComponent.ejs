@@ -1,7 +1,15 @@
 <div class="posts-wrapper">
     <div class="post">
         <h5 class="post-title"><%= post.title %></h5>
-        <img id='preview-img' src="<%= post.image %>" alt="Uploaded Image">
+        <% if(locals.urlPath == '/preview'){ %>
+            <img id='img-preview-script' alt="Uploaded Image">
+            <script defer>
+                const img = document.getElementById('img-preview-script')
+                img.src = localStorage.getItem('data_img')
+            </script>
+        <% } else { %>
+            <img id='img-preview' src=<%= post.image %> alt="Uploaded Image">
+        <% } %>
         <p class="post-body"><%= post.body %></p>
         <div class="post-author">
             <p><% if(post.author){ %>Autor: <%= post.author.nick %> <%= post.createdAtString %><%}%></p>

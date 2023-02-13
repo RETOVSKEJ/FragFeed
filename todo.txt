@@ -20,6 +20,7 @@ TODO Do dodania .where .is w boiler css
 
 
 2. zdjęcia w postach
+3. potwierdzenie usuniecia postu
 3. Komentarze, lajki, tagi, preview posta, akceptacja postow
 3. weryfkacja emaila
 4. newslettery
@@ -30,3 +31,11 @@ TODO 2. ERRORY multera, ogólnie łapanie błedow i poprawki tych formow
 
 TODO 11.02
 1. clientside preview with fileReader i validacja rozmiaru i store w sessionStorage / url
+
+
+2. OKEJ ZROBIONE PREVIEW I VALIDACJA
+-> teraz trzeba zrobić ten przycisk "dodaj post" na stronie preview, żeby on zapisywał odrazu
+(Model w zeszycie)
+
+TODO error handlers images
+error -> zbyt duzy plik / zly format / blad multera / blad serwera(timed out/wrongpath) / permission check

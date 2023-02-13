@@ -5,7 +5,7 @@ const ROLES = require('../models/roles')
 const { postPost, getPost, getPostPreview, passPostPreview, deletePost, editPost,  getPostForm, getEditForm, postUpload } = require('../controllers/posts')
 const { getHomepage } = require('../controllers/home')
 const { catchAsync } = require('../middleware/errors')
-const { uploadDisk, uploadMemory } = require('../middleware/imageHandler')
+const { uploadDisk } = require('../middleware/imageHandler')
 const {
   authUser,
   notAuthUser,
@@ -34,7 +34,15 @@ router.route('/new')
 
 router.route('/preview')
 .get(authUser, catchAsync(canAddPost), getPostPreview)
-.post(catchAsync(canAddPost), uploadMemory.single('image'), passPostPreview)
+.post(catchAsync(canAddPost), passPostPreview)
+
+const fs = require('fs')
+router.route('/upload')
+.post((req,res) => {
+  console.log(req.body)
+  fs.writeFile('/public/assets/uploads/file.jpg', req.body.file, (err) => console.log(err))
+  res.send('UDAŁO SIE')
+}) 
 
 // router.route('/upload')
 // .post(, postUpload) // catchAsync(canUploadImage)
