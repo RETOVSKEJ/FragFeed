@@ -20,9 +20,6 @@
     background-color: transparent;
     text-transform: uppercase;
 }
-:where(input) {
-    cursor: pointer;
-}
 
 :where(li) {list-style-type: none;}
 

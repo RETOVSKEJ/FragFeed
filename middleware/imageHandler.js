@@ -17,4 +17,3 @@ const uploadDisk = multer({storage: diskStorage, limits: {fileSize: 10_000_000}}
 const uploadMemory = multer({storage: MemoryStorage, limits: {fileSize: 10_000_000}}) // 10mb
 
 module.exports = { uploadDisk, uploadMemory } 
-

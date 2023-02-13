@@ -20,7 +20,7 @@
 </div>
     <div class="posts-wrapper">  
     <% for(post of posts.reverse()) { %>
-        <a href="/<%= post.id %>"><%- include('./partials/postComponent') %></a>
+        <a href='/<%= post.id %>'><%- include('./partials/postComponent') %></a>
     <% } %>
     </div>
     <%= msg %>

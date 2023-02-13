@@ -1,14 +1,11 @@
 const Post = require('../models/Post')
 const Joi = require('joi');
-const fs = require('fs')
-const path = require('path')
 
 ///////////// GET ////////////////
 
 
 // @route /:id
 async function getPost(req, res){
-    console.log(process.cwd())
     // if(isNaN(req.params.id)) {res.status(400); throw new Error('Nie istnieje taki post, podaj numer')} 
     const post = await Post.findOne({id: req.params.id})
     .populate('author', '-password')
@@ -23,32 +20,27 @@ async function getPost(req, res){
 
 // @route /new
 async function getPostForm(req, res){
-    const urlPath = req.path ?? '';
-    return res.status(200).render('postForm',
-     { msg: req.flash('logInfo'), path: urlPath})
+    return res.status(200).render('postForm', { msg: req.flash('logInfo')})
 }
 
 //@route /:id/edit
 async function getEditForm(req, res){
-    const urlPath = req.path ?? '';              // tworzy stringa, zeby path nie bł undefined
     const post = await Post.findOne({id: req.params.id})
     .populate('author', '-password')                            // TODO SPRAWDZIC TUTAJ POPULATE CZY NIE LEPIEJ JEST USUWAC -_id i porownywac w permissions samo .author z req.user._id, (Zamiast .author._id)
     .populate('edited_by', '-password').exec()
     req.session.post = post
-    return res.status(200).render('postForm',
-     { post: post, msg: req.flash('logInfo'), path: urlPath})
+    return res.status(200).render('postForm', { post: post, msg: req.flash('logInfo')})
 }
 
-/////////////////////////////////////////
-//////////// PREVIEW FUNC ///////////////
 
+/////////// PREVIEW FUNC ////////////
 
 //@route /preview
 function getPostPreview(req, res){
     if(req.headers.referer === undefined) return res.redirect('back');
     if(req.headers.referer.includes('/new') || req.headers.referer.includes('/edit')){
         res.locals.referer = req.headers.referer;
-        res.locals.post_id = req.session?.post?.id ?? null
+        res.locals.post_id = req.session.post.id;
         res.locals.urlPath = req.path
         return res.render('preview', {post: req.session.preview, msg: req.flash('logInfo')})
     }
@@ -57,15 +49,15 @@ function getPostPreview(req, res){
 }
 
 
-//@route /preview POST   // TODO WYLACZYLEM VAALIDACJE NA CHWILE
+//@route /preview POST
 function passPostPreview(req, res){
     const { minlength: titleMinLength, maxlength: titleMaxLength } = Post.schema.paths.title.options
     const { minlength: bodyMinLength, maxlength: bodyMaxLength } = Post.schema.paths.body.options
+    console.log(req.headers.referer)
 
     const Schema = Joi.object({
         title: Joi.string().min(titleMinLength[0]).max(titleMaxLength[0]).required(),
         body: Joi.string().min(bodyMinLength[0]).max(bodyMaxLength[0]).required(),
-        image: Joi.optional()
     })
     const { error } = Schema.validate(req.body)
     if (error) {
@@ -86,36 +78,30 @@ function passPostPreview(req, res){
     //     }
     // }
 
-    req.session.post = null;
+    req.session.preview = {
+        author: req.user,
+        title: req.body.title,
+        body: req.body.body,
+    }
     return res.redirect('/preview')
 }
 
-//////////////////////////////////
-////////// UPLOAD FUNC //////////
 
-function postUpload(req,res){
-    console.log("ZUPLOADOWALO")
-    return res.redirect(201, 'back')
-}
-
+///////////// POST ////////////////
 
 // @route /new
 async function postPost(req, res){
     const LAST_ID = (await Post.findOne().sort('-id'))?.id ?? 0 // przypisuje id 0 jesli zaden post nie istnieje // Lepsze od countDocuments, bo nie zmienia ID w przypadku usuniecia
     let post;
-    const POST_PREVIEW = req.session.preview ?? {};
     console.log(req.session.preview)
+    const POST_PREVIEW = req.session.preview ?? {};
 
     if(Object.keys(POST_PREVIEW).length > 0){
-        //fetch() TODO 
-
-
         post = await Post.create({
             id: LAST_ID + 1,
             title: POST_PREVIEW.title,
             body: POST_PREVIEW.body,
-            author: req.user,
-            image: req?.file?.path
+            author: req.user
         })
     } else {
         // fetch() TODO
@@ -123,12 +109,10 @@ async function postPost(req, res){
             id: LAST_ID + 1,
             title: req.body.title,
             body: req.body.body,
-            author: req.user,
-            image: req?.file?.path
+            author: req.user
         })
     }
-
-    console.log(post)
+    
     res.status(201);
     return res.redirect(`/${post.id}`)
 }
@@ -145,16 +129,14 @@ async function editPost(req, res){
         await Post.updateOne({id: req.params.id}, {
             title: POST_PREVIEW.title,
             body: POST_PREVIEW.body,
-            edited_by: req.user,
-            image: req?.file?.path,
+            edited_by: req.user
         })
     } else {
         // fetch() TODO
         await Post.updateOne({id: req.params.id}, {
             title: req.body.title,
             body: req.body.body,
-            edited_by: req.user,
-            image: req?.file?.path,
+            edited_by: req.user
         })
     }
 
@@ -182,6 +164,5 @@ module.exports = {
     getEditForm,
     postPost,
     editPost,
-    deletePost,
-    postUpload
+    deletePost
 }

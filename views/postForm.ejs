@@ -12,7 +12,7 @@
         <a href="/">Strona Główna</a>
     </div>
     <%= msg %>
-    <% if (path.includes('/edit')) { %>
+    <% if (urlPath.includes('/edit')) { %>
         <form id="postForm" action="/<%=post.id%>/edit?_method=PATCH" method="POST" enctype="multipart/form-data">
             <textarea id="title" name="title"  rows="1" required><%= post.title %></textarea>
             <textarea id="body" name='body'  rows="20" required><%= post.body %></textarea>

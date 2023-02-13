@@ -6,7 +6,13 @@ function setUser(req,res,next){
     return next();
 }
 
+function setPath(req,res,next){
+    res.locals.urlPath = req.path
+    return next()
+}
+
 
 module.exports = {
     setUser,
+    setPath
 }

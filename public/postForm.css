@@ -6,11 +6,7 @@ textarea{
     display: block;
 }
 
-.hidden{
-    display: none;
-}
-
 .img-preview{
-    height: 200px; width: 200px;
+    width: 500px;
+    object-fit: cover;
 }
-
