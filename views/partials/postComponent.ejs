@@ -2,13 +2,17 @@
     <div class="post">
         <h5 class="post-title"><%= post.title %></h5>
         <% if(locals.urlPath == '/preview'){ %>
-            <img id='img-preview-script' alt="Uploaded Image">
-            <script defer>
-                const img = document.getElementById('img-preview-script')
-                img.src = localStorage.getItem('data_img')
+            <img id='img-preview' src='<%= post.image %>' alt="Uploaded Image preview">
+            <script>
+                if(localStorage.getItem('img_data')){
+                    const img = document.getElementById('img-preview');
+                    img.src = localStorage.getItem('img_data')
+                }
             </script>
         <% } else { %>
-            <img id='img-preview' src=<%= post.image %> alt="Uploaded Image">
+            <% if(post.image) { %>
+            <img id='img-preview' src='<%= post.image %>' alt="Post image">
+            <% } %>
         <% } %>
         <p class="post-body"><%= post.body %></p>
         <div class="post-author">

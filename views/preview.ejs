@@ -16,6 +16,10 @@
     <div class="posts-wrapper">
         <form action="/new" method="POST">
             <button type="button" onclick="history.back()">Cofnij</button>
+            <input type="hidden" id="img_data" name="img_data">
+            <script>
+                document.getElementById('img_data').value = localStorage.getItem('img_data');
+            </script>
             <% if (referer.includes('/edit')) { %>
                 <button type="submit" formaction="/<%= post_id %>/edit?_method=PATCH">Edytuj Post</button>
             <% } else { %>

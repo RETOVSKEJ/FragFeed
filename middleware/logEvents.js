@@ -7,14 +7,14 @@ function createUpdateTXT(log){
     }
     const logsPATH = path.resolve('logs/reqLog.txt')
     fs.appendFile(logsPATH, log, (err) => {
-        err ? console.error(err) : console.log("Dodano LOG poprawnie")    // DEV
+        err ? console.error(err) : null    // DEV
     })
 }
 
 
 function logEvents(req,res,next){
     const dateTime = new Date().toLocaleString('pl', {dateStyle: 'short', timeStyle: 'long'})
-    let log = `\n${dateTime}\t${req.headers.origin}\t${req.method} ${req.path}`;  
+    let log = `${dateTime}\t${req.headers.origin}\t${req.method} ${req.path}`;  
 
     if (log.match('.css|.html|.jpg|.png'))
         log = `${log}\tSTATIC`

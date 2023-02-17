@@ -43,7 +43,7 @@ async function canAddPost(req,res,next){
 
 //@route /:id   
 async function canEditPost(req,res,next){   
-    if(req.session.post.id != req.params.id)       // ZABEZPIECZENIE przed wpisaniem bezpośrednio url /:id/edit if the post is not in the session, get it from the db
+    if(req.session.post?.id != req.params.id)       // ZABEZPIECZENIE przed wpisaniem bezpośrednio url /:id/edit if the post is not in the session, get it from the db
         req.session.post = await Post.findOne({id: req.params.id}).populate('author', '-password').exec()
 
     if (req.user.role === ROLES.ADMIN || req.session.post?.author?._id === req.user._id.toString()){

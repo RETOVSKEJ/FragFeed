@@ -27,15 +27,15 @@ router.route(`/:id(\\d+)`)
 
 router.route(`/:id(\\d+)/edit`)
 .get(authUser, catchAsync(canEditPost), catchAsync(getEditForm))   // calls .put from /:id route
-.patch(authUser, catchAsync(canEditPost), catchAsync(editPost))
+.patch(authUser, catchAsync(canEditPost), uploadDisk.single('image'), catchAsync(editPost))
 
 router.route('/new')
 .get(authUser, catchAsync(canAddPost), catchAsync(getPostForm))
-.post(authUser, catchAsync(canAddPost), catchAsync(postPost))
+.post(authUser, catchAsync(canAddPost), uploadDisk.single('image'), catchAsync(postPost))
 
 router.route('/preview')
-.get(authUser, catchAsync(canAddPost), getPostPreview)
-.post(catchAsync(canAddPost), uploadMemory.single('image'), passPostPreview)
+.get(authUser, catchAsync(canAddPost), catchAsync(getPostPreview))
+.post(catchAsync(canAddPost), passPostPreview)
 
 // router.route('/upload')
 // .post(, postUpload) // catchAsync(canUploadImage)
