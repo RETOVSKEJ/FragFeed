@@ -14,7 +14,8 @@ function createUpdateTXT(log){
 
 function logEvents(req,res,next){
     const dateTime = new Date().toLocaleString('pl', {dateStyle: 'short', timeStyle: 'long'})
-    let log = `${dateTime}\t${req.headers.origin}\t${req.method} ${req.path}`;  
+    let log = `${dateTime}\t${req.get('referer')}\t${res.get('content-length')}\t${req.method} ${req.path}`;  
+    // TODO w przyszlosci dodac req.get(user-agent) i req.ip 
 
     if (log.match('.css|.html|.jpg|.png'))
         log = `${log}\tSTATIC`
@@ -33,7 +34,7 @@ function logEvents(req,res,next){
 }
 
 
-function logOtherEvents(req,res,otherLog){
+function logOtherEvents(otherLog){
     const dateTime = new Date().toLocaleString('pl', {dateStyle: 'short', timeStyle: 'long'})
     let log = `\n${dateTime}\t${otherLog}`;
     createUpdateTXT(log)

@@ -53,7 +53,7 @@ async function getPostPreview(req, res){
     if(req.headers.referer === undefined) return res.redirect('back');
     if(req.headers.referer.includes('/new') || req.headers.referer.includes('/edit')){
         res.locals.referer = req.headers.referer;
-        res.locals.post_id = req.session.post.id;
+        res.locals.post_id = req.session.post?.id 
         return res.render('preview', {post: req.session.preview, msg: req.flash('logInfo')})
     }
     return res.redirect('back')
@@ -95,6 +95,7 @@ function passPostPreview(req, res){
 
 ///////////// POST ////////////////
 
+
 // @route /new
 async function postPost(req, res){
     const LAST_ID = (await Post.findOne().sort('-id'))?.id ?? 0 // przypisuje id 0 jesli zaden post nie istnieje // Lepsze od countDocuments, bo nie zmienia ID w przypadku usuniecia
@@ -109,18 +110,16 @@ async function postPost(req, res){
     if(!req.is('multipart/form-data')){ 
         /// TYLKO DLA POST PREVIEW  -  inny formularz z preview.ejs
         if(PREVIEW_IMAGE_PROVIDED){
-            try{
-                const filePath = await storeImage(req.body.img_data, POST_PREVIEW.filename, newFilename)    // automatically adds extension
-                const index = filePath.indexOf('public')
-                imageSrcPath = filePath.slice(index)
-            } catch (err) {
-                console.error(err)
-            }
+            const filePath = await storeImage(req.body.img_data, POST_PREVIEW.filename, newFilename)    // automatically adds extension
+            const index = filePath.indexOf('public')
+            imageSrcPath = filePath.slice(index)
         }
     }
 
-    if(IMAGE_PROVIDED){
-        imageSrcPath = await renameFile(req.file, newFilename)
+    if(IMAGE_PROVIDED){     // multer & sharp
+        const filePath = await renameFile(req.file, newFilename)
+        const index = filePath.indexOf('public')
+        imageSrcPath = filePath.slice(index)
     }
 
     if(Object.keys(POST_PREVIEW).length > 0){
@@ -147,30 +146,38 @@ async function postPost(req, res){
     return res.redirect(`/${post.id}`)
 }
 
+
 ///////////// PUT PATCH DELETE ////////////////
+
 
 // @route /:id/edit    PATCH
 async function editPost(req, res){
     const POST_PREVIEW = req.session.preview ?? {};
-    const PREVIEW_IMAGE_PROVIDED = !!POST_PREVIEW.filename           // JESLI WSTAWIMY NOWE ZDJECIE I WCISNIEMY PREVIEW
-    const IMAGE_PROVIDED = !!req.file               // JESLI WSTAWIMY NOWE ZDJECIE
+    const PREVIEW_IMAGE_PROVIDED = !!POST_PREVIEW.filename           
+    const IMAGE_PROVIDED = !!req.file               
+    console.log('EDITED POST TEST', POST_PREVIEW, req.session.post)
 
     let newFilename = `${req.params.id}-${new Date().toISOString().split('T')[0]}` // returns id-yyyy-mm-dd
     let imageSrcPath;
-    if(!req.is('multipart/form-data')){
-        /// TYLKO DLA POST PREVIEW
-        if(PREVIEW_IMAGE_PROVIDED){
-            try{
-                const filePath = await storeImage(req.body.img_data, POST_PREVIEW.filename, newFilename)
-                const index = filePath.indexOf('public')
-                imageSrcPath = filePath.slice(index) // public/assetts/uploads...
-            } catch (err) {
-                console.error(err)
-            }
+    if(!req.is('multipart/form-data')){          /// TYLKO DLA POST PREVIEW
+        if(PREVIEW_IMAGE_PROVIDED){ 
+            // JESLI WSTAWIMY NOWE ZDJECIE I WCISNIEMY PREVIEW (storeImage & canvas client-side)
+            const filePath = await storeImage(req.body.img_data, POST_PREVIEW.filename, newFilename)
+            const index = filePath.indexOf('public')
+            imageSrcPath = filePath.slice(index) // public/assetts/uploads...
+            
+            if(imageSrcPath != req.session.post.image)    
+                await deleteOldFile(req.session.post.image)
     }}
 
     if(IMAGE_PROVIDED){
+        // JESLI WSTAWIMY NOWE ZDJECIE  (multer & sharp)
         imageSrcPath = await renameFile(req.file, newFilename)
+        const index = imageSrcPath.indexOf('public')        // musi byc, ze względów na problem w przegladarkach (blocked:other)
+        imageSrcPath = imageSrcPath.slice(index)
+
+        if(imageSrcPath != req.session.post.image)        /// usun stare zdjecie (rename nie nadpisuje plikow, jesli maja inne rozszerzenia)
+            await deleteOldFile(req.session.post.image)
     }
 
     if(Object.keys(POST_PREVIEW).length > 0){
@@ -218,13 +225,27 @@ module.exports = {
 }
 
 
-async function renameFile(reqFile, newFilename){
+async function renameFile(reqFile, newFilename){    
     const pathExt = path.extname(reqFile.originalname)
     newFilename += pathExt
-    imageSrcPath = path.join(reqFile.destination, newFilename)  // public/assets/uploads/...jpg
-    await fs.promises.rename
-    (path.join(process.cwd(), reqFile.path),
-     path.join(process.cwd(), imageSrcPath))
-    /// MIEJSCE NA USUNIECIE STARYCH ZDJEC
+    imageSrcPath = path.resolve('public', 'assets', 'uploads', newFilename)  
+    try{ 
+        await fs.promises.rename
+        (path.resolve(reqFile.path),            // path..../uploaded
+        path.resolve(imageSrcPath))             // public/assets/uploads/...jpg
+    } catch (err){ 
+        console.err('renameFile() error: ', err)
+    }
     return imageSrcPath
+}
+
+async function deleteOldFile(filePath){
+    const pathToFile = path.resolve(filePath)
+    try{
+        await fs.promises.unlink(pathToFile)
+        console.log(pathToFile, 'deleted')
+    } catch (err){
+        console.error('deleteOldFile() error: ', err)
+    }
+
 }

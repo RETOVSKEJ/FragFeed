@@ -5,7 +5,7 @@ const ROLES = require('../models/roles')
 const { postPost, getPost, getPostPreview, passPostPreview, deletePost, editPost,  getPostForm, getEditForm, } = require('../controllers/posts')
 const { getHomepage } = require('../controllers/home')
 const { catchAsync } = require('../middleware/errors')
-const { uploadDisk } = require('../middleware/imageHandler')
+const { uploadCompressedDisk } = require('../middleware/imageHandler')
 const {
   authUser,
   notAuthUser,
@@ -27,11 +27,12 @@ router.route(`/:id(\\d+)`)
 
 router.route(`/:id(\\d+)/edit`)
 .get(authUser, catchAsync(canEditPost), catchAsync(getEditForm))   // calls .put from /:id route
-.patch(authUser, catchAsync(canEditPost), uploadDisk.single('image'), catchAsync(editPost))
+.patch(authUser, catchAsync(canEditPost), uploadCompressedDisk.single('image'), catchAsync(editPost))
 
 router.route('/new')
 .get(authUser, catchAsync(canAddPost), catchAsync(getPostForm))
-.post(authUser, catchAsync(canAddPost), uploadDisk.single('image'), catchAsync(postPost))
+.post(authUser, catchAsync(canAddPost), uploadCompressedDisk.single('image'), catchAsync(postPost))
+// .post(authUser, catchAsync(canAddPost), uploadCompressedDisk.single('image'), catchAsync(postPost))
 
 router.route('/preview')
 .get(authUser, catchAsync(canAddPost), catchAsync(getPostPreview))
