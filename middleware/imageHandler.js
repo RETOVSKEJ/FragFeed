@@ -2,19 +2,20 @@ const multer = require('multer')
 const path = require('path')
 const fs = require('fs')
 
-const MemoryStorage = multer.memoryStorage();
 const diskStorage = multer.diskStorage({      
     destination: (req, file, cb)  => {  // callback function WHERE TO STORE IMAGES
         cb(null, 'public/assets/uploads')              // cb(error / dest) //TODO ERROR ZROBIC
     },  
     filename:  (req, file, cb) => {         // without filenames, would store with original name 
         console.log("zdjecie dodane: \n", file);
-        cb(null, `uploaded`)    // the standard is to add a date  // .originalname to nazwa na komputerze uploadujacego
+        cb(null, `uploaded`)    // 'uploaded' because we're renaming it instantly in controllers // the standard is to add a date  // .originalname to nazwa na komputerze uploadujacego
     }                             
 })
 
 
-
+/// Adds extnames automatically
+/// stores images in uploads, used instead of multer when post is previewed. 
+/// stores compressed images
 async function storeImage(data, uploadedFilename, newFilename){
     const fileExt = path.extname(uploadedFilename)
     let filePath = path.join(process.cwd(), 'public', 'assets', 'uploads', `${newFilename}${fileExt}`)
@@ -53,6 +54,5 @@ async function storeBufferinFile(buffer, FilePath){
 }       /// RETURNS successFlag
     
 const uploadDisk = multer({storage: diskStorage, limits: {fileSize: 10_000_000}})  // 10mb
-const uploadMemory = multer({storage: MemoryStorage, limits: {fileSize: 10_000_000}}) // 10mb
 
-module.exports = { uploadDisk, uploadMemory, storeImage  } 
+module.exports = { uploadDisk, storeImage  } 

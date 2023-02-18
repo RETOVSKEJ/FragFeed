@@ -1,4 +1,4 @@
-/// set locals.user so its available in templates
+/// set locals.user so its available in all templates
 function setUser(req,res,next){
     if(req.user)
         res.locals.user = req.user
@@ -6,6 +6,7 @@ function setUser(req,res,next){
     return next();
 }
 
+/// set locals.urlPath so its available in all templates
 function setPath(req,res,next){
     res.locals.urlPath = req.path
     return next()

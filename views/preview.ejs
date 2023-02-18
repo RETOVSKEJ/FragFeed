@@ -18,6 +18,7 @@
             <button type="button" onclick="history.back()">Cofnij</button>
             <input type="hidden" id="img_data" name="img_data">
             <script>
+                // FOR storingImage on the server with storeImage
                 document.getElementById('img_data').value = localStorage.getItem('img_data');
             </script>
             <% if (referer.includes('/edit')) { %>

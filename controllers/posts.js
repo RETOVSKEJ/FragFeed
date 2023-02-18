@@ -3,6 +3,14 @@ const Joi = require('joi');
 const { storeImage } = require('../middleware/imageHandler')
 const fs = require('fs')
 const path = require('path')
+
+
+//// req.session.preview usuwane w: getPost, getPostForm, getEditForm / ustawiane w: 
+//// req.session.post usuwane w: getHomepage / ustawiane w: getPost, getEditForm
+
+//// post.create i post.update({id: req.params.id}) --> DOKŁADNIE TO SAMO
+//// ale inne dla preview a dla posta
+
 ///////////// GET ////////////////
 
 
@@ -16,7 +24,7 @@ async function getPost(req, res){
     req.session.post = post
     req.session.preview = null;
     if(!post) {res.status(400); throw new Error('Nie istnieje taki post')}
-    console.log(post)
+    console.log('DISPLAYED POST (getPost): ', post)
     return res.status(200).render('post', { post: post, msg: req.flash('logInfo')})
 }
 
@@ -40,17 +48,12 @@ async function getEditForm(req, res){
 /////////// PREVIEW FUNC ////////////
 
 //@route /preview
+//@desc  displaying preview of the post
 async function getPostPreview(req, res){
     if(req.headers.referer === undefined) return res.redirect('back');
-    if(req.headers.referer.includes('/new')){
+    if(req.headers.referer.includes('/new') || req.headers.referer.includes('/edit')){
         res.locals.referer = req.headers.referer;
         res.locals.post_id = req.session.post.id;
-        return res.render('preview', {post: req.session.preview, msg: req.flash('logInfo')})
-    }
-    if(req.headers.referer.includes('/edit')){
-        res.locals.referer = req.headers.referer;
-        res.locals.post_id = req.session.post.id;
-        console.log('POST PREVIEW', req.session.preview)
         return res.render('preview', {post: req.session.preview, msg: req.flash('logInfo')})
     }
     return res.redirect('back')
@@ -58,11 +61,13 @@ async function getPostPreview(req, res){
 
 
 //@route /preview POST
+//@desc  passing informations for displaying preview of the post
 function passPostPreview(req, res){
     const { minlength: titleMinLength, maxlength: titleMaxLength } = Post.schema.paths.title.options
     const { minlength: bodyMinLength, maxlength: bodyMaxLength } = Post.schema.paths.body.options
     console.log(req.headers.referer)
 
+    /// needs to use JOI since we're not posting the post yet. (OPTIMALIZATION)
     const Schema = Joi.object({
         title: Joi.string().min(titleMinLength[0]).max(titleMaxLength[0]).required(),
         body: Joi.string().min(bodyMinLength[0]).max(bodyMaxLength[0]).required(),
@@ -74,12 +79,13 @@ function passPostPreview(req, res){
         return res.redirect('back')   
     } 
 
+    // kopiujemy image z ostatnio widzaniego posta, aby mozna bylo go wyswietlic w Edit -> preview
     const image = req.session.post?.image
     req.session.preview = {
         author: req.user,
         title: req.body.title,
         body: req.body.body,
-        filename: req.body.image,
+        filename: req.body.image,   // original name of input file
         image: image
     }
 
@@ -93,33 +99,32 @@ function passPostPreview(req, res){
 async function postPost(req, res){
     const LAST_ID = (await Post.findOne().sort('-id'))?.id ?? 0 // przypisuje id 0 jesli zaden post nie istnieje // Lepsze od countDocuments, bo nie zmienia ID w przypadku usuniecia
     const POST_PREVIEW = req.session.preview ?? {};
+    const PREVIEW_IMAGE_PROVIDED = !!POST_PREVIEW.filename           // JESLI WSTAWIMY NOWE ZDJECIE I WCISNIEMY PREVIEW
+    const IMAGE_PROVIDED = !!req.file               // JESLI WSTAWIMY NOWE ZDJECIE
+    
     let post;
-
-    let imageSrcPath
+    let imageSrcPath;
     let newFilename = `${LAST_ID + 1}-${new Date().toISOString().split('T')[0]}` // returns id-yyyy-mm-dd
-    if(!req.is('multipart/form-data')){
-            /// TYLKO DLA POST PREVIEW
-        if(POST_PREVIEW.filename){
+    
+    if(!req.is('multipart/form-data')){ 
+        /// TYLKO DLA POST PREVIEW  -  inny formularz z preview.ejs
+        if(PREVIEW_IMAGE_PROVIDED){
             try{
-            const filePath = await storeImage(req.body.img_data, POST_PREVIEW.filename, newFilename)    // automatically adds extension
-            const index = filePath.indexOf('public')
-            imageSrcPath = filePath.slice(index)
+                const filePath = await storeImage(req.body.img_data, POST_PREVIEW.filename, newFilename)    // automatically adds extension
+                const index = filePath.indexOf('public')
+                imageSrcPath = filePath.slice(index)
             } catch (err) {
                 console.error(err)
             }
         }
     }
 
-    if(req.file){
-        const pathExt = path.extname(req.file.originalname)
-        newFilename += pathExt
-        imageSrcPath = path.join(req.file.destination, newFilename)
-        await fs.promises.rename
-        (path.join(process.cwd(), req.file.path),
-         path.join(process.cwd(), imageSrcPath))
+    if(IMAGE_PROVIDED){
+        imageSrcPath = await renameFile(req.file, newFilename)
     }
 
     if(Object.keys(POST_PREVIEW).length > 0){
+        // Tylko jesli wstawiamy bezposrednio po preview
         post = await Post.create({
             id: LAST_ID + 1,
             title: POST_PREVIEW.title,
@@ -147,31 +152,29 @@ async function postPost(req, res){
 // @route /:id/edit    PATCH
 async function editPost(req, res){
     const POST_PREVIEW = req.session.preview ?? {};
-
+    const PREVIEW_IMAGE_PROVIDED = !!POST_PREVIEW.filename           // JESLI WSTAWIMY NOWE ZDJECIE I WCISNIEMY PREVIEW
+    const IMAGE_PROVIDED = !!req.file               // JESLI WSTAWIMY NOWE ZDJECIE
 
     let newFilename = `${req.params.id}-${new Date().toISOString().split('T')[0]}` // returns id-yyyy-mm-dd
     let imageSrcPath;
     if(!req.is('multipart/form-data')){
-        if(POST_PREVIEW.filename)
+        /// TYLKO DLA POST PREVIEW
+        if(PREVIEW_IMAGE_PROVIDED){
             try{
-            const filePath = await storeImage(req.body.img_data, POST_PREVIEW.filename, newFilename)
-            const index = filePath.indexOf('public')
-            imageSrcPath = filePath.slice(index)
+                const filePath = await storeImage(req.body.img_data, POST_PREVIEW.filename, newFilename)
+                const index = filePath.indexOf('public')
+                imageSrcPath = filePath.slice(index) // public/assetts/uploads...
             } catch (err) {
                 console.error(err)
             }
-    }
+    }}
 
-    if(req.file){
-        const pathExt = path.extname(req.file.originalname)
-        newFilename += pathExt
-        imageSrcPath = path.join(req.file.destination, newFilename)
-        await fs.promises.rename
-        (path.join(process.cwd(), req.file.destination, 'uploaded'),
-         path.join(process.cwd(), imageSrcPath))
+    if(IMAGE_PROVIDED){
+        imageSrcPath = await renameFile(req.file, newFilename)
     }
 
     if(Object.keys(POST_PREVIEW).length > 0){
+        // Tylko jesli wstawiamy bezposrednio po preview
         await Post.updateOne({id: req.params.id}, {
             title: POST_PREVIEW.title,
             body: POST_PREVIEW.body,
@@ -186,9 +189,6 @@ async function editPost(req, res){
             image: imageSrcPath ?? undefined
         })
     }
-    
-    console.log('3')
-    
 
     req.flash('logInfo', 'Edited Succesfully')
     return res.redirect(`/${req.params.id}`)
@@ -215,4 +215,16 @@ module.exports = {
     postPost,
     editPost,
     deletePost
+}
+
+
+async function renameFile(reqFile, newFilename){
+    const pathExt = path.extname(reqFile.originalname)
+    newFilename += pathExt
+    imageSrcPath = path.join(reqFile.destination, newFilename)  // public/assets/uploads/...jpg
+    await fs.promises.rename
+    (path.join(process.cwd(), reqFile.path),
+     path.join(process.cwd(), imageSrcPath))
+    /// MIEJSCE NA USUNIECIE STARYCH ZDJEC
+    return imageSrcPath
 }

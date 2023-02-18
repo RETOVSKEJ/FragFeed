@@ -5,7 +5,7 @@ const ROLES = require('../models/roles')
 const { postPost, getPost, getPostPreview, passPostPreview, deletePost, editPost,  getPostForm, getEditForm, } = require('../controllers/posts')
 const { getHomepage } = require('../controllers/home')
 const { catchAsync } = require('../middleware/errors')
-const { uploadDisk, uploadMemory } = require('../middleware/imageHandler')
+const { uploadDisk } = require('../middleware/imageHandler')
 const {
   authUser,
   notAuthUser,

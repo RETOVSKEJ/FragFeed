@@ -47,10 +47,8 @@ function previewImg(ev){
     /// CHECK FOR ERRORS
     if(document.getElementById('error-message')) // old Errors to delete
         document.getElementById('error-message').remove()
-    if(document.getElementById('img-preview')){
-        console.log('errr')
+    if(document.getElementById('img-preview'))
         document.getElementById('img-preview').remove()
-    }
 
     const err = validateSize()
     if(err){
@@ -72,8 +70,9 @@ function previewImg(ev){
         const data_img = fr.result;
         image.src = data_img
 
+        /// Compress image
         image.onload = (ev) => {
-            const WIDTH = 1280;
+            const WIDTH = 1280;     /// SIZE OF OUR COMPRESSED FILE
             const RATIO =  WIDTH / ev.target.width
 
             const canvas = document.createElement('canvas')
