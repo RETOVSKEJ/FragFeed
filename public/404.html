@@ -1,14 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="/errors.css">
-    <link rel="shortcut icon" href="/assets/favicon-error-16x16.png" type="image/png">
-</head>
-<body>
-    <h1>404 not FOUND EJS FILE -- GIT</h1>
-</body>
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+		<link rel="stylesheet" href="/errors.css" />
+		<link
+			rel="shortcut icon"
+			href="/assets/favicon-error-16x16.png"
+			type="image/png"
+		/>
+	</head>
+	<body>
+		<h1>404 not FOUND EJS FILE -- GIT</h1>
+		<form action="/new" method="POST">
+			<label for="tags-input">Tagi:</label>
+			<input
+				id="tags-input"
+				name="tags"
+				placeholder="Dodaj tagi oddzielając je przecinkiem"
+				value=""
+			/>
+			<ul id="tags-container"></ul>
+			<button type="submit">ee</button>
+		</form>
+		<script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify@4.2.0/dist/tagify.min.js"></script>
+		<script>
+			const form = document.querySelector('form')
+			const input = document.getElementById('tags-input')
+			const tagsContainer = document.getElementById('tags-container')
+			const tags = []
+
+			input.addEventListener('input', (ev) => {
+				if (ev.data === ',') {
+					let newTag = ev.target.value.replaceAll(',', '')
+					if (newTag.length > 2) {
+						// 1 charakter to przecinek
+						newTag = newTag.slice(0, -1)
+						const li = document.createElement('li')
+						li.id = 'tag'
+						li.innerText = newTag
+						li.style.background = '#444'
+						li.style.padding = '4px'
+						tagsContainer.append(li)
+						tags.push(newTag)
+						ev.target.value = null
+					}
+				}
+			})
+
+			form.addEventListener('submit', (ev) => {
+				ev.preventDefault()
+				input.value = tags.join(',')
+				form.submit()
+			})
+		</script>
+	</body>
 </html>

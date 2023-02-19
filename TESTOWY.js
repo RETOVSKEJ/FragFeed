@@ -127,9 +127,24 @@ if (user == null) {
     console.log("sema")
 }})();
 
+const str = "string"
+function changeStr(str)
+{
+    str += "eeee"
+}
 
-// generate IIFE example
-// (async () => {
-//     await run()
-//     console.log(testWhere().then(v => console.log(v)))
-// }) ();
+changeStr(str)
+console.log(str)
+
+
+const czlowiek = {
+    name: 'arek'
+}
+function changeObj(obj)
+{
+    obj.name ="darek"
+    obj = "dupa"
+}
+changeObj(czlowiek)
+console.log(czlowiek.name)
+console.log(czlowiek)

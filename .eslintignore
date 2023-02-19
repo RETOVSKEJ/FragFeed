@@ -1,0 +1,7 @@
+.env
+node_modules/
+TESTOWY.js      
+TESTOWY2.js
+logs/*
+package-lock.json
+public/assets/*

@@ -1,4 +1,5 @@
 .env
 node_modules
-TESTOWY.js 
+TESTOWY.js  
+TESTOWY2.js
 logs/*

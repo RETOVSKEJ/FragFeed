@@ -1,12 +1,11 @@
-@import "./boilerplate.css";
+@import './boilerplate.css';
 
-
-textarea{
-    margin: 1rem;
-    display: block;
+textarea {
+	margin: 1rem;
+	display: block;
 }
 
-.img-preview{
-    width: 500px;
-    object-fit: cover;
+.img-preview {
+	width: 500px;
+	object-fit: cover;
 }
