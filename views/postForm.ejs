@@ -10,14 +10,12 @@
 		/>
 		<script src="/postFormCompressValidate.js" defer></script>
 		<script src="/postFormTags.js" defer></script>
-
 	</head>
 	<body>
 		<div class="sidebar">
 			<a href="/">Strona Główna</a>
 		</div>
-		<%= msg %>
-		<% if (urlPath.includes('/edit')) { %>
+		<%= msg %> <% if (urlPath.includes('/edit')) { %>
 		<script>
 			window.EJSpost = <%- JSON.stringify(post) %>
 		</script>
@@ -46,7 +44,9 @@
 <%= post.body %></textarea
 			>
 			<label for="image">Upload Image</label>
-			<input type="file" id="image"
+			<input
+				type="file"
+				id="image"
 				name="image"
 				onchange="previewImg()"
 				accept="image/*"
@@ -63,7 +63,14 @@
 					/>
 				</ul>
 			</div>
-			<button id="previewBtn" type="submit" formaction="/preview" formenctype="application/x-www-form-urlencoded">Podgląd</button>
+			<button
+				id="previewBtn"
+				type="submit"
+				formaction="/preview"
+				formenctype="application/x-www-form-urlencoded"
+			>
+				Podgląd
+			</button>
 			<button id="sendBtn" type="submit">Edytuj Post</button>
 		</form>
 		<% } else { %>
@@ -79,14 +86,18 @@
 				placeholder="Tytuł posta..."
 				rows="1"
 				required
-			><%=locals.post?.title%></textarea>
+			>
+<%=locals.post?.title%></textarea
+			>
 			<textarea
 				id="body"
 				name="body"
 				placeholder="Text..."
 				rows="20"
 				required
-			><%=locals.post?.body%></textarea>
+			>
+<%=locals.post?.body%></textarea
+			>
 			<label for="image">Upload Image</label>
 			<input
 				type="file"

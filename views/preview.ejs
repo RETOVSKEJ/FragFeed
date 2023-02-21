@@ -1,34 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="/homepage.css">
-</head>
-<body>
-    <%= msg %>
-    <div class="sidebar">
-        <a class='home' href="/">Strona Główna</a>
-    </div>
-    <!--  TODO MIEJSCE NA UI HANDLE EJS-->
-    <div class="posts-wrapper">
-        <form action="/new" method="POST">
-            <button type="button" onclick="history.back()">Cofnij</button>
-            <input type="hidden" id="img_data" name="img_data">
-            <script>
-                // FOR storingImage on the server with storeImage
-                document.getElementById('img_data').value = localStorage.getItem('img_data');
-            </script>
-            <% if (referer.includes('/edit')) { %>
-                <button type="submit" formaction="/<%= post_id %>/edit?_method=PATCH">Edytuj Post</button>
-            <% } else { %>
-                <button type="submit">Dodaj Post</button>
-            <% } %>
-        </form>
-        <%- include('./partials/postComponent') %>
-    </div>
-    <%- include('./partials/logoutButton') %>
-</body>
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+		<link rel="stylesheet" href="/home.css" />
+	</head>
+	<body>
+		<%= msg %>
+		<div class="sidebar">
+			<a class="home" href="/">Strona Główna</a>
+		</div>
+		<!--  TODO MIEJSCE NA UI HANDLE EJS-->
+		<div class="posts-wrapper">
+			<form action="/new" method="POST">
+				<button type="button" onclick="history.back()">Cofnij</button>
+				<input type="hidden" id="img_data" name="img_data" />
+				<script>
+					// FOR storingImage on the server with storeImage
+					document.getElementById('img_data').value =
+						localStorage.getItem('img_data')
+				</script>
+				<% if (referer.includes('/edit')) { %>
+				<button
+					type="submit"
+					formaction="/<%= post_id %>/edit?_method=PATCH"
+				>
+					Edytuj Post
+				</button>
+				<% } else { %>
+				<button type="submit">Dodaj Post</button>
+				<% } %>
+			</form>
+			<%- include('./partials/postComponent') %>
+		</div>
+		<%- include('./partials/logoutButton') %>
+	</body>
 </html>

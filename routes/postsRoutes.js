@@ -6,6 +6,7 @@ const ROLES = require('../models/roles')
 const {
 	postPost,
 	getPost,
+	getRandomPost,
 	getTaggedPosts,
 	getPostPreview,
 	passPostPreview,
@@ -14,7 +15,7 @@ const {
 	getPostForm,
 	getEditForm,
 } = require('../controllers/posts')
-const { getHomepage } = require('../controllers/home')
+const { getHome, getHomePage } = require('../controllers/home')
 const { catchAsync } = require('../middleware/errors')
 const { uploadCompressedDisk } = require('../middleware/imageHandler')
 const {
@@ -28,13 +29,15 @@ const {
 	canCommentPost,
 } = require('../middleware/permissions')
 
-router.route(['/', '/old']).get(catchAsync(getHomepage))
+router.route(['/', '/old']).get(catchAsync(getHome))
+router.route(['/page', '/page/:num']).get(catchAsync(getHomePage))
 
 router
 	.route('/:id(\\d+)')
 	.get(catchAsync(getPost))
 	.delete(authUser, catchAsync(canDeletePost), catchAsync(deletePost))
 
+router.route('/random').get(catchAsync(getRandomPost))
 router.route('/tag/:tag').get(catchAsync(getTaggedPosts))
 
 router

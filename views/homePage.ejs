@@ -1,33 +1,36 @@
-<!-- route from getPosts -->
+<!-- route from getHomePage -->
 
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="/homepage.css">
-    <!-- <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
-    <link rel="shortcut icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
-    <link rel="shortcut icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
-    <link rel="manifest" href="/assets/site.webmanifest"> -->
-    <!-- <link rel="shortcut icon" type="image/png" sizes="16x16" href="/favicon.ico"> -->
-</head>
-<body>
-<div class="sidebar">
-    <a href="/new">Dodaj Post</a>
-    <a href="/">Newest</a>
-    <a href="/old">Oldest</a>
-</div>
-    <div class="posts-wrapper">
-        <% for(const post of posts) { %> 
-            <a href="/<%= post.id %>"><%- include('./partials/postComponent', {post: post}) %></a>
-        <% } %>
-    </div>
-    <%= msg %>
-    <div class="navbar">
-        <%- include('./partials/logoutButton') %>
-    </div>
-</body>
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+		<link rel="stylesheet" href="/home.css" />
+	</head>
+	<body>
+		<div class="sidebar">
+			<a href="/new">Dodaj Post</a>
+			<a href="/">Newest</a>
+			<a href="/old">Oldest</a>
+			<a href="/random">Random</a>
+		</div>
+		<main>
+			<% if(!bFirstPage) { %>
+			<a href="/page/<%= page - 1 %>?limit=<%= limit %>">Previous Page</a>
+			<% } %> <% if(!bLastPage) { %>
+			<a href="/page/<%= page + 1 %>?limit=<%= limit %>">Next Page</a>
+			<% } %>
+			<div class="posts-wrapper">
+				<% for(const post of posts) { %>
+				<a href="/<%= post.id %>"
+					><%- include('./partials/postComponent', {post: post}) %></a
+				>
+				<% } %>
+			</div>
+		</main>
+		<%= msg %>
+		<div class="navbar"><%- include('./partials/logoutButton') %></div>
+	</body>
 </html>

@@ -3,5 +3,7 @@
 	"tabWidth": 4,
 	"useTabs": true,
 	"semi": false,
-	"singleQuote": true
+	"singleQuote": true,
+	"singleAttributePerLine": false,
+	"htmlWhitespaceSensitivity": "css"
 }

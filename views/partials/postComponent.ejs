@@ -1,33 +1,42 @@
-
 <div class="post">
-    <h5 class="post-title"><%= post.title %></h5>
-    <!-- IF ITS NEW/EDITED POST PREVIEW -->
-    <% if(locals.urlPath == '/preview'){ %>
-        <img id='img-preview' src='<%= post.image %>' alt="Uploaded Image preview">
-        <script>
-            // IF USER JUST UPLOADED IMAGE TO PREVIEW
-            if(localStorage.getItem('img_data')){
-                const img = document.getElementById('img-preview');
-                img.src = localStorage.getItem('img_data')
-            }
-        </script>
-    <!-- IF ITS SINGLE POST OR HOMEPAGE -->
-    <% } else { %> 
-        <!-- IF POST DOES HAVE AN IMAGE -->
-        <% if(post.image) { %>
-        <img id='img-preview' src='<%= post.image %>' alt="Post image">
-        <% } %>
-    <% } %>
-    <p class="post-body"><%= post.body %></p>
-    <div class="post-author">
-        <p><% if(post.author){ %>Autor: <%= post.author.nick %> <%= post.createdAtString %><%}%></p>
-        <p><% if(post.edited_by){ %>Edytowane przez: <%= post.edited_by.nick %> <%= post.updatedAtString %><%}%></p> 
-    </div>
-    <div class="post-tags"><label for="tags">Tagi: </label>
-        <% for(const tag of post.tags) {%>
-            <a class="post-tag" href='/tag/<%= tag %>'><%= tag %></a>
-        <% } %>
-    </div>
-    <div class="post-likes"></div>
-    <div class="post-comments"><span>Like</span></div>
+	<h5 class="post-title"><%= post.title %></h5>
+	<!-- IF ITS NEW/EDITED POST PREVIEW -->
+	<% if(locals.urlPath == '/preview'){ %>
+	<img
+		id="img-preview"
+		src="<%= post.image %>"
+		alt="Uploaded Image preview"
+	/>
+	<script>
+		// IF USER JUST UPLOADED IMAGE TO PREVIEW
+		if (localStorage.getItem('img_data')) {
+			const img = document.getElementById('img-preview')
+			img.src = localStorage.getItem('img_data')
+		}
+	</script>
+	<!-- IF ITS SINGLE POST OR HOMEPAGE -->
+	<% } else { %>
+	<!-- IF POST DOES HAVE AN IMAGE -->
+	<% if(post.image) { %>
+	<img id="img-preview" src="<%= post.image %>" alt="Post image" />
+	<% } %> <% } %>
+	<p class="post-body"><%= post.body %></p>
+	<div class="post-author">
+		<p>
+			<% if(post.author){ %>Autor: <%= post.author.nick %> <%=
+			post.createdAtString %><%}%>
+		</p>
+		<p>
+			<% if(post.edited_by){ %>Edytowane przez: <%= post.edited_by.nick %>
+			<%= post.updatedAtString %><%}%>
+		</p>
+	</div>
+	<div class="post-tags">
+		<label for="tags">Tagi: </label>
+		<% for(const tag of post.tags) {%>
+		<a class="post-tag" href="/tag/<%= tag %>"><%= tag %></a>
+		<% } %>
+	</div>
+	<div class="post-likes"></div>
+	<div class="post-comments"><span>Like</span></div>
 </div>

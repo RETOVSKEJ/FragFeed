@@ -148,3 +148,27 @@ function changeObj(obj)
 changeObj(czlowiek)
 console.log(czlowiek.name)
 console.log(czlowiek)
+
+
+// async function asyncFunction() {
+//   const responsePromise = fetch('https://jsonplaceholder.typicode.com/todos/1');
+//   const timerPromise = new Promise((resolve, reject) => {
+//     setTimeout(() => reject('Request timed out'), 5000);
+//   });
+  
+//     const result = await Promise.race([responsePromise, timerPromise]);
+//     const data = await result.json();
+//     console.log(data);
+
+
+    const promises = [
+  Promise.resolve(1),
+  Promise.reject(new Error('Something went wrong')),
+  Promise.resolve(3)
+];
+
+
+const [one, two, three] = async () => {await Promise.allSettled(promises)
+    console.log(one, two, three)
+}
+

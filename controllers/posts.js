@@ -6,10 +6,12 @@ const Post = require('../models/Post')
 const assert = require('assert')
 
 /// / req.session.preview usuwane w: getPost, getPostForm, getEditForm / ustawiane w:
-/// / req.session.post usuwane w: getHomepage / ustawiane w: getPost, getEditForm
+/// / req.session.post usuwane w: getHome / ustawiane w: getPost, getEditForm
 
 /// / post.create i post.update({id: req.params.id}) --> DOKŁADNIE TO SAMO
 /// / ale inne dla preview a dla posta
+
+//msg: req.flash('logInfo')  --> info wyswietlane dla usera w EJS, jak "Logged sucessfuly" itp.
 
 /// ////////// GET ////////////////
 
@@ -37,6 +39,18 @@ async function getPost(req, res) {
 	return res.status(200).render('post', { post, msg: req.flash('logInfo') })
 }
 
+async function getRandomPost(req, res) {
+	const postsCount = await Post.countDocuments()
+	const randInt = Math.floor(Math.random() * postsCount)
+	const post = await Post.findOne().skip(randInt).exec()
+	if (!post) {
+		res.status(400)
+		throw new Error('Nie istnieje taki post')
+	}
+	req.flash('logInfo', 'RANDOM POST ID: ' + post.id)
+	return res.status(200).render('post', { post, msg: req.flash('logInfo') })
+}
+
 async function getTaggedPosts(req, res) {
 	const tag = req.params.tag
 	const posts = await Post.find({ tags: { $in: [tag] } })
@@ -51,12 +65,10 @@ async function getTaggedPosts(req, res) {
 async function getPostForm(req, res) {
 	const POST_PREVIEW_DATA = req.session.preview
 	req.session.preview = null
-	return res
-		.status(200)
-		.render('postForm', {
-			post: POST_PREVIEW_DATA,
-			msg: req.flash('logInfo'),
-		})
+	return res.status(200).render('postForm', {
+		post: POST_PREVIEW_DATA,
+		msg: req.flash('logInfo'),
+	})
 }
 
 // @route /:id/edit
@@ -289,6 +301,7 @@ async function deletePost(req, res) {
 
 module.exports = {
 	getPost,
+	getRandomPost,
 	getTaggedPosts,
 	getPostForm,
 	getPostPreview,
