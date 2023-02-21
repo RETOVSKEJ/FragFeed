@@ -25,7 +25,7 @@
 	"main": "server.js",
 	"scripts": {
 		"server": "nodemon server.js",
-		"lint": "eslint . ",
+		"lint": "eslint . --watch-disabled",
 		"lint:fix": "eslint --fix .",
 		"prettier": "npx prettier --write ."
 	},

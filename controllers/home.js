@@ -5,7 +5,20 @@ const Post = require('../models/Post')
 // }
 
 async function getHomepage(req, res) {
-	const posts = await Post.find({}).populate('author', '-password').exec()
+	if (req.path === '/old') {
+		var posts = await Post.find({})
+			.populate('author', '-password')
+			.populate('edited_by', '-password')
+			.exec()
+	} else {
+		var posts = await Post.find({})
+			.sort('-id')
+			.populate('author', '-password')
+			.populate('edited_by', '-password')
+			.exec()
+	}
+	//	if(req.query === 'top')
+	//	if(req.query === 'hot')
 	req.session.post = null
 	res.status(200).render('homePage', { posts, msg: req.flash('logInfo') })
 }

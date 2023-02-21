@@ -9,7 +9,7 @@ function createUpdateTXT(log) {
 	}
 	const logsPATH = path.resolve('logs/reqLog.txt')
 	fs.appendFile(logsPATH, log, (err) => {
-		console.assert(err, err) // DEV
+		console.assert(!err, err) // DEV
 	})
 }
 

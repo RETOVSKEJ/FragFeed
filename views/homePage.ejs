@@ -17,11 +17,13 @@
 <body>
 <div class="sidebar">
     <a href="/new">Dodaj Post</a>
+    <a href="/">Newest</a>
+    <a href="/old">Oldest</a>
 </div>
-    <div class="posts-wrapper">  
-    <% for(post of posts.reverse()) { %>
-        <a href='/<%= post.id %>'><%- include('./partials/postComponent') %></a>
-    <% } %>
+    <div class="posts-wrapper">
+        <% for(const post of posts) { %> 
+            <a href="/<%= post.id %>"><%- include('./partials/postComponent', {post: post}) %></a>
+        <% } %>
     </div>
     <%= msg %>
     <div class="navbar">

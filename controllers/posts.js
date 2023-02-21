@@ -3,6 +3,7 @@ const fs = require('fs')
 const path = require('path')
 const { storeImage } = require('../middleware/imageHandler')
 const Post = require('../models/Post')
+const assert = require('assert')
 
 /// / req.session.preview usuwane w: getPost, getPostForm, getEditForm / ustawiane w:
 /// / req.session.post usuwane w: getHomepage / ustawiane w: getPost, getEditForm
@@ -36,10 +37,26 @@ async function getPost(req, res) {
 	return res.status(200).render('post', { post, msg: req.flash('logInfo') })
 }
 
+async function getTaggedPosts(req, res) {
+	const tag = req.params.tag
+	const posts = await Post.find({ tags: { $in: [tag] } })
+		.populate('author', '-password')
+		.sort('-id')
+		.exec()
+	if (posts.length === 0) return res.redirect('/')
+	return res.status(200).render('tag', { posts: posts, tag: tag })
+}
+
 // @route /new
 async function getPostForm(req, res) {
+	const POST_PREVIEW_DATA = req.session.preview
 	req.session.preview = null
-	return res.status(200).render('postForm', { msg: req.flash('logInfo') })
+	return res
+		.status(200)
+		.render('postForm', {
+			post: POST_PREVIEW_DATA,
+			msg: req.flash('logInfo'),
+		})
 }
 
 // @route /:id/edit
@@ -95,6 +112,7 @@ function passPostPreview(req, res) {
 			.max(bodyMaxLength[0])
 			.required(),
 		image: Joi.optional(),
+		tags: Joi.optional(),
 	})
 	const { error } = Schema.validate(req.body)
 	if (error) {
@@ -110,6 +128,7 @@ function passPostPreview(req, res) {
 		body: req.body.body,
 		filename: req.body.image, // original name of input file
 		image,
+		tags: req.body.tags,
 	}
 
 	return res.redirect('/preview')
@@ -119,12 +138,14 @@ function passPostPreview(req, res) {
 
 // @route /new
 async function postPost(req, res) {
-	console.log(req.body.tags)
-
 	const LAST_ID = (await Post.findOne().sort('-id'))?.id ?? 0 // przypisuje id 0 jesli zaden post nie istnieje // Lepsze od countDocuments, bo nie zmienia ID w przypadku usuniecia
 	const POST_PREVIEW = req.session.preview ?? {}
 	const PREVIEW_IMAGE_PROVIDED = !!POST_PREVIEW.filename // JESLI WSTAWIMY NOWE ZDJECIE I WCISNIEMY PREVIEW
 	const IMAGE_PROVIDED = !!req.file // JESLI WSTAWIMY NOWE ZDJECIE
+	assert(
+		POST_PREVIEW.tags instanceof Array == false,
+		'tags in post_preview shouldnt be in array'
+	)
 
 	let post
 	let imageSrcPath
@@ -160,6 +181,7 @@ async function postPost(req, res) {
 			body: POST_PREVIEW.body,
 			author: req.user,
 			image: imageSrcPath,
+			tags: POST_PREVIEW.tags.split(','),
 		})
 	} else {
 		post = await Post.create({
@@ -168,6 +190,7 @@ async function postPost(req, res) {
 			body: req.body.body,
 			author: req.user,
 			image: imageSrcPath ?? undefined,
+			tags: req.body.tags.split(','),
 		})
 	}
 
@@ -184,6 +207,10 @@ async function editPost(req, res) {
 	const PREVIEW_IMAGE_PROVIDED = !!POST_PREVIEW.filename
 	const IMAGE_PROVIDED = !!req.file
 	console.log('EDITED POST TEST', POST_PREVIEW, req.session.post)
+	assert(
+		POST_PREVIEW.tags instanceof Array == false,
+		'tags in post_preview shouldnt be in array'
+	)
 
 	const newFilename = `${req.params.id}-${
 		new Date().toISOString().split('T')[0]
@@ -228,6 +255,7 @@ async function editPost(req, res) {
 				body: POST_PREVIEW.body,
 				edited_by: req.user,
 				image: imageSrcPath,
+				tags: POST_PREVIEW.tags.split(','),
 			}
 		)
 	} else {
@@ -238,6 +266,7 @@ async function editPost(req, res) {
 				body: req.body.body,
 				edited_by: req.user,
 				image: imageSrcPath ?? undefined,
+				tags: req.body.tags.split(','),
 			}
 		)
 	}
@@ -260,6 +289,7 @@ async function deletePost(req, res) {
 
 module.exports = {
 	getPost,
+	getTaggedPosts,
 	getPostForm,
 	getPostPreview,
 	passPostPreview,

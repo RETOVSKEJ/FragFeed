@@ -6,6 +6,7 @@ const ROLES = require('../models/roles')
 const {
 	postPost,
 	getPost,
+	getTaggedPosts,
 	getPostPreview,
 	passPostPreview,
 	deletePost,
@@ -27,12 +28,14 @@ const {
 	canCommentPost,
 } = require('../middleware/permissions')
 
-router.route('/').get(catchAsync(getHomepage))
+router.route(['/', '/old']).get(catchAsync(getHomepage))
 
 router
 	.route('/:id(\\d+)')
 	.get(catchAsync(getPost))
 	.delete(authUser, catchAsync(canDeletePost), catchAsync(deletePost))
+
+router.route('/tag/:tag').get(catchAsync(getTaggedPosts))
 
 router
 	.route('/:id(\\d+)/edit')

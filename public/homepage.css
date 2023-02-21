@@ -2,7 +2,8 @@
 
 body {
 	display: grid;
-	grid-template-columns: 300px 600px 300px; /* TODO zrobic tu porzadny grid */
+	grid-template-columns: 300px 600px 300px;
+	/* TODO zrobic tu porzadny grid */
 }
 
 .posts-wrapper {
@@ -24,9 +25,27 @@ body {
 	padding: 0.5em;
 	display: block;
 	font-size: var(--fs-lg);
-	color: whitesmoke; /* TODO find&replace dla wszystkich whiteSmoke na var(--text-clr) ITP. */
+	color: whitesmoke;
+	/* TODO find&replace dla wszystkich whiteSmoke na var(--text-clr) ITP. */
 }
 
 .post-body {
 	font-size: var(--fs-btn);
+}
+
+.post-tags {}
+
+.post-tag {
+	color: #222;
+	background-color: whitesmoke;
+	padding: 0.25rem 0.75rem;
+	margin-inline: 0.25em;
+	border-radius: 6px;
+	font-size: 12px;
+}
+
+.post-tag:hover {
+	color: whitesmoke;
+	background-color: cornflowerblue;
+	border: none;
 }
