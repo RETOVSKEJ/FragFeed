@@ -55,5 +55,10 @@ error -> zbyt duzy plik / zly format / blad multera / blad serwera(timed out/wro
 TODO --> jakis regex do tagow, pagination, testy i koniec backendu narazie
 TODO --> Cannot read properties of null (reading 'title')
 TODO --> pasek ładowania przy uploadzie zdjecia (client-side) i disabled buttony dopoki sie nie wruzci
-TODO --> tagi
-TODO --> pagination
+TODO --> search bar - sugestie
+TODO --> search bar - podswietlanie literek
+TODO --> search bar - scrolling
+TODO --> search bar - autocomplete
+TODO --> search bar - search by tags
+TODO --> poszukac bugow z post_preview i uploadach zdjec itp
+TODO --> wyczyscic baze danych

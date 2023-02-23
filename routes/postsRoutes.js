@@ -15,7 +15,11 @@ const {
 	getPostForm,
 	getEditForm,
 } = require('../controllers/posts')
-const { getHome, getHomePage } = require('../controllers/home')
+const {
+	getHome,
+	getHomePage,
+	getSearchResults,
+} = require('../controllers/home')
 const { catchAsync } = require('../middleware/errors')
 const { uploadCompressedDisk } = require('../middleware/imageHandler')
 const {
@@ -39,6 +43,7 @@ router
 
 router.route('/random').get(catchAsync(getRandomPost))
 router.route('/tag/:tag').get(catchAsync(getTaggedPosts))
+router.route('/search').get(catchAsync(getSearchResults))
 
 router
 	.route('/:id(\\d+)/edit')

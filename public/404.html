@@ -15,93 +15,11 @@
 			rel="stylesheet"
 			href="https://unicons.iconscout.com/release/v4.0.0/css/line.css"
 		/>
-		<style>
-			#tags-container {
-				padding: 4px;
-				background-color: white;
-				border: 1px solid whitesmoke;
-			}
-			#tags-list {
-				display: flex;
-				flex-wrap: wrap;
-			}
-			#tag {
-				list-style-type: none;
-				margin-inline: 0.5em;
-				background-color: #333;
-			}
-			#tags-input {
-				border: none;
-				border-radius: 4px;
-				outline: none;
-				padding: 4px;
-			}
-		</style>
+		<script src="/js/customEvents.js" defer></script>
 	</head>
 	<body>
 		<h1>404 not FOUND EJS FILE -- GIT</h1>
 		<form action="/new" method="POST">
-			<label for="tags-input">Tagi:</label>
-			<div id="tags-container">
-				<ul id="tags-list">
-					<!-- <li id="tag">html<i class="uil uil-multiply"></i></li>
-					<li id="tag">css<i class="uil uil-multiply"></i></li> -->
-					<input
-						id="tags-input"
-						name="tags"
-						type="text"
-						placeholder="Dodaj tagi oddzielając je przecinkiem"
-						value=""
-					/>
-				</ul>
-			</div>
-			<button type="submit">ee</button>
-		</form>
 		<script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify@4.2.0/dist/tagify.min.js"></script>
-		<script>
-			const form = document.querySelector('form')
-			const input = document.getElementById('tags-input')
-			const tagsList = document.getElementById('tags-list')
-			const tags = document.getElementsByClassName('tag')
-			const removeIconArray = document.getElementsByName('remove')
-			const container = document.getElementById('tags-container')
-
-			const maxTags = 6
-			const tagsToSubmit = []
-
-			function removeTag(text) {
-				var index = tagsToSubmit.indexOf(text)
-				if (index !== -1) tagsToSubmit.splice(index, 1)
-			}
-
-			tagsList.addEventListener('click', (ev) => {
-				if (ev.target.matches('#remove')) {
-					removeTag(ev.target.parentElement.innerText)
-					ev.target.parentElement.remove()
-				}
-			})
-
-			input.addEventListener('input', (ev) => {
-				if (ev.data === ',') {
-					let newTag = ev.target.value.replaceAll(',', '')
-					if (tagsToSubmit.includes(newTag)) return
-					if (tagsToSubmit.length === maxTags) return
-					if (newTag.length > 25) return
-					if (newTag.length > 2) {
-						// 1 charakter to przecinek
-						const li = `<li id='tag' class='tag'>${newTag}<i id='remove' class="uil uil-multiply"></i></li>`
-						tagsList.insertAdjacentHTML('afterbegin', li)
-						tagsToSubmit.push(newTag)
-						ev.target.value = null
-					}
-				}
-			})
-
-			form.addEventListener('submit', (ev) => {
-				ev.preventDefault()
-				input.value = tags.join(',')
-				form.submit()
-			})
-		</script>
 	</body>
 </html>

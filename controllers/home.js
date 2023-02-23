@@ -9,13 +9,14 @@ async function retrieveAllPosts(query) {
 	})
 		.sort('-id')
 		.populate('author', '-password')
+		.populate('edited_by', '-password')
 		.exec()
 	return posts
 }
 
 async function retrievePosts(
 	postsCount = null,
-	{ sort = null, offset = null, objQuery = null }
+	{ sort = 'asc', offset = null, objQuery = null }
 ) {
 	return await Post.find({ objQuery })
 		.limit(postsCount)
@@ -31,18 +32,18 @@ async function retrievePosts(
 async function getHome(req, res) {
 	const preloadedPostsLimit = 8
 	const bIsFetch = req.accepts('html') ? false : true
-	const bIsSearch = req.get('data') ? true : false
+	const bIsSearch = req.get('search') ? true : false
 	const offset = bIsFetch ? parseInt(req.get('offset')) : null // TODO chyba mozna usunac nulla
-	const fetchPostsLimit = bIsFetch ? parseInt(req.get('posts-count')) : null
+	const fetchPostsLimit = parseInt(req.get('posts-count')) ?? null
 	let posts
 
-	req.session.post = null
 	console.log(req.headers)
-
 	if (bIsSearch) {
-		posts = await retrieveAllPosts(req.get('data'))
-		return res.send(posts)
+		posts = await Post.find().sort('-id').exec() // slight optimalization
+		return res.status(200).send(posts)
 	}
+
+	req.session.post = null
 
 	if (req.path === '/old') {
 		bIsFetch
@@ -96,7 +97,19 @@ async function getHomePage(req, res) {
 	})
 }
 
+async function getSearchResults(req, res) {
+	const results = await retrieveAllPosts(req.query.q)
+
+	console.log(results)
+	return res.status(200).render('search', {
+		posts: results,
+		postsCount: results.length,
+		msg: req.flash('logInfo'),
+	})
+}
+
 module.exports = {
 	getHome,
 	getHomePage,
+	getSearchResults,
 }

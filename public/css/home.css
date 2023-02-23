@@ -81,8 +81,8 @@ nav .search-result strong {
   margin-right: auto;
 }
 
-.hidden {
-  display: none !important;
+.hidden.hidden.hidden {
+  display: none;
 }
 
 /* SIDE BAR */

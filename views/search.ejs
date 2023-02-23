@@ -7,11 +7,11 @@
 		<title>Document</title>
 		<link rel="stylesheet" href="/css/home.css" />
 		<script src="/js/searchBar.js" defer></script>
-		<script src="/js/homepage.js" defer></script>
 	</head>
 	<body>
 		<div class="sidebar">
 			<a href="/new">Dodaj Post</a>
+            <a href="/">Home</a>
 			<a href="/">Newest</a>
 			<a href="/old">Oldest</a>
 			<a href="/random">Random</a>
@@ -19,6 +19,7 @@
 			<%= msg %>
 		</div>
 		<div class="posts-wrapper">
+            <h2>Found posts: <%=postsCount %></h2>
 			<% for(const post of posts) { %>
 			<%- include('./partials/postComponent', {post: post}) %>
 			<% } %>

@@ -1,43 +1,86 @@
 const searchBar = document.getElementById('search')
 const searchResults = document.getElementById('search-results')
+const searchPostsWrapper = document.getElementById('search-posts-wrapper')
 const searchResult = document.getElementsByClassName('search-result')
+const showMoreBtn = document.getElementById('show-more')
+const resultsCounter = document.getElementById('results-counter')
 
-const SEARCH_BAR_MAX_POSTS = 5
+const SEARCH_MAX_VIEWED = 5
+let postsArr = []
 
-async function loadPosts(query) {
-	const data = await fetch(`${window.origin}/`, {
-		headers: {
-			'Content-type': 'application/json',
-			Accept: 'application/json',
-			data: query,
-		},
-	})
-	if (!data.ok) return
-	const results = await data.json()
-	return results
-}
+const fetchEvent = new Event('custom:fetchLoaded')
 
-searchBar.addEventListener('input', async (ev) => {
-	const posts = await loadPosts(ev.target.value)
-	searchResults.innerHTML = ''
-	if (posts.length == 0 && posts) {
-		const p = document.createElement('p')
-		p.innerText = 'Brak wyników'
-		searchResults.append(p)
-	} else {
-		for (let i = 0; i < SEARCH_BAR_MAX_POSTS; i++) {
-			const title = posts[i].title
-			const imgSrc = posts[i].image
-			const elem = `<div class="search-result"><img src="${imgSrc}" alt="image"><strong>${title}</strong></div>`
-			searchResults.insertAdjacentHTML('beforeend', elem)
+// Do something only after fetch has ended
+document.addEventListener('custom:fetchLoaded', (ev) => {
+	console.log(ev)
+	searchBar.addEventListener('keyup', async (ev) => {
+		if (ev.key === 'Enter' && ev.target.value !== '') {
+			window.location.replace(
+				`${window.origin}/search?q=${ev.target.value}`
+			)
 		}
-	}
+
+		const posts = filterPosts(ev.target.value)
+		searchPostsWrapper.innerHTML = ''
+		if (posts.length == 0) {
+			resultsCounter.innerText = 'Brak wyników...'
+			showMoreBtn.classList.add('hidden')
+		} else {
+			let postsViewed
+			posts.length < SEARCH_MAX_VIEWED // pokaz 1-5 postow jesli nie ma więcej
+				? (postsViewed = posts.length)
+				: (postsViewed = SEARCH_MAX_VIEWED)
+
+			resultsCounter.textContent = `Znalezionych wyników: ${posts.length}`
+			showMoreBtn.classList.toggle(
+				// Schowaj przycisk jeśli jest mniej niż 5 postów
+				'hidden',
+				posts.length < SEARCH_MAX_VIEWED
+			)
+			showMoreBtn.href = `/search?q=${searchBar.value}`
+
+			for (let i = 0; i < postsViewed; i++) {
+				const title = posts[i].title
+				const imgSrc = posts[i].image
+				const elem = `<div class="search-result"><img src="${imgSrc}" alt="image"><strong>${title}</strong></div>`
+				searchPostsWrapper.insertAdjacentHTML('beforeend', elem)
+			}
+		}
+	})
 })
+
+fetch(`${window.origin}/`, {
+	headers: {
+		'Content-type': 'application/json',
+		Accept: 'application/json',
+		search: true,
+	},
+})
+	.then((data) => data.json())
+	.then((result) => {
+		postsArr = result
+		document.dispatchEvent(fetchEvent)
+	})
+
+function filterPosts(query) {
+	let postsArrFiltered = postsArr
+		.map((elem) => elem)
+		.filter((elem) =>
+			elem.title.includes(query) || elem.body.includes(query)
+				? elem
+				: null
+		)
+	console.log(postsArrFiltered, postsArr)
+	return postsArrFiltered
+}
 
 searchBar.addEventListener('focus', (ev) => {
 	searchResults.classList.remove('hidden')
 })
 
 searchBar.addEventListener('focusout', (ev) => {
+	if (ev.relatedTarget === showMoreBtn) {
+		return
+	}
 	searchResults.classList.add('hidden')
 })
