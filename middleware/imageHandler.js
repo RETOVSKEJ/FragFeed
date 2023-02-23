@@ -34,7 +34,7 @@ MyCustomStorage.prototype._handleFile = function _handleFile(req, file, cb) {
 				path,
 				size: outStream.bytesWritten,
 			})
-		}) 
+		})
 	})
 }
 
@@ -114,7 +114,7 @@ async function storeBufferinFile(buffer, FilePath) {
 /// // DEPRECATED
 // const diskStorage = multer.diskStorage({
 //     destination: (req, file, cb)  => {  // callback function WHERE TO STORE IMAGES
-//         cb(null, 'public/assets/uploads')              // cb(error / dest) //TODO ERROR ZROBIC
+//         cb(null, 'public/assets/uploads')              // cb(error / dest)
 //     },
 //     filename:  (req, file, cb) => {         // without filenames, would store with original name
 //         console.log("zdjecie dodane: \n", file);

@@ -32,9 +32,11 @@
 		</p>
 	</div>
 	<div class="post-tags">
+		<% if(post.tags.length > 0) { %>
 		<label for="tags">Tagi: </label>
-		<% for(const tag of post.tags) {%>
-		<a class="post-tag" href="/tag/<%= tag %>"><%= tag %></a>
+			<% for(const tag of post.tags) {%>
+				<a class="post-tag" href="/tag/<%= tag %>"><%= tag %></a>
+			<% } %>
 		<% } %>
 	</div>
 	<div class="post-likes"></div>

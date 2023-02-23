@@ -154,10 +154,13 @@ async function postPost(req, res) {
 	const POST_PREVIEW = req.session.preview ?? {}
 	const PREVIEW_IMAGE_PROVIDED = !!POST_PREVIEW.filename // JESLI WSTAWIMY NOWE ZDJECIE I WCISNIEMY PREVIEW
 	const IMAGE_PROVIDED = !!req.file // JESLI WSTAWIMY NOWE ZDJECIE
-	assert(
-		POST_PREVIEW.tags instanceof Array == false,
-		'tags in post_preview shouldnt be in array'
-	)
+
+	const POST_TAGS =
+		req.body.tags.length > 0 ? req.body.tags.split(',') : req.body.tags
+	const POST_PREVIEW_TAGS =
+		POST_PREVIEW?.tags?.length > 0
+			? POST_PREVIEW?.tags.split(',')
+			: POST_PREVIEW?.tags
 
 	let post
 	let imageSrcPath
@@ -193,7 +196,7 @@ async function postPost(req, res) {
 			body: POST_PREVIEW.body,
 			author: req.user,
 			image: imageSrcPath,
-			tags: POST_PREVIEW.tags.split(','),
+			tags: POST_PREVIEW_TAGS || undefined,
 		})
 	} else {
 		post = await Post.create({
@@ -202,7 +205,7 @@ async function postPost(req, res) {
 			body: req.body.body,
 			author: req.user,
 			image: imageSrcPath ?? undefined,
-			tags: req.body.tags.split(','),
+			tags: POST_TAGS || undefined,
 		})
 	}
 
@@ -219,10 +222,12 @@ async function editPost(req, res) {
 	const PREVIEW_IMAGE_PROVIDED = !!POST_PREVIEW.filename
 	const IMAGE_PROVIDED = !!req.file
 	console.log('EDITED POST TEST', POST_PREVIEW, req.session.post)
-	assert(
-		POST_PREVIEW.tags instanceof Array == false,
-		'tags in post_preview shouldnt be in array'
-	)
+	const POST_TAGS =
+		req.body.tags.length > 0 ? req.body.tags.split(',') : req.body.tags
+	const POST_PREVIEW_TAGS =
+		POST_PREVIEW?.tags?.length > 0
+			? POST_PREVIEW?.tags.split(',')
+			: POST_PREVIEW?.tags
 
 	const newFilename = `${req.params.id}-${
 		new Date().toISOString().split('T')[0]
@@ -267,7 +272,7 @@ async function editPost(req, res) {
 				body: POST_PREVIEW.body,
 				edited_by: req.user,
 				image: imageSrcPath,
-				tags: POST_PREVIEW.tags.split(','),
+				tags: POST_PREVIEW_TAGS || undefined,
 			}
 		)
 	} else {
@@ -278,7 +283,7 @@ async function editPost(req, res) {
 				body: req.body.body,
 				edited_by: req.user,
 				image: imageSrcPath ?? undefined,
-				tags: req.body.tags.split(','),
+				tags: POST_TAGS || undefined,
 			}
 		)
 	}

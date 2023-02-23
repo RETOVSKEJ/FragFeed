@@ -34,12 +34,13 @@ app.set('view engine', 'ejs')
 app.use(logEvents)
 
 /// //////// MIDDLEWARES /////////////////
+
 app.use(express.urlencoded({ limit: '5mb', extended: true })) // extended true - moge postować nested objekty, false - flat
 app.use(express.json())
-app.use(express.static(path.join(__dirname, '/public'), { index: '_' })) // index zeby nie czytalo index.html jako strony glownej, pomaga obslugiwac html css i obrazki
+app.use(express.static(path.resolve('public'), { index: '_' })) // index zeby nie czytalo index.html jako strony glownej, pomaga obslugiwac html css i obrazki
 app.use(
 	'*/uploads',
-	express.static(path.join(__dirname, '/public/assets/uploads'))
+	express.static(path.resolve('public', 'assets', 'uploads'))
 ) // dla obslugi podfolderu w /public
 app.use(cookieParser())
 app.use(flash())

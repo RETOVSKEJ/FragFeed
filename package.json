@@ -18,6 +18,7 @@
 		"passport": "^0.6.0",
 		"passport-local": "^1.0.0",
 		"passport-remember-me": "^0.0.1",
+		"sass": "^1.58.3",
 		"sharp": "^0.31.3"
 	},
 	"name": "spikerush",
@@ -27,7 +28,9 @@
 		"server": "nodemon server.js",
 		"lint": "eslint . --watch-disabled",
 		"lint:fix": "eslint --fix .",
-		"prettier": "npx prettier --write ."
+		"prettier": "npx prettier --write .",
+		"scss": "sass --no-source-map --watch public/scss/main.scss public/css/main.css",
+		"dev": "npm run server & npm run scss"
 	},
 	"keywords": [],
 	"author": "",

@@ -1,4 +1,5 @@
 @import './boilerplate.css';
+
 body {
 	display: flex;
 	height: 100vh;
@@ -12,11 +13,13 @@ body {
 	display: block;
 	color: lawngreen;
 }
+
 .errors {
 	display: block;
 	margin: 0.5em;
 	color: red;
 }
+
 .error {
 	display: block;
 	margin: 0.25em;

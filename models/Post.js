@@ -32,6 +32,16 @@ const postSchema = mongoose.Schema(
 		tags: {
 			type: [String],
 			trim: true,
+			default: [],
+			validate: {
+				validator: (arr) => {
+					return (
+						arr.filter((str) => str.length > 2).length ===
+						arr.length
+					)
+				},
+				message: 'Tag cannot be shorter than 2 characters',
+			},
 		},
 		image: String, // tylko sciezka do zdjecia  /public/assets/uploads
 	},

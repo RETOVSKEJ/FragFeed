@@ -1,0 +1,108 @@
+@import './boilerplate.css';
+
+@mixin post($size: 1em) {
+	display: flex;
+	flex-direction: column;
+	border: 1px solid var(--accent-clr);
+	border-radius: 4px;
+	gap: $size;
+	padding: $size;
+}
+
+body {
+	width: 75%;
+	margin: auto;
+	display: grid;
+	grid-template-columns: 0.5fr 1fr 0.5fr;
+	/* TODO zrobic tu porzadny grid */
+}
+
+.posts-wrapper {
+	display: flex;
+	flex-direction: column;
+	gap: 2em;
+
+	.post {
+		@include post();
+
+		.post-title {
+			padding: 0.5em;
+			display: block;
+			font-size: var(--fs-lg);
+			color: whitesmoke;
+			/* TODO find&replace dla wszystkich whiteSmoke na var(--text-clr) ITP. */
+		}
+
+		.post-body {
+			font-size: var(--fs-btn);
+		}
+
+		.post-tags {
+		}
+
+		.post-tag {
+			color: #222;
+			background-color: whitesmoke;
+			padding: 0.25rem 0.75rem;
+			margin-inline: 0.25em;
+			border-radius: 6px;
+			font-size: 12px;
+
+			&:hover {
+				color: whitesmoke;
+				background-color: cornflowerblue;
+				border: none;
+			}
+		}
+	}
+}
+
+/* SEARCH BAR */
+
+nav {
+	display: flex;
+	flex-direction: column;
+	flex-wrap: wrap;
+	margin: 1rem;
+
+	.search {
+		border-radius: 4px;
+		padding: 0.5em;
+	}
+
+	.search-results {
+		/* display: none; */
+		border: 1px solid black;
+		padding: 1rem;
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+	}
+
+	.search-result {
+		@include post(0.5em);
+		flex-direction: row;
+
+		img {
+			width: 64px;
+			height: 64px;
+			margin-right: auto;
+		}
+
+		strong {
+			margin-right: auto;
+		}
+	}
+}
+
+.hidden {
+	display: none !important;
+}
+
+/* SIDE BAR */
+
+.sidebar {
+	display: flex;
+	flex-direction: column;
+	flex-wrap: wrap;
+}

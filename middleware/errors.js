@@ -10,7 +10,7 @@ function errorHandler(err, req, res, next) {
 	console.error(err.stack)
 	const errorLog = `${res.statusCode}\t${err.name}`
 
-	logOtherEvents(errorLog) // TODO optimiaztion, nie trzeba przesylac req i res raczej
+	logOtherEvents(errorLog)
 
 	/// //// LOGIN REGISTER INPUTS //////////////
 	if (err.name == 'ValidationError') {

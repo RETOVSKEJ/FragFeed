@@ -41,6 +41,7 @@ tagsInput.addEventListener('input', (ev) => {
 	}
 })
 
+/// recreating tags -->  for /edit ONLY
 if (window.EJSpost) {
 	for (const tag of window.EJSpost.tags) {
 		createTag(tag)
@@ -60,6 +61,8 @@ previewBtn.addEventListener('click', (ev) => {
 
 form.addEventListener('submit', (ev) => {
 	ev.preventDefault()
-	tagsInput.value = tagsToSubmit.join(',')
+	if (tagsToSubmit.length > 0) {
+		tagsInput.value = tagsToSubmit.join(',')
+	}
 	form.submit()
 })
