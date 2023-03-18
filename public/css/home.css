@@ -1,5 +1,7 @@
 @import './boilerplate.css';
-body {
+
+
+main {
   width: 75%;
   margin: auto;
   display: grid;
@@ -12,6 +14,7 @@ body {
   flex-direction: column;
   gap: 2em;
 }
+
 .posts-wrapper .post {
   display: flex;
   flex-direction: column;
@@ -20,6 +23,7 @@ body {
   gap: 1em;
   padding: 1em;
 }
+
 .posts-wrapper .post .post-title {
   padding: 0.5em;
   display: block;
@@ -27,9 +31,11 @@ body {
   color: whitesmoke;
   /* TODO find&replace dla wszystkich whiteSmoke na var(--text-clr) ITP. */
 }
+
 .posts-wrapper .post .post-body {
   font-size: var(--fs-btn);
 }
+
 .posts-wrapper .post .post-tag {
   color: #222;
   background-color: whitesmoke;
@@ -38,6 +44,7 @@ body {
   border-radius: 6px;
   font-size: 12px;
 }
+
 .posts-wrapper .post .post-tag:hover {
   color: whitesmoke;
   background-color: cornflowerblue;
@@ -51,10 +58,12 @@ nav {
   flex-wrap: wrap;
   margin: 1rem;
 }
+
 nav .search {
   border-radius: 4px;
   padding: 0.5em;
 }
+
 nav .search-results {
   /* display: none; */
   border: 1px solid black;
@@ -63,6 +72,7 @@ nav .search-results {
   flex-direction: column;
   gap: 0.5rem;
 }
+
 nav .search-result {
   display: flex;
   flex-direction: column;
@@ -72,11 +82,13 @@ nav .search-result {
   padding: 0.5em;
   flex-direction: row;
 }
+
 nav .search-result img {
   width: 64px;
   height: 64px;
   margin-right: auto;
 }
+
 nav .search-result strong {
   margin-right: auto;
 }

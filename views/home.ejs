@@ -7,29 +7,40 @@
 		<title>Document</title>
 		<link rel="stylesheet" href="/css/home.css" />
 		<script src="/js/searchBar.js" defer></script>
+		<script src="/js/newsletterModal.js" defer></script>
 		<script src="/js/homepage.js" defer></script>
 	</head>
 	<body>
-		<div class="sidebar">
-			<a href="/new">Dodaj Post</a>
-			<a href="/">Newest</a>
-			<a href="/old">Oldest</a>
-			<a href="/random">Random</a>
-			<%- include('./partials/logoutButton') %>
-			<%= msg %>
-		</div>
-		<div class="posts-wrapper">
-			<% for(const post of posts) { %>
-			<%- include('./partials/postComponent', {post: post}) %>
-			<% } %>
-		</div>
-		<nav>
-			<input type="search" class="search" id="search" name="q" placeholder="Szukaj...">
-			<div id="search-results" class="search-results hidden">
-				<p id="results-counter"></p>
-				<div id="search-posts-wrapper" tabindex="1"></div>
-				<a id="show-more">Pokaż więcej...</a>
+		<main>
+			<div class="sidebar">
+				<a href="/new">Dodaj Post</a>
+				<a href="/">Newest</a>
+				<a href="/old">Oldest</a>
+				<a href="/random">Random</a>
+				<button id="newsletter-btn" type="button">Newsletter</button>
+				<%- include('./partials/logoutButton') %>
+				<%= msg %>
+				<div id="newsletter-modal" class="modal hidden">
+					<form action="/newsletter" method="POST">
+						<input type="text" id='name' name="name" required>
+						<input type="email" id='email' name="email" required>
+						<button type="submit">Zapisz do newslettera</button>
+					</form>
+				</div>
 			</div>
-		</nav>
+			<div class="posts-wrapper">
+				<% for(const post of posts) { %>
+				<%- include('./partials/postComponent', {post: post}) %>
+				<% } %>
+			</div>
+			<nav id="search-bar">
+				<input type="search" class="search" id="search" name="q" placeholder="Szukaj...">
+				<div id="search-results" class="search-results hidden">
+					<span id="results-counter"></span>
+					<div id="search-posts-wrapper" tabindex="1"></div>
+					<a id="show-more" href="/search?q=">Pokaż więcej...</a>
+				</div>
+			</nav>
+		</main>
 	</body>
 </html>

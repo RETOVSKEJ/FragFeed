@@ -1,12 +1,12 @@
 const postWrapper = document.querySelector('.posts-wrapper')
+let postsCount = postWrapper.children.length
 let lastPost = postWrapper.lastElementChild
 let postsOffset = postWrapper.childElementCount
 
 /// INTERSECTION OBSERVER
-
 const LastPostObserver = new IntersectionObserver(
 	(entry) => {
-		if (entry[0].isIntersecting) {
+		if (entry[0].isIntersecting && postsCount > 2) {
 			console.log('eee')
 			loadNewPosts()
 			console.log(entry[0], lastPost)
@@ -18,6 +18,14 @@ const LastPostObserver = new IntersectionObserver(
 	}
 )
 
+const noPostsToFetch = new CustomEvent('custom:NoPostsToFetch', {
+	detail: 'nothing to fetch, all posts already fetched',
+})
+document.body.addEventListener('custom:NoPostsToFetch', (ev) => {
+	console.error(ev.detail)
+	LastPostObserver.unobserve(lastPost)
+})
+
 LastPostObserver.observe(lastPost)
 
 function reduceTags(tagsArr) {
@@ -26,7 +34,7 @@ function reduceTags(tagsArr) {
 }
 
 async function loadNewPosts() {
-	const data = await fetch(window.origin, {
+	const data = await fetch(`${window.origin}/fetch/posts`, {
 		headers: {
 			'Cache-control': 'max-age=120',
 			'Content-type': 'application/json',
@@ -37,6 +45,8 @@ async function loadNewPosts() {
 	})
 	if (data.ok) {
 		var result = await data.json()
+		if (result.length === 0)
+			return document.body.dispatchEvent(noPostsToFetch)
 		console.log(result)
 		result.forEach((elem, index) => {
 			let tagsArr = []
@@ -65,6 +75,7 @@ async function loadNewPosts() {
 		})
 	}
 	postsOffset += result.length
+	postsCount += result.length
 	lastPost = postWrapper.lastElementChild
 	LastPostObserver.observe(lastPost)
 }

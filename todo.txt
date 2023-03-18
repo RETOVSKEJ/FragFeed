@@ -52,7 +52,6 @@ TODO error handlers images
 error -> zbyt duzy plik / zly format / blad multera / blad serwera(timed out/wrongpath) / permission check
 
 
-TODO --> jakis regex do tagow, pagination, testy i koniec backendu narazie
 TODO --> Cannot read properties of null (reading 'title')
 TODO --> pasek ładowania przy uploadzie zdjecia (client-side) i disabled buttony dopoki sie nie wruzci
 TODO --> search bar - sugestie
@@ -62,3 +61,15 @@ TODO --> search bar - autocomplete
 TODO --> search bar - search by tags
 TODO --> poszukac bugow z post_preview i uploadach zdjec itp
 TODO --> wyczyscic baze danych
+TODO --> TESTY
+TODO --> login - zapomnialem hasla
+TODO --> login - logowanie przez email
+TODO --> login - potwierdzienie emaila
+TODO --> email -> newslettery
+TODO --> JS memoization
+TODO --> CACHE
+TODO --> deboucne throttling
+TODO --> zabezpieczenia przed atakami
+Todo --> watch video about security
+todo --> zrob cos z tymi bledami
+todo --> kombor zrobi mi lougouta

@@ -1,4 +1,7 @@
 const Post = require('../models/Post')
+const appMailer = require('../emails')
+const sgMail = require('@sendgrid/mail')
+sgMail.setApiKey(process.env.SENDGRID_KEY_API)
 
 /// HELPERS
 
@@ -29,45 +32,50 @@ async function retrievePosts(
 
 /// ROUTES
 
-async function getHome(req, res) {
-	const preloadedPostsLimit = 8
+async function getFetchPosts(req, res) {
 	const bIsFetch = req.accepts('html') ? false : true
-	const bIsSearch = req.get('search') ? true : false
 	const offset = bIsFetch ? parseInt(req.get('offset')) : null // TODO chyba mozna usunac nulla
 	const fetchPostsLimit = parseInt(req.get('posts-count')) ?? null
-	let posts
 
+	if (req.path === '/old') {
+		var posts = await retrievePosts(fetchPostsLimit, {
+			offset: offset,
+		})
+	} else {
+		var posts = await retrievePosts(fetchPostsLimit, {
+			sort: '-id',
+			offset: offset,
+		})
+	}
+
+	return res.status(200).json(posts)
+}
+
+async function getHome(req, res) {
+	const preloadedPostsLimit = 8
+	const bIsSearch = req.get('search') ? true : false
+
+	let posts
 	console.log(req.headers)
+
 	if (bIsSearch) {
 		posts = await Post.find().sort('-id').exec() // slight optimalization
-		return res.status(200).send(posts)
+		return res.vary('accept').status(200).send(posts)
 	}
 
 	req.session.post = null
 
 	if (req.path === '/old') {
-		bIsFetch
-			? (posts = await retrievePosts(fetchPostsLimit, {
-					offset: offset,
-			  }))
-			: (posts = await retrievePosts(preloadedPostsLimit))
+		posts = await retrievePosts(preloadedPostsLimit)
 	} else {
-		bIsFetch
-			? (posts = await retrievePosts(fetchPostsLimit, {
-					sort: '-id',
-					offset: offset,
-			  }))
-			: (posts = await retrievePosts(preloadedPostsLimit, {
-					sort: '-id',
-			  }))
+		posts = await retrievePosts(preloadedPostsLimit, {
+			sort: '-id',
+		})
 	}
 	//	if(req.query === 'top')
 	//	if(req.query === 'hot')
-
 	res.vary('accept')
-	return req.accepts('html')
-		? res.status(200).render('home', { posts, msg: req.flash('logInfo') })
-		: res.send(posts)
+	return res.status(200).render('home', { posts, msg: req.flash('logInfo') })
 }
 
 async function getHomePage(req, res) {
@@ -108,8 +116,52 @@ async function getSearchResults(req, res) {
 	})
 }
 
+async function postNewsletter(req, res) {
+	console.log(req.body)
+
+	const formData = {
+		name: req.body.name,
+		email: req.body.email.toLowerCase(),
+	}
+
+	const msg = {
+		to: formData.email, // Adres e-mail odbiorcy
+		from: 'retovskej@wp.pl', // Adres e-mail nadawcy
+		subject: 'Temat emaila', // Temat wiadomości
+		text: 'witaj siwecie!', // Treść wiadomości w formacie tekstowym
+		html: '<strong>and easy to do anywhere, even with Node.js</strong>',
+	}
+
+	// Wysłanie wiadomości e-mail
+	sgMail
+		.send(msg)
+		.then(() => {
+			console.log('Wiadomość e-mail została wysłana.')
+		})
+		.catch((error) => {
+			console.error(error)
+			res.status(500).json({
+				message: 'Wystąpił błąd podczas wysyłania wiadomości e-mail.',
+			})
+		})
+
+	// console.log(formData)
+	// // store in DB
+
+	// // send notifiaciton
+	// await appMailer.applicationNotify({
+	// 	email: formData.email,
+	// 	data: { name: formData.name },
+	// })
+
+	req.flash('logInfo', 'Dziekujemy za zapisanie do newslettera!')
+	return res.status(200).redirect('/')
+}
+
 module.exports = {
+	getFetchPosts,
 	getHome,
 	getHomePage,
 	getSearchResults,
+	postNewsletter,
 }

@@ -1,5 +1,5 @@
 <div class="post">
-	<h5 class="post-title"><%= post.title %></h5>
+	<a><h5 class="post-title"><%= post.title %></h5></a>
 	<!-- IF ITS NEW/EDITED POST PREVIEW -->
 	<% if(locals.urlPath == '/preview'){ %>
 	<img
@@ -18,7 +18,7 @@
 	<% } else { %>
 	<!-- IF POST DOES HAVE AN IMAGE -->
 	<% if(post.image) { %>
-	<img id="img-preview" src="<%= post.image %>" alt="Post image" />
+	<a href="/<%= post.id %>"><img id="img-preview" src="<%= post.image %>" alt="Post image" /></a>
 	<% } %> <% } %>
 	<p class="post-body"><%= post.body %></p>
 	<div class="post-author">

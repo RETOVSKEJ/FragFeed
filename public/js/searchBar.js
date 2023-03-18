@@ -1,4 +1,5 @@
-const searchBar = document.getElementById('search')
+const searchContainer = document.getElementById('search-bar')
+const searchInput = document.getElementById('search')
 const searchResults = document.getElementById('search-results')
 const searchPostsWrapper = document.getElementById('search-posts-wrapper')
 const searchResult = document.getElementsByClassName('search-result')
@@ -13,7 +14,7 @@ const fetchEvent = new Event('custom:fetchLoaded')
 // Do something only after fetch has ended
 document.addEventListener('custom:fetchLoaded', (ev) => {
 	console.log(ev)
-	searchBar.addEventListener('keyup', async (ev) => {
+	searchInput.addEventListener('keyup', async (ev) => {
 		if (ev.key === 'Enter' && ev.target.value !== '') {
 			window.location.replace(
 				`${window.origin}/search?q=${ev.target.value}`
@@ -37,12 +38,12 @@ document.addEventListener('custom:fetchLoaded', (ev) => {
 				'hidden',
 				posts.length < SEARCH_MAX_VIEWED
 			)
-			showMoreBtn.href = `/search?q=${searchBar.value}`
+			showMoreBtn.href = `/search?q=${searchInput.value}`
 
 			for (let i = 0; i < postsViewed; i++) {
 				const title = posts[i].title
 				const imgSrc = posts[i].image
-				const elem = `<div class="search-result"><img src="${imgSrc}" alt="image"><strong>${title}</strong></div>`
+				const elem = `<div class="search-result"><a href="/${posts[i].id}"><img src="${imgSrc}" alt="image"><strong>${title}</strong></a></div>`
 				searchPostsWrapper.insertAdjacentHTML('beforeend', elem)
 			}
 		}
@@ -52,7 +53,7 @@ document.addEventListener('custom:fetchLoaded', (ev) => {
 fetch(`${window.origin}/`, {
 	headers: {
 		'Content-type': 'application/json',
-		Accept: 'application/json',
+		accept: 'application/json',
 		search: true,
 	},
 })
@@ -74,13 +75,19 @@ function filterPosts(query) {
 	return postsArrFiltered
 }
 
-searchBar.addEventListener('focus', (ev) => {
-	searchResults.classList.remove('hidden')
+searchContainer.addEventListener('focusin', (ev) => {
+	/// wyswietla rezultaty w momencie przelaczenia focusu
+	if (searchInput.value.length > 0) searchResults.classList.remove('hidden')
+	/// wyswietla rezultaty po pierwszym wpisaniu (musi byc > zamiast ==, zeby wyswietlic tez podczas wklejania pelnego tesktu)
+	searchInput.addEventListener('input', (ev) => {
+		if (ev.target.value.length > 0) {
+			searchResults.classList.remove('hidden')
+		}
+	})
 })
 
-searchBar.addEventListener('focusout', (ev) => {
-	if (ev.relatedTarget === showMoreBtn) {
-		return
+searchContainer.addEventListener('focusout', (ev) => {
+	if (!ev.relatedTarget) {
+		searchResults.classList.add('hidden')
 	}
-	searchResults.classList.add('hidden')
 })

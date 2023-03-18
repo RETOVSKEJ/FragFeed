@@ -19,6 +19,8 @@ const {
 	getHome,
 	getHomePage,
 	getSearchResults,
+	postNewsletter,
+	getFetchPosts,
 } = require('../controllers/home')
 const { catchAsync } = require('../middleware/errors')
 const { uploadCompressedDisk } = require('../middleware/imageHandler')
@@ -35,6 +37,7 @@ const {
 
 router.route(['/', '/old']).get(catchAsync(getHome))
 router.route(['/page', '/page/:num']).get(catchAsync(getHomePage))
+router.route('/fetch/posts').get(catchAsync(getFetchPosts))
 
 router
 	.route('/:id(\\d+)')
@@ -44,6 +47,7 @@ router
 router.route('/random').get(catchAsync(getRandomPost))
 router.route('/tag/:tag').get(catchAsync(getTaggedPosts))
 router.route('/search').get(catchAsync(getSearchResults))
+router.route('/newsletter').post(catchAsync(postNewsletter))
 
 router
 	.route('/:id(\\d+)/edit')
