@@ -8,39 +8,49 @@
 		<link rel="stylesheet" href="/css/home.css" />
 		<script src="/js/searchBar.js" defer></script>
 		<script src="/js/newsletterModal.js" defer></script>
+		 <script src="https://kit.fontawesome.com/c780166e7c.js" crossorigin="anonymous"></script>
 		<script src="/js/homepage.js" defer></script>
 	</head>
 	<body>
-		<main>
-			<div class="sidebar">
-				<a href="/new">Dodaj Post</a>
-				<a href="/">Newest</a>
-				<a href="/old">Oldest</a>
-				<a href="/random">Random</a>
-				<button id="newsletter-btn" type="button">Newsletter</button>
-				<%- include('./partials/logoutButton') %>
-				<%= msg %>
-				<div id="newsletter-modal" class="modal hidden">
-					<form action="/newsletter" method="POST">
-						<input type="text" id='name' name="name" required>
-						<input type="email" id='email' name="email" required>
-						<button type="submit">Zapisz do newslettera</button>
+		<nav class="navbar-wrapper">
+			<button id="newsletter-btn" type="button">Newsletter</button>
+			<dialog id="newsletter-modal" class="modal"  >
+				<div class="modal-wrapper">
+					<h2>Zapisz się do naszego newslettera, aby nie przegapić żadnych nowości!</h2>
+					<form action="/newsletter" method="POST" class="modal-form">
+						<label for="name">Name: <input type="text" id='name' name="name" required></label>
+						<label for="email">Email:  <input type="email" id='email' name="email" required></label>
+						<button type="submit">Zapisz</button>
+						<button id="newsletter-close" type="button">x</button>
 					</form>
 				</div>
+			</dialog>
+			<div id="search-bar">
+				<input type="search" class="search" id="search" name="q" placeholder="Szukaj...">
+				<div id="search-results" class="search-results hidden">
+					<span id="results-counter"></span>
+					<div id="search-posts-wrapper" tabindex="1"></div>
+						<a id="show-more" href="/search?q=">Pokaż więcej...</a>
+					</div>
+				</div>
+			</div>
+			<div class="login-info">	
+				<%- include('./partials/logoutButton') %>
+				<%= msg %>
+			</div>
+		</nav>
+		<main>
+			<div class="sidebar">
+				<a href="/new"><i class="fa-solid fa-home"></i><span>Dodaj Post</span></a>
+				<a href="/"><i class="fa-solid fa-home"></i><span>Newest</span></a>
+				<a href="/old"><i class="fa-solid fa-home"></i><span>Oldest</span></a>
+				<a href="/random"><i class="fa-solid fa-home"></i><span>Random</span></a>
 			</div>
 			<div class="posts-wrapper">
 				<% for(const post of posts) { %>
 				<%- include('./partials/postComponent', {post: post}) %>
 				<% } %>
 			</div>
-			<nav id="search-bar">
-				<input type="search" class="search" id="search" name="q" placeholder="Szukaj...">
-				<div id="search-results" class="search-results hidden">
-					<span id="results-counter"></span>
-					<div id="search-posts-wrapper" tabindex="1"></div>
-					<a id="show-more" href="/search?q=">Pokaż więcej...</a>
-				</div>
-			</nav>
 		</main>
 	</body>
 </html>

@@ -68,8 +68,7 @@ async function loadNewPosts() {
 		<label for="tags">Tagi: </label>
         ${reduceTags(tagsArr)}
 	</div>
-	<div class="post-likes"></div>
-	<div class="post-comments"><span>Like</span></div>
+	<div class="post-likes"><button>up</button><button>down</button></div>
 </div>`
 			postWrapper.insertAdjacentHTML('beforeend', newPost)
 		})
