@@ -1,0 +1,17 @@
+@mixin glassAccent() {
+	box-shadow: var(--shadow-accent);
+	background-color: var(--third-clr);
+	backdrop-filter: blur(4px);
+	border: var(--border-accent);
+	border-radius: var(--radius);
+}
+
+@mixin button() {
+	padding: 0.5rem 1rem;
+	font-size: var(--fs-btn);
+	border: var(--border);
+	border-radius: var(--radius);
+	box-shadow: var(--shadow-black);
+	background-color: var(--accent-clr);
+	cursor: pointer;
+}

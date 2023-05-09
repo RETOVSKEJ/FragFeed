@@ -1,0 +1,54 @@
+@import './boilerplate.css';
+
+body {
+	display: flex;
+	height: 100vh;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	color: var(--text-clr);
+}
+
+.message {
+	display: block;
+	color: lawngreen;
+}
+
+.errors {
+	display: block;
+	margin: 0.5em;
+	color: red;
+}
+
+.error {
+	display: block;
+	margin: 0.25em;
+}
+
+a {
+	color: var(--text-clr);
+	text-decoration: none;
+	border: 1px solid #060;
+	border-radius: 0.25em;
+	padding: var(--small);
+}
+
+h1 {
+	color: var(--text-clr);
+}
+
+form {
+	display: flex;
+	flex-direction: column;
+	gap: 1em;
+	padding: 1.25em;
+	margin: 1em;
+	border-radius: 6px;
+}
+
+form div {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	gap: 1em;
+}

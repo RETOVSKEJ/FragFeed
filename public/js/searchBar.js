@@ -43,7 +43,24 @@ document.addEventListener('custom:fetchLoaded', (ev) => {
 			for (let i = 0; i < postsViewed; i++) {
 				const title = posts[i].title
 				const imgSrc = posts[i].image
-				const elem = `<div class="search-result"><a href="/${posts[i].id}"><img src="${imgSrc}" alt="image"><strong>${title}</strong></a></div>`
+				const date = new Date(posts[i].createdAt)
+				const options = {
+					month: 'long',
+					day: 'numeric',
+					year: 'numeric',
+					hour: 'numeric',
+					minute: 'numeric',
+					hour12: false,
+				}
+				const elem = `<div class="search-result">
+					<a href="/${posts[i].id}">
+						<img src="${imgSrc}" alt="image">
+						<div class='flex-c fs-small'>
+							<strong>${title}</strong>
+							<em>${date.toLocaleString('pl', options)}</em>
+						</div>
+					</a>
+				</div>`
 				searchPostsWrapper.insertAdjacentHTML('beforeend', elem)
 			}
 		}
@@ -71,13 +88,19 @@ function filterPosts(query) {
 				? elem
 				: null
 		)
-	console.log(postsArrFiltered, postsArr)
+	if (postsArrFiltered.length === 0) {
+		searchPostsWrapper.classList.add('hidden')
+	} else {
+		searchPostsWrapper.classList.remove('hidden')
+	}
 	return postsArrFiltered
 }
 
 searchContainer.addEventListener('focusin', (ev) => {
 	/// wyswietla rezultaty w momencie przelaczenia focusu
-	if (searchInput.value.length > 0) searchResults.classList.remove('hidden')
+	if (searchInput.value.length > 0) {
+		searchResults.classList.remove('hidden')
+	}
 	/// wyswietla rezultaty po pierwszym wpisaniu (musi byc > zamiast ==, zeby wyswietlic tez podczas wklejania pelnego tesktu)
 	searchInput.addEventListener('input', (ev) => {
 		if (ev.target.value.length > 0) {

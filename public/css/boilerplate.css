@@ -8,13 +8,13 @@
 }
 
 :where(a, button, i) {
-	color: var(--btn-clr);
+	color: var(--text-clr);
 	cursor: pointer;
 	text-decoration: none;
 }
 
 :where(a, button, i):hover {
-	color: var(--btn-clr-hl);
+	color: #fff;
 }
 
 :where(button) {
@@ -75,8 +75,7 @@
 	--btn-clr-hl: #f5f5f5;
 	--text-clr: #f5f5f5;
 	--accent-clr: #a10000;
-	--accent-clr-green: #5dbb1d;
-
+	--accent-clr-green: #1dbb7e;
 
 
 	--rounded-sm: 4px;
@@ -99,22 +98,25 @@
 
 	--sidebar-width: 300px;
 	--sidebar-right-width: 250px;
-	--navbar-height: ;
+	--navbar-height: 75px;
 	--header-height: ;
 	--effect-height: ;
 	--avatar-size: 40px;
 
 	--radius: 6px;
 	--border: 1px solid var(--accent-clr);
+	--border-accent: 1px solid var(--accent-clr-green);
 	--shadow: 0 0 10px var(--accent-clr);
 	--shadow-btn: 0 0 6px var(--accent-clr);
+	--shadow-black: 0px 1px 2px #000a;
+	--shadow-accent: 0 0 6px var(--accent-clr-green);
 	--bg: var(--primary-clr);
 	--bg-alpha: rgba(32, 33, 34, 0.8);
 
 	background-color: var(--bg);
 	color: var(--text-clr);
 	scroll-behavior: smooth;
-	font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+	font-family: 'sans-serif', 'Segoe UI';
 }
 
 /* GENERIC CLASES */

@@ -1,0 +1,29 @@
+@import 'variables';
+.toast {
+	position: fixed;
+	font-size: var(--fs-small);
+	bottom: 0;
+	right: 0;
+	margin: 1rem;
+	padding: 1rem 1.5rem;
+	width: 225px;
+	// background-color: #73ffc9;
+	text-align: center;
+	top: initial;
+	opacity: 1;
+	transition: opacity 500ms;
+	@include glassAccent();
+	z-index: 999;
+}
+
+.toast-hidden {
+	top: 100%;
+	opacity: 0;
+	transition: all 500ms;
+}
+
+.toast-close {
+	position: absolute;
+	top: 0;
+	right: 0;
+}

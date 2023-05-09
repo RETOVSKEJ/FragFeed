@@ -1,0 +1,12 @@
+<button id="newsletter-btn" type="button">Newsletter</button>
+<dialog id="newsletter-modal" class="modal"  >
+    <div class="modal-wrapper">
+        <h2>Zapisz się do naszego newslettera, aby nie przegapić żadnych nowości!</h2>
+        <form action="/newsletter" method="POST" class="modal-form">
+            <label for="name">Name: <input type="text" id='name' name="name" required></label>
+            <label for="email">Email:  <input type="email" id='email' name="email" required></label>
+            <button type="submit">Zapisz</button>
+            <button id="newsletter-close" type="button">x</button>
+        </form>
+    </div>
+</dialog>

@@ -1,4 +1,7 @@
 const postWrapper = document.querySelector('.posts-wrapper')
+const hotPostWrapper = document.querySelector('.hot-wrapper')
+const NAVBAR_HEIGHT = document.querySelector('nav').offsetHeight
+
 let postsCount = postWrapper.children.length
 let lastPost = postWrapper.lastElementChild
 let postsOffset = postWrapper.childElementCount
@@ -77,4 +80,21 @@ async function loadNewPosts() {
 	postsCount += result.length
 	lastPost = postWrapper.lastElementChild
 	LastPostObserver.observe(lastPost)
+}
+
+document.body.onscroll = () => {
+	const HOT_WRAPPER_HEIGHT = hotPostWrapper.offsetHeight
+	const WRAPPER_MARGIN_TOP = 32
+	const ADDITIONAL_MARGIN_BOTTOM = 4
+	const pos =
+		window.scrollY +
+		window.innerHeight -
+		NAVBAR_HEIGHT -
+		WRAPPER_MARGIN_TOP -
+		ADDITIONAL_MARGIN_BOTTOM
+	if (pos > HOT_WRAPPER_HEIGHT) {
+		hotPostWrapper.style.marginTop = `${pos - HOT_WRAPPER_HEIGHT}px`
+	} else {
+		hotPostWrapper.style.marginTop = '0px'
+	}
 }

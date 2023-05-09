@@ -8,5 +8,5 @@ body {
 }
 
 h1 {
-	color: whitesmoke;
+	color: var(--text-clr);
 }

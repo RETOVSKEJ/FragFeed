@@ -19,7 +19,9 @@
 	<!-- IF POST DOES HAVE AN IMAGE -->
 	<% if(post.image) { %>
 	<a href="/<%= post.id %>"><img id="img-preview" src="<%= post.image %>" alt="Post image" /></a>
-	<% } %> <% } %>
+	<% } else { %>
+		<a href="/<%= post.id %>"><img id="img-preview" src="nophoto.png" alt="No Photo available" /></a>
+	<% }} %>
 	<p class="post-body"><%= post.body %></p>
 	<div class="post-author">
 		<p>
