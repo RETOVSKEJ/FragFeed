@@ -56,7 +56,6 @@ async function getHome(req, res) {
 	const bIsSearch = req.get('search') ? true : false
 
 	let posts
-	console.log(req.headers)
 
 	if (bIsSearch) {
 		posts = await Post.find().sort('-id').exec() // slight optimalization
@@ -108,7 +107,6 @@ async function getHomePage(req, res) {
 async function getSearchResults(req, res) {
 	const results = await retrieveAllPosts(req.query.q)
 
-	console.log(results)
 	return res.status(200).render('search', {
 		posts: results,
 		postsCount: results.length,
@@ -117,8 +115,6 @@ async function getSearchResults(req, res) {
 }
 
 async function postNewsletter(req, res) {
-	console.log(req.body)
-
 	const formData = {
 		name: req.body.name,
 		email: req.body.email.toLowerCase(),

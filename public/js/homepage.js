@@ -82,6 +82,7 @@ async function loadNewPosts() {
 	LastPostObserver.observe(lastPost)
 }
 
+/// STICKY SIDEBARS ///
 document.body.onscroll = () => {
 	const HOT_WRAPPER_HEIGHT = hotPostWrapper.offsetHeight
 	const WRAPPER_MARGIN_TOP = 32

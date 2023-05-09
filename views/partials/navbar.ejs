@@ -1,8 +1,23 @@
 <nav class="navbar-wrapper">
-
+    <div class="hamburger">
+        <input id="menu-button" type="checkbox" />
+        <label class="menu-container" for="menu-button">
+            <span class="top"></span>
+            <span class="middle"></span>
+            <span class="bottom"></span>
+        </label>
+        <div class="menu hidden-ham">
+            <%- include('./sidebar') %>
+        </div>
+    </div>
     <%- include('./newsletter') %>
     <%- include('./searchBar') %>
-    <div class="login-info">	
-        <%- include('./logoutButton') %>
+    <div class="login-info">
+        <div class="pc">
+            <%- include('./logoutButton') %>
+        </div>
+        <div class="mobile">
+            <%- include('./logoutButtonMobile') %>
+        </div>
     </div>
 </nav>

@@ -181,6 +181,14 @@ nav {
 	z-index: 900;
 	background-color: var(--third-clr);
 
+	.hamburger {
+		display: none;
+	}
+
+	.mobile {
+		display: none;
+	}
+
 	.search-bar {
 		position: relative;
 		width: 300px;
@@ -303,15 +311,92 @@ nav {
 		margin-inline: 0.5rem;
 	}
 
-	#newsletter-btn {
-		display: none;
-	}
+	nav {
+		justify-content: center;
 
-	.login-info {
-		display: none;
-	}
+		.pc {
+			display: none;
+		}
+		.mobile {
+			display: block;
+		}
 
-	.hot-wrapper {
-		display: none;
+		#newsletter-btn {
+			display: none;
+		}
+
+		.hot-wrapper {
+			display: none;
+		}
+
+		/* HAMBURGER */
+		#menu-button {
+			display: none;
+			appearance: none;
+		}
+
+		.menu-container {
+			display: inline-flex;
+			flex-direction: column;
+			gap: 5px;
+			/* wystarczy zmienic gap na 13px i wyjdzie piekna strzalka! */
+			cursor: pointer;
+			padding: 10px;
+			border: 1px solid #888;
+			border-radius: 5px;
+			/* inline-flex do buttona */
+
+			span {
+				width: var(--hamburger-width);
+				height: var(--hamburger-height);
+				background-color: white;
+				border-radius: 10px;
+				pointer-events: none;
+				transition: transform 400ms ease-in-out, opacity 200ms;
+			}
+		}
+
+		#menu-button:checked + label .top {
+			transform: translateY(8px) rotate(405deg);
+		}
+
+		#menu-button:checked + label .bottom {
+			transform: translateY(-8px) rotate(-405deg);
+		}
+
+		#menu-button:checked + label .middle {
+			opacity: 0;
+		}
+
+		/* NAVBAR */
+
+		.hidden-ham.hidden-ham.hidden-ham {
+			transform: translateX(-110%);
+		}
+
+		#menu-button:checked ~ .menu {
+			list-style-type: none;
+			display: flex;
+			position: relative;
+			align-items: center;
+			width: 150px;
+			height: 100vh;
+			overflow-y: hidden;
+			flex-direction: column;
+			background-color: #292929;
+			border: 1px solid #333;
+			transform: translateX(0%);
+		}
+
+		#menu-button:checked ~ .menu > * {
+			width: 100%;
+			padding: 1rem;
+			text-decoration: none;
+			border-bottom: 1px solid #333;
+		}
+
+		#menu-button:checked ~ .menu > *:hover {
+			background-color: rgba(255, 255, 255, 0.15);
+		}
 	}
 }

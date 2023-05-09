@@ -1,0 +1,10 @@
+<!-- HIDDEN FOR NOT AUTHENTICATED USERS -->
+<% if (locals.user) { %>
+    <form action="/logout?_method=DELETE" method="POST">
+        <button class="fa-solid fa-user-slash" type=submit></button>
+    </form>
+<% } else { %>
+    <a class="fa-solid fa-user" href="/login"></a>
+<% } %>
+
+
