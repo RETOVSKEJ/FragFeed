@@ -6,6 +6,10 @@
 	display: none;
 }
 
+.shadow-btn.shadow-btn {
+	box-shadow: var(--shadow-btn);
+}
+
 body {
 	overflow: hidden;
 }
@@ -56,6 +60,7 @@ form {
 		display: flex;
 		align-items: center;
 		gap: 1rem;
+		margin-top: 0.5rem;
 
 		label {
 			padding-bottom: 3px;
@@ -71,9 +76,23 @@ form {
 		}
 	}
 
-	.register {
+	.p {
+		text-align: center;
+		font-size: var(--fs-btn);
+		color: var(--btn-clr);
+		margin-top: 1rem;
+	}
+
+	.register-btn {
+		margin-top: 0.5rem;
+		width: 100%;
+	}
+
+	.register,
+	.login {
 		@include button();
 		margin-top: 0.5rem;
+		text-align: center;
 	}
 
 	.input-div {
@@ -85,6 +104,11 @@ form {
 		display: flex;
 		flex-direction: row;
 		gap: 1em;
+
+		&:focus-within {
+			border: var(--border);
+			z-index: 10;
+		}
 
 		i {
 			color: var(--btn-clr);
@@ -122,12 +146,20 @@ form {
 		width: 100%;
 		border: none;
 	}
+
+	i {
+		margin-left: 0.25rem;
+	}
 }
 
 @media (min-width: 621px) {
 	.auth-nav {
 		padding: 3rem;
 		border: 3px solid var(--accent-clr-green);
+	}
+
+	form .p {
+		margin-top: 2rem;
 	}
 }
 
@@ -178,6 +210,11 @@ form {
 
 		.remember-me {
 			margin-top: 0.5rem;
+		}
+
+		.register-btn {
+			margin-top: 1rem;
+			width: 100%;
 		}
 	}
 }

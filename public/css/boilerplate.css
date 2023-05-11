@@ -17,6 +17,10 @@
 	color: #fff;
 }
 
+:where(a, button, i):focus-visible {
+	outline: 1px solid var(--accent-clr-green);
+}
+
 a h5:hover,
 button:hover {
 	filter: brightness(1.22);

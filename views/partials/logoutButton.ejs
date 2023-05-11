@@ -1,6 +1,6 @@
 <!-- HIDDEN FOR NOT AUTHENTICATED USERS -->
 <% if (locals.user) { %>
-    <p>Welcome, <%= locals.user.nick %></p>
+    <p class="welcome">Welcome, <%= locals.user.nick %></p>
     <form action="/logout?_method=DELETE" method="POST">
         <button type=submit>Log Out</button>
     </form>

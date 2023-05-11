@@ -150,6 +150,12 @@ nav .search-info .show-more {
   text-transform: uppercase;
   cursor: pointer;
 }
+nav .login-info .pc {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
 
 /* SIDE BAR */
 .sidebar {
@@ -280,6 +286,11 @@ nav .search-info .show-more {
   border-radius: var(--radius);
 }
 
+@media (max-width: 1040px) {
+  .welcome {
+    display: none;
+  }
+}
 @media (min-width: 621px) and (max-width: 1040px) {
   main {
     margin-top: var(--navbar-height);
@@ -362,6 +373,9 @@ nav .search-info .show-more {
     width: 100dvw;
     top: var(--navbar-height);
     left: 0;
+  }
+  nav .login-info .pc {
+    display: none;
   }
   nav #menu-button {
     display: none;

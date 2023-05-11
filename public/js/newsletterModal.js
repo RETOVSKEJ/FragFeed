@@ -1,12 +1,15 @@
-const newsletterBtn = document.getElementById('newsletter-btn')
+const newsletterBtn = document.getElementsByClassName('newsletter-btn')
 const newsletterModal = document.getElementById('newsletter-modal')
 const newsletterClose = document.getElementById('newsletter-close')
 
-newsletterBtn.onclick = (ev) => {
+newsletterBtn[0].onclick = () => {
+	newsletterModal.showModal()
+}
+newsletterBtn[1].onclick = () => {
 	newsletterModal.showModal()
 }
 
-newsletterClose.onclick = (ev) => {
+newsletterClose.onclick = () => {
 	newsletterModal.close()
 }
 

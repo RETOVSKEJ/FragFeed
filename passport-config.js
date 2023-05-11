@@ -8,14 +8,14 @@ function initialize(passport, getUserByNick) {
 		const user = await getUserByNick(nick)
 		if (user == null) {
 			// TODO check user == null or !user
-			return done(null, false, 'No user with that nick')
+			return done(null, false, 'Nie ma takiego użytkownika')
 		}
 
 		try {
 			if (await bcrypt.compare(password, user.password)) {
-				return done(null, user, { message: 'Logged in succesfully' })
+				return done(null, user, { message: 'Zalogowano poprawnie' })
 			} // TODO view messages on frontend
-			return done(null, false, { message: 'wrong password' })
+			return done(null, false, { message: 'Nieprawidłowe Hasło' })
 		} catch (err) {
 			return done(err)
 		}

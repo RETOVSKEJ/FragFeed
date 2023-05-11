@@ -28,6 +28,6 @@
 				<% } %>
 			</div>
 		</main>
-		<%- include('./partials/toast', {msg: msg}) %>
+		<%- include('./partials/toast', {msg: messages.error || msg}) %>
 	</body>
 </html>

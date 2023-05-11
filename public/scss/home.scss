@@ -147,6 +147,11 @@ nav {
 			@include button();
 		}
 	}
+
+	.login-info .pc {
+		@include flex();
+		gap: 1rem;
+	}
 }
 
 /* SIDE BAR */
@@ -285,6 +290,12 @@ nav {
 	}
 }
 
+@media (max-width: 1040px) {
+	.welcome {
+		display: none;
+	}
+}
+
 @media (min-width: 621px) and (max-width: 1040px) {
 	main {
 		margin-top: var(--navbar-height);
@@ -372,6 +383,10 @@ nav {
 			width: 100dvw;
 			top: var(--navbar-height);
 			left: 0;
+		}
+
+		.login-info .pc {
+			display: none;
 		}
 
 		/* HAMBURGER */

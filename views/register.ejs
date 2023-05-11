@@ -6,28 +6,48 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="/css/auth.css"></style>
+    <script src="/js/toast.js" defer></script>
+    <script src="https://kit.fontawesome.com/c780166e7c.js" crossorigin="anonymous"></script>
 </head>
 <body>
-    <div class="errors">
-        <% for(let message of msg) { %>
-            <span class="error"><%= message %></span>
-        <% } %>
+
+<body>
+    <main>
+    <div class="form-wrapper">
+        <form action="/register" method="POST">
+            <h2 class="header">Zarejestruj się</h2>
+            <div class="input-div">
+                <i class="fa-solid fa-user"></i>
+                <input placeholder="Nick" id="nick" name="nick" type="text" required>
+            </div>
+            <div class="input-div">
+                <i class="fa-solid fa-lock"></i>
+                <input placeholder="Password" id="password" name="password" type="password" required>
+            </div>
+            <div class="input-div">
+                <i class="fa-solid fa-lock"></i>
+                 <input placeholder="Confirm Password" id="conf_password" name="conf_password" type="password" required>
+            </div>
+            <div class="input-div">
+                <i class="fa-solid fa-envelope"></i>
+                 <input placeholder="Email" id="email" name="email" type="email" required>
+            </div>
+            <button class="register-btn" type="submit">Zarejestruj</button>
+            <p class="mobile p">Masz już konto?</p>
+            <a class='mobile login' href="/login">Zaloguj się</a>
+        </form>
     </div>
-    <form action="/register" method="POST">
+    <div class="auth-nav">
         <div>
-            <label for="nick">Nick:</label><input id="nick" name="nick" type="text" required>
+            <h2 class="pc">Masz już konto? Zaloguj się!</h2>
+            <a class='pc login shadow-btn' href="/login">Zaloguj się</a>
         </div>
         <div>
-            <label for="password">Password:</label><input id="password" name="password" type="password" required>
+            <h2>Nie chcesz się rejestrować? Wróć na stronę główną!</h2>
+            <a class="shadow-btn" href="/">Powrót <i class="fa-home fa-solid"></i></a>
         </div>
-        <div>
-            <label for="conf_password">Confirm Password:</label><input id="conf_password" name="conf_password" type="password" required>
-        </div>
-        <div>
-            <label for="email">Email:</label><input id="email" name="email" type="email" required>
-        </div>
-        <button type="submit">Register</button>
-    </form>
-    <a href="/login">Log In</a>
+    </div>
+    </main>
+    <%- include('./partials/toast', {msg: messages.error || msg}) %>
 </body>
 </html>

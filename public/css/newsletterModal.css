@@ -77,3 +77,13 @@
     top: 0;
     right: 0;
 }
+
+@media (max-width: 640px) {
+    .modal {
+        padding: 1rem;
+    }
+
+    .modal input {
+        width: 100%;
+    }
+}

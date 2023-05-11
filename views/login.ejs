@@ -24,24 +24,25 @@
                 <input placeholder="Password" id="password" name="password" type="password" required>
             </div>
             <div class="remember-me">
-                <label for="remember_me">Pamiętaj mnie: </labeL><input type="checkbox" id="remember_me" name="remember_me">
-                <button type="submit">Log In</button>
+                <labe for="remember_me">Pamiętaj mnie: </labe><input type="checkbox" id="remember_me" name="remember_me">
+                <button type="submit">Zaloguj</button>
             </div>
-            <a class='mobile register' href="/register">Sign up</a>
+            <p class="mobile p">Nie masz jeszcze konta?</p>
+            <a class='mobile register' href="/register">Zarejestruj się</a>
         </form>
     </div>
     
     <div class="auth-nav">
         <div>
             <h2 class="pc">Nie masz jeszcze konta? Zarejestruj się!</h2>
-            <a class='pc register' href="/register">Sign up</a>
+            <a class='pc register' href="/register">Załóż konto</a>
         </div>
         <div>
             <h2>Nie chcesz się logować? Wróć na stronę główną!</h2>
-            <a href="/">Powrót</a>
+            <a href="/">Powrót <i class="fa-home fa-solid"></i></a>
         </div>
     </div>
     </main>
-    <%- include('./partials/toast', {msg: messages.error}) %>
+    <%- include('./partials/toast', {msg: messages.error || msg}) %>
 </body>
 </html>

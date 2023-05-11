@@ -6,7 +6,7 @@ const MIN_PASSWORD_LENGTH = 5
 async function getLogin(req, res) {
 	if (global.location === 'logout') {
 		delete global.location
-		req.flash('logInfo', 'You have logged out Succesfully')
+		req.flash('logInfo', 'Wylogowałeś się poprawnie!')
 	}
 
 	return res.render('login', { msg: req.flash('logInfo') })
@@ -49,7 +49,7 @@ async function postRegister(req, res, next) {
 	})
 
 	console.timeEnd()
-	req.flash('logInfo', 'Registered successfully')
+	req.flash('logInfo', 'Zarejestrowano poprawnie')
 	return res.redirect('/login')
 }
 

@@ -4,6 +4,10 @@
   display: none;
 }
 
+.shadow-btn.shadow-btn {
+  box-shadow: var(--shadow-btn);
+}
+
 body {
   overflow: hidden;
 }
@@ -53,6 +57,7 @@ form .remember-me {
   display: flex;
   align-items: center;
   gap: 1rem;
+  margin-top: 0.5rem;
 }
 form .remember-me label {
   padding-bottom: 3px;
@@ -64,7 +69,18 @@ form .remember-me button {
 form .remember-me input {
   accent-color: var(--accent-clr);
 }
-form .register {
+form .p {
+  text-align: center;
+  font-size: var(--fs-btn);
+  color: var(--btn-clr);
+  margin-top: 1rem;
+}
+form .register-btn {
+  margin-top: 0.5rem;
+  width: 100%;
+}
+form .register,
+form .login {
   padding: 0.6rem 1rem;
   font-family: sans-serif, "Segoe UI";
   font-size: var(--fs-btn);
@@ -75,6 +91,7 @@ form .register {
   text-transform: uppercase;
   cursor: pointer;
   margin-top: 0.5rem;
+  text-align: center;
 }
 form .input-div {
   background-color: var(--third-clr);
@@ -85,6 +102,10 @@ form .input-div {
   display: flex;
   flex-direction: row;
   gap: 1em;
+}
+form .input-div:focus-within {
+  border: var(--border);
+  z-index: 10;
 }
 form .input-div i {
   color: var(--btn-clr);
@@ -128,11 +149,17 @@ form .input-div input {
   width: 100%;
   border: none;
 }
+.auth-nav i {
+  margin-left: 0.25rem;
+}
 
 @media (min-width: 621px) {
   .auth-nav {
     padding: 3rem;
     border: 3px solid var(--accent-clr-green);
+  }
+  form .p {
+    margin-top: 2rem;
   }
 }
 @media (min-width: 1041px) {
@@ -177,5 +204,9 @@ form .input-div input {
   }
   form .remember-me {
     margin-top: 0.5rem;
+  }
+  form .register-btn {
+    margin-top: 1rem;
+    width: 100%;
   }
 }

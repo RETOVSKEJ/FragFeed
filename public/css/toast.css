@@ -4,8 +4,8 @@
   bottom: 0;
   right: 0;
   margin: 1rem;
-  padding: 1rem 1.5rem;
-  width: 225px;
+  padding: 1.25rem 1.5rem;
+  width: fit-content;
   text-align: center;
   top: initial;
   opacity: 1;
@@ -17,11 +17,12 @@
   border: var(--border-accent);
   border-radius: var(--radius);
   z-index: 999;
+  color: #aaa;
 }
 
 .toast i {
+  padding-left: 0.25rem;
   margin-left: -0.5rem;
-  margin-right: 0.25rem;
 }
 
 .toast-hidden {
@@ -30,7 +31,16 @@
   transition: all 500ms;
 }
 
+.toast span {
+  margin-left: 0.45rem;
+  margin-right: 0.75rem;
+}
+
 .toast-close {
+  font-size: 18px;
+  width: 2rem;
+  border: none;
+  background-color: transparent;
   position: absolute;
   top: 0;
   right: 0;
