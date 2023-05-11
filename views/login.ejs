@@ -6,29 +6,42 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="/css/auth.css">
+    <script src="/js/toast.js" defer></script>
+    <script src="https://kit.fontawesome.com/c780166e7c.js" crossorigin="anonymous"></script>
 </head>
 <body>
-    <div class="message">
-        <%= msg %> 
+    <main>
     </div>
-    <div class="error">
-    <% if (messages.error) { %> 
-        <%= messages.error %>
-    <% } %>
+    <div class="form-wrapper">
+        <form action="/login" method="POST">
+            <h2 class="header">Zaloguj się</h2>
+            <div class="input-div">
+                <i class="fa-solid fa-user"></i>
+                <input placeholder="Nick" id="nick" name="nick" type="text" required>
+            </div>
+            <div class="input-div">
+                <i class="fa-solid fa-lock"></i>
+                <input placeholder="Password" id="password" name="password" type="password" required>
+            </div>
+            <div class="remember-me">
+                <label for="remember_me">Pamiętaj mnie: </labeL><input type="checkbox" id="remember_me" name="remember_me">
+                <button type="submit">Log In</button>
+            </div>
+            <a class='mobile register' href="/register">Sign up</a>
+        </form>
     </div>
-    <form action="/login" method="POST">
+    
+    <div class="auth-nav">
         <div>
-            <label for="nick">Nick</label><input id="nick" name="nick" type="text" required>
+            <h2 class="pc">Nie masz jeszcze konta? Zarejestruj się!</h2>
+            <a class='pc register' href="/register">Sign up</a>
         </div>
         <div>
-            <label for="password">Password</label><input id="password" name="password" type="password" required>
+            <h2>Nie chcesz się logować? Wróć na stronę główną!</h2>
+            <a href="/">Powrót</a>
         </div>
-        <div>
-        <label for="remember_me">Stay logged in:</label><input type="checkbox" id="remember_me" name="remember_me">
-        <button type="submit">Log In</button>
-        </div>
-    </form>
-    <a href="/register">Sign up</a>
-    <a href="/">Strona Główna</a>
+    </div>
+    </main>
+    <%- include('./partials/toast', {msg: messages.error}) %>
 </body>
 </html>

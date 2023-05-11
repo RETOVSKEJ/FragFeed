@@ -17,6 +17,16 @@
 	color: #fff;
 }
 
+a h5:hover,
+button:hover {
+	filter: brightness(1.22);
+}
+
+.sidebar-link:hover {
+	background-color: #2b2c2e;
+}
+
+
 :where(button) {
 	border: var(--border);
 	border-radius: var(--rounded-sm);
@@ -99,9 +109,15 @@
 	--sidebar-width: 300px;
 	--sidebar-right-width: 250px;
 	--navbar-height: 75px;
+	--sidebar-tablet-height: 69px;
+	--navbar-padding: 1rem;
 	--header-height: ;
 	--effect-height: ;
 	--avatar-size: 40px;
+
+
+	--hamburger-height: 3px;
+	--hamburger-width: 24px;
 
 	--radius: 6px;
 	--border: 1px solid var(--accent-clr);

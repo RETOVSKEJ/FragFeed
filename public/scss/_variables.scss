@@ -6,12 +6,27 @@
 	border-radius: var(--radius);
 }
 
-@mixin button() {
-	padding: 0.5rem 1rem;
+@mixin button($padding: 0.6rem 1rem) {
+	padding: $padding;
+	font-family: sans-serif, 'Segoe UI';
 	font-size: var(--fs-btn);
 	border: var(--border);
 	border-radius: var(--radius);
 	box-shadow: var(--shadow-black);
 	background-color: var(--accent-clr);
+	text-transform: uppercase;
 	cursor: pointer;
+}
+
+@mixin flex() {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+@mixin flex-c() {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
 }

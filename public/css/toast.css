@@ -1,6 +1,6 @@
 .toast {
   position: fixed;
-  font-size: var(--fs-small);
+  font-size: var(--fs-btn);
   bottom: 0;
   right: 0;
   margin: 1rem;
@@ -13,10 +13,15 @@
   box-shadow: var(--shadow-accent);
   background-color: var(--third-clr);
   -webkit-backdrop-filter: blur(4px);
-          backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
   border: var(--border-accent);
   border-radius: var(--radius);
   z-index: 999;
+}
+
+.toast i {
+  margin-left: -0.5rem;
+  margin-right: 0.25rem;
 }
 
 .toast-hidden {

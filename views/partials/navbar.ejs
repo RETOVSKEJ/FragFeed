@@ -1,5 +1,5 @@
 <nav class="navbar-wrapper">
-    <div class="hamburger">
+    <div class="hamburger mobile">
         <input id="menu-button" type="checkbox" />
         <label class="menu-container" for="menu-button">
             <span class="top"></span>
@@ -7,9 +7,10 @@
             <span class="bottom"></span>
         </label>
         <div class="menu hidden-ham">
-            <%- include('./sidebar') %>
+           <%- include('./sidebarMobile') %>
         </div>
     </div>
+    <button id="newsletter-btn" class="pc pc-button" type="button">Newsletter</button>
     <%- include('./newsletter') %>
     <%- include('./searchBar') %>
     <div class="login-info">

@@ -59,7 +59,7 @@ async function loadNewPosts() {
 				)
 			)
 			const newPost = `<div class="post">
-	<h5 class="post-title">${elem.title}</h5>
+	<a href=${post.id}><h5 class="post-title">${elem.title}</h5></a>
 	<img id="img-preview" src="${elem.image ?? ''}" alt="Post image" />
 	<p class="post-body">${elem.body}</p>
 	<div class="post-author">
@@ -80,22 +80,4 @@ async function loadNewPosts() {
 	postsCount += result.length
 	lastPost = postWrapper.lastElementChild
 	LastPostObserver.observe(lastPost)
-}
-
-/// STICKY SIDEBARS ///
-document.body.onscroll = () => {
-	const HOT_WRAPPER_HEIGHT = hotPostWrapper.offsetHeight
-	const WRAPPER_MARGIN_TOP = 32
-	const ADDITIONAL_MARGIN_BOTTOM = 4
-	const pos =
-		window.scrollY +
-		window.innerHeight -
-		NAVBAR_HEIGHT -
-		WRAPPER_MARGIN_TOP -
-		ADDITIONAL_MARGIN_BOTTOM
-	if (pos > HOT_WRAPPER_HEIGHT) {
-		hotPostWrapper.style.marginTop = `${pos - HOT_WRAPPER_HEIGHT}px`
-	} else {
-		hotPostWrapper.style.marginTop = '0px'
-	}
 }

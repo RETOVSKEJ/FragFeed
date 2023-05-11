@@ -1,5 +1,5 @@
 <div class="post">
-	<a><h5 class="post-title"><%= post.title %></h5></a>
+	<a href="<%= post.id %>"><h5 class="post-title"><%= post.title %></h5></a>
 	<!-- IF ITS NEW/EDITED POST PREVIEW -->
 	<% if(locals.urlPath == '/preview'){ %>
 	<img

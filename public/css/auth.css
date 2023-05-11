@@ -1,5 +1,14 @@
 @import './boilerplate.css';
+@import './toast.css';
+.pc.pc {
+  display: none;
+}
+
 body {
+  overflow: hidden;
+}
+
+main {
   display: flex;
   height: 100vh;
   flex-direction: column;
@@ -11,17 +20,6 @@ body {
 .message {
   display: block;
   color: lawngreen;
-}
-
-.errors {
-  display: block;
-  margin: 0.5em;
-  color: red;
-}
-
-.error {
-  display: block;
-  margin: 0.25em;
 }
 
 a {
@@ -36,18 +34,148 @@ h1 {
   color: var(--text-clr);
 }
 
+.form-wrapper {
+  margin-top: auto;
+}
+
 form {
   display: flex;
   flex-direction: column;
-  gap: 1em;
-  padding: 1.25em;
-  margin: 1em;
+  margin: 1rem;
   border-radius: 6px;
 }
-
-form div {
+form .header {
+  margin-top: -1.5rem;
+  margin-block: 1.5rem;
+  text-align: center;
+}
+form .remember-me {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+form .remember-me label {
+  padding-bottom: 3px;
+}
+form .remember-me button {
+  margin-left: auto;
+  padding-inline: 1rem;
+}
+form .remember-me input {
+  accent-color: var(--accent-clr);
+}
+form .register {
+  padding: 0.6rem 1rem;
+  font-family: sans-serif, "Segoe UI";
+  font-size: var(--fs-btn);
+  border: var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-black);
+  background-color: var(--accent-clr);
+  text-transform: uppercase;
+  cursor: pointer;
+  margin-top: 0.5rem;
+}
+form .input-div {
+  background-color: var(--third-clr);
+  border: 1px solid #404143;
+  border-radius: 4px;
+  padding: 0.75rem 1.25rem;
+  margin-top: -1px;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
   gap: 1em;
+}
+form .input-div i {
+  color: var(--btn-clr);
+}
+form .input-div input {
+  color: var(--btn-clr);
+  border: none;
+  outline: none;
+  background-color: transparent;
+}
+
+.auth-nav {
+  background-color: var(--secondary-clr);
+  -webkit-backdrop-filter: blur(4px);
+          backdrop-filter: blur(4px);
+  position: relative;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  margin-top: auto;
+  width: 100%;
+  padding: 1rem;
+  border: var(--border-accent);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-accent);
+}
+.auth-nav a {
+  padding: 0.6rem 1rem;
+  font-family: sans-serif, "Segoe UI";
+  font-size: var(--fs-btn);
+  border: var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-black);
+  background-color: var(--accent-clr);
+  text-transform: uppercase;
+  cursor: pointer;
+  text-align: center;
+  margin-top: 1rem;
+  max-width: 700px;
+  display: block;
+  width: 100%;
+  border: none;
+}
+
+@media (min-width: 621px) {
+  .auth-nav {
+    padding: 3rem;
+    border: 3px solid var(--accent-clr-green);
+  }
+}
+@media (min-width: 1041px) {
+  .pc.pc.pc {
+    display: block;
+  }
+  .mobile {
+    display: none;
+  }
+  main {
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    overflow: hidden;
+  }
+  .auth-nav {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 42%;
+    height: 100vh;
+    height: 100dvh;
+    padding: 3.5rem;
+    margin-top: initial;
+    background-color: var(--secondary-clr);
+    border: none;
+    border-left: 4px solid var(--accent-clr-green);
+    box-shadow: var(--shadow-accent);
+  }
+  .auth-nav a {
+    width: 35%;
+    margin-inline: auto;
+  }
+  .form-wrapper {
+    display: flex;
+    justify-content: center;
+    width: 58%;
+    margin-top: initial;
+  }
+  form {
+    width: 333px;
+  }
+  form .remember-me {
+    margin-top: 0.5rem;
+  }
 }

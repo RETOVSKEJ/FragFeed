@@ -150,7 +150,7 @@ async function postNewsletter(req, res) {
 	// 	data: { name: formData.name },
 	// })
 
-	req.flash('logInfo', 'Dziekujemy za zapisanie do newslettera!')
+	req.flash('logInfo', 'Zostałeś dodany do newslettera!')
 	return res.status(200).redirect('/')
 }
 
