@@ -4,132 +4,30 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Document</title>
 		<link rel="stylesheet" href="/css/postForm.css" />
-		<link
-			rel="stylesheet"
-			href="https://unicons.iconscout.com/release/v4.0.0/css/line.css"
-		/>
 		<script src="/js/postFormCompressValidate.js" defer></script>
+		<script src="/js/searchBar.js" defer></script>
 		<script src="/js/postFormTags.js" defer></script>
-		<script
+		<script src="/js/newsletterModal.js" defer></script>
+		<script src="/js/toast.js" defer></script>
+		<script src="https://kit.fontawesome.com/c780166e7c.js" crossorigin="anonymous"></script>
+		<link rel="stylesheet" href="/css/home.css"></link>
+		<link rel="stylesheet" href="/css/postForm.css"></link>
 	</head>
 	<body>
-		<div class="sidebar">
-			<a href="/">Strona Główna</a>
-		</div>
-		<%= msg %> <% if (urlPath.includes('/edit')) { %>
 		<script>
 			window.EJSpost = <%- JSON.stringify(post) %>
 		</script>
-		<form
-			id="postForm"
-			action="/<%=post.id%>/edit?_method=PATCH"
-			method="POST"
-			enctype="multipart/form-data"
-		>
-			<textarea
-				id="title"
-				name="title"
-				placeholder="Tytuł posta..."
-				rows="1"
-				required
-			>
-<%= post.title %></textarea
-			>
-			<textarea
-				id="body"
-				name="body"
-				placeholder="Text..."
-				rows="20"
-				required
-			>
-<%= post.body %></textarea
-			>
-			<label for="image">Upload Image</label>
-			<input
-				type="file"
-				id="image"
-				name="image"
-				onchange="previewImg()"
-				accept="image/*"
-			/>
-			<div id="preview"><!-- Image preview // INSERTED with JS--></div>
-			<label for="tags-input">Tagi:</label>
-			<div id="tags-container">
-				<ul id="tags-list">
-					<input
-						id="tags-input"
-						name="tags"
-						type="text"
-						placeholder="Dodaj tagi oddzielając je przecinkiem"
-					/>
-				</ul>
-			</div>
-			<button
-				id="previewBtn"
-				type="submit"
-				formaction="/preview"
-				formenctype="application/x-www-form-urlencoded"
-			>
-				Podgląd
-			</button>
-			<button id="sendBtn" type="submit">Edytuj Post</button>
-		</form>
+		<%- include('./partials/navbar') %>
+		<main>
+		
+		<% if (urlPath.includes('/edit')) { %>
+			<h2 class="heading">Edytuj Post</h2>
+			<%- include('./partials/postFormEdit') %>
 		<% } else { %>
-		<form
-			id="postForm"
-			action="/new"
-			method="POST"
-			enctype="multipart/form-data"
-		>
-			<textarea
-				id="title"
-				name="title"
-				placeholder="Tytuł posta..."
-				rows="1"
-				required
-			>
-<%=locals.post?.title%></textarea
-			>
-			<textarea
-				id="body"
-				name="body"
-				placeholder="Text..."
-				rows="20"
-				required
-			>
-<%=locals.post?.body%></textarea
-			>
-			<label for="image">Upload Image</label>
-			<input
-				type="file"
-				id="image"
-				name="image"
-				onchange="previewImg()"
-				accept="image/*"
-			/>
-			<div id="preview"><!-- Image preview // INSERTED with JS--></div>
-			<label for="tags-input">Tagi:</label>
-			<div id="tags-container">
-				<ul id="tags-list">
-					<input
-						id="tags-input"
-						name="tags"
-						type="text"
-						placeholder="Dodaj tagi oddzielając je przecinkiem"
-					/>
-				</ul>
-			</div>
-			<button
-				id="previewBtn"
-				type="submit"
-				formaction="/preview"
-				formenctype="application/x-www-form-urlencoded"
-			>
-				Podgląd
-			</button>
-			<button id="sendBtn" type="submit">Dodaj Post</button>
-		</form>
-		<% } %> <%- include('./partials/logoutButton') %>
-		<footer></footer>
+			<h2 class="heading">Stwórz Nowy Post</h2>
+			<%- include('./partials/postFormNew') %>
+		<% } %> 
+		</main>
+		<%- include('./partials/toast', {msg: messages.error || messages.message || msg}) %>
 	</body>
 </html>

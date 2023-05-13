@@ -5,6 +5,7 @@
   right: 0;
   margin: 1rem;
   padding: 1.25rem 1.5rem;
+  width: -moz-fit-content;
   width: fit-content;
   text-align: center;
   top: initial;

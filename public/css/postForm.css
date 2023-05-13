@@ -1,7 +1,37 @@
 @import './boilerplate.css';
-textarea {
-  margin: 1rem;
-  display: block;
+main {
+  grid-template-columns: 1fr;
+}
+
+.heading {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.post-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 55%;
+  margin-inline: auto;
+}
+.post-form input,
+.post-form textarea {
+  font-family: "sans-serif", "Segoe UI";
+  background-color: var(--third-clr);
+  border: 1px solid #404142;
+  border-radius: var(--radius);
+  color: var(--text-clr);
+  padding: 1em;
+  outline: none;
+  width: 100%;
+}
+.post-form input:focus,
+.post-form textarea:focus {
+  border: 1px solid #606162;
+}
+.post-form .post-body {
+  height: 30vh;
 }
 
 .img-preview {
