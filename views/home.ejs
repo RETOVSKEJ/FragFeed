@@ -28,6 +28,7 @@
 				<% } %>
 			</div>
 		</main>
-		<%- include('./partials/toast', {msg: messages.error || msg}) %>
+		<%= console.log(msg, messages) %>
+		<%- include('./partials/toast', {msg: messages.error || messages.message || msg}) %>
 	</body>
 </html>

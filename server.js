@@ -81,9 +81,13 @@ app.use('', postsRouter)
 
 /// ///////// ERROR HANDLERS /////////////
 app.all('*', (req, res, next) => {
-	// wczytuje regex do url, jesli jakakolwiek sciezka inna niz w routeach, to error 404
+	// musi zwracać next() lub throw w każdej ściezce
 	res.status(404)
-	throw new Error('Nie ma takiej strony! app.all')
+	if (/(.jpg|.png|.svg|.gif)$/.test(req.url)) {
+		console.error('Serwer nie znalazl obrazu: ', req.url)
+		return next()
+	}
+	throw new Error('app.all: Serwer nie znalazł takiego pliku: ', req.url)
 	// req.accepts('html') ? res.sendFile('public/404.html', {root: __dirname}) : res.json({error: "404 json"})
 })
 app.use(errorHandler)

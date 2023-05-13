@@ -6,10 +6,18 @@ const MIN_PASSWORD_LENGTH = 5
 async function getLogin(req, res) {
 	if (global.location === 'logout') {
 		delete global.location
-		req.flash('logInfo', 'Wylogowałeś się poprawnie!')
+		req.flash('logInfo', 'Wylogowałeś się pomyślnie')
 	}
 
 	return res.render('login', { msg: req.flash('logInfo') })
+}
+
+async function postLoginRememberMe(req, res) {
+	req.flash('logInfo', 'Zalogowano poprawnie')
+	req.body.remember_me
+		? (req.session.cookie.maxAge = 1000 * 60 * 60 * 24 * 30) // remember me checked 30 days
+		: (req.session.cookie.maxAge = null) // remember me unchecked
+	return res.redirect('/')
 }
 
 async function getRegister(req, res) {
@@ -49,7 +57,7 @@ async function postRegister(req, res, next) {
 	})
 
 	console.timeEnd()
-	req.flash('logInfo', 'Zarejestrowano poprawnie')
+	req.flash('logInfo', 'Zarejestrowano pomyślnie')
 	return res.redirect('/login')
 }
 
@@ -61,6 +69,7 @@ async function logOut(req, res, next) {
 
 module.exports = {
 	getLogin,
+	postLoginRememberMe,
 	getRegister,
 	postRegister,
 	logOut,

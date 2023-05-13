@@ -59,7 +59,7 @@ async function loadNewPosts() {
 				)
 			)
 			const newPost = `<div class="post">
-	<a href=${post.id}><h5 class="post-title">${elem.title}</h5></a>
+	<a href=${elem.id}><h5 class="post-title">${elem.title}</h5></a>
 	<img id="img-preview" src="${elem.image ?? ''}" alt="Post image" />
 	<p class="post-body">${elem.body}</p>
 	<div class="post-author">

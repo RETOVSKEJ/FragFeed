@@ -8,6 +8,7 @@ const ROLES = require('../models/roles')
 const { catchAsync } = require('../middleware/errors')
 const {
 	getLogin,
+	postLoginRememberMe,
 	getRegister,
 	postRegister,
 	logOut,
@@ -28,7 +29,7 @@ router
 			badRequestMessage: 'Wrong Request / missing credentials', // wyswietli sie nad errorem
 			failureFlash: true,
 		}),
-		rememberMe
+		postLoginRememberMe
 	)
 
 router.delete('/logout', authUser, logOut)
@@ -39,10 +40,3 @@ router
 	.post(notAuthUser, catchAsync(postRegister))
 
 module.exports = router
-
-function rememberMe(req, res) {
-	req.body.remember_me
-		? (req.session.cookie.maxAge = 1000 * 60 * 60 * 24 * 30) // remember me checked 30 days
-		: (req.session.cookie.maxAge = null) // remember me unchecked
-	return res.redirect('/')
-}

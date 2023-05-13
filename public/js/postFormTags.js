@@ -8,7 +8,7 @@ const tagsToSubmit = []
 
 // returns newLength of tagsToSubmit
 function createTag(tag) {
-	const li = `<li id='tag' class='tag'>${tag}<i id='remove' class="uil uil-multiply"></i></li>`
+	const li = `<li id='tag' class='tag'>${tag}<i id='remove' class="fa-solid fa-xmark"></i></li>`
 	tagsList.insertAdjacentHTML('afterbegin', li)
 	return tagsToSubmit.push(tag)
 }

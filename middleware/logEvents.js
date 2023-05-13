@@ -25,14 +25,7 @@ function logEvents(req, res, next) {
 		log = `${log}\tSTATIC`
 	}
 
-	createUpdateTXT(log)
-
-	// if (otherLog){
-	//     log = `\n${dateTime}\t${otherLog}`;
-	//     createUpdateTXT(log);
-	//     console.error(log)
-	//     return;
-	// }
+	createUpdateTXT(`\n${log}`)
 
 	console.log(log) // GET users/1234
 	return next()

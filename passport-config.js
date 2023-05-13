@@ -7,15 +7,14 @@ function initialize(passport, getUserByNick) {
 	const authenticateUser = async (nick, password, done) => {
 		const user = await getUserByNick(nick)
 		if (user == null) {
-			// TODO check user == null or !user
 			return done(null, false, 'Nie ma takiego użytkownika')
 		}
 
 		try {
 			if (await bcrypt.compare(password, user.password)) {
-				return done(null, user, { message: 'Zalogowano poprawnie' })
-			} // TODO view messages on frontend
-			return done(null, false, { message: 'Nieprawidłowe Hasło' })
+				return done(null, user, 'Zalogowano poprawnie!')
+			}
+			return done(null, false, 'Nieprawidłowe Hasło')
 		} catch (err) {
 			return done(err)
 		}

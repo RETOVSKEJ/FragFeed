@@ -71,6 +71,7 @@ async function getHome(req, res) {
 			sort: '-id',
 		})
 	}
+
 	//	if(req.query === 'top')
 	//	if(req.query === 'hot')
 	res.vary('accept')
