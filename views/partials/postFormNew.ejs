@@ -11,7 +11,7 @@
 				id="title"
 				name="title"
 				placeholder="Tytuł..."
-                value=<%=locals.post?.title%>
+                value="<%=locals.post?.title%>"
 				required
 			/>
 			<textarea
@@ -23,7 +23,7 @@
 				required   
 			><%=locals.post?.title%></textarea>
 				<div class="img-div">
-				<label for="image">Upload Image</label>
+				<label for="image">Zdjęcie:</label>
 				<input
 				type="file"
 				id="image"
@@ -38,22 +38,24 @@
 			    <div id="tags-container">
 				    <ul id="tags-list">
 				    	<input
+                        class="tags-input"
 						id="tags-input"
 						name="tags"
 						type="text"
 						placeholder="Dodaj tagi oddzielając je przecinkiem"
 					/>
-				</ul>
-			</div>
+				    </ul>
+			    </div>
             </div>
-			
-			<button
+			<div class="button-div">
+                <button
 				id="previewBtn"
 				type="submit"
 				formaction="/preview"
 				formenctype="application/x-www-form-urlencoded"
 			>
 				Podgląd
-			</button>
-			<button id="sendBtn" type="submit">Dodaj Post</button>
+			    </button>
+			    <button id="sendBtn" type="submit">Dodaj Post</button>
+            </div>
 		</form>

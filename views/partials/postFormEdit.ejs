@@ -23,7 +23,7 @@
 				required
 			><%= post.body %></textarea>
 			<div class="img-div">
-				<label for="image">Upload Image</label>
+				<label for="image">Zdjęcie:</label>
 				<input
 				type="file"
 				id="image"
@@ -44,7 +44,8 @@
 					/>
 				</ul>
 			</div>
-			<button
+            <div class="button-div">
+                <button
 				id="previewBtn"
 				type="submit"
 				formaction="/preview"
@@ -53,4 +54,5 @@
 				Podgląd
 			</button>
 			<button id="sendBtn" type="submit">Edytuj Post</button>
+            </div>
 		</form>
