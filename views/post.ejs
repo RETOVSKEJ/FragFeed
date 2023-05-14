@@ -6,17 +6,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="/css/home.css">
+    <link rel="stylesheet" href="/css/post.css" />
+    <link rel="stylesheet" href="/css/hotPostsMediaQueries.css" />
+    <script src="/js/toast.js" defer></script>
+	<script src="/js/searchBar.js" defer></script>
+	<script src="/js/postLikes.js" defer></script>
+	<script src="/js/newsletterModal.js" defer></script>
+	<script src="https://kit.fontawesome.com/c780166e7c.js" crossorigin="anonymous"></script>
 </head>
 <body>
-    <%= msg %>
-    <div class="sidebar">
-        <a href="/">Strona Główna</a>
-    </div>
+    <%- include('./partials/navbar') %>
     <!--  TODO MIEJSCE NA UI HANDLE EJS-->
-    <div class="posts-wrapper">
-        <%- include('./partials/postButtons') %>
-        <%- include('./partials/postComponent') %>
-    </div>
-    <%- include('./partials/logoutButton') %>
+    <main>
+        <%- include('./partials/sidebar') %>
+        <div class="post-wrapper">
+            <%- include('./partials/postButtons') %>
+            <%- include('./partials/postComponent') %>
+        </div>
+        <%- include('./partials/hotPostsWrapper') %>
+    </main>
+    <%- include('./partials/toast', {msg: messages.error || messages.message || msg}) %>
 </body>
 </html>

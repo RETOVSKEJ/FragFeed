@@ -1,4 +1,4 @@
-<div class="post">
+<div class="post" data-atr="<%= post.id %>">
 	<a href="<%= post.id %>"><h5 class="post-title"><%= post.title %></h5></a>
 	<!-- IF ITS NEW/EDITED POST PREVIEW -->
 	<% if(locals.urlPath == '/preview'){ %>
@@ -7,7 +7,7 @@
 		src="<%= post.image %>"
 		alt="Uploaded Image preview"
 	/>
-	<script>
+	<script defer>
 		// IF USER JUST UPLOADED IMAGE TO PREVIEW
 		if (localStorage.getItem('img_data')) {
 			const img = document.getElementById('img-preview')
@@ -18,9 +18,9 @@
 	<% } else { %>
 	<!-- IF POST DOES HAVE AN IMAGE -->
 	<% if(post.image) { %>
-	<a href="/<%= post.id %>"><img id="img-preview" src="<%= post.image %>" alt="Post image" /></a>
+	<a class="post-img" href="/<%= post.id %>"><img id="img-preview" src="<%= post.image %>" alt="Post image" /></a>
 	<% } else { %>
-		<a href="/<%= post.id %>"><img id="img-preview" src="nophoto.png" alt="No Photo available" /></a>
+		<a class="post-img" href="/<%= post.id %>"><img id="img-preview" src="nophoto.png" alt="No Photo available" /></a>
 	<% }} %>
 	<p class="post-body"><%= post.body %></p>
 	<div class="post-author">
@@ -41,5 +41,16 @@
 			<% } %>
 		<% } %>
 	</div>
-	<div class="post-likes"><button>up</button><button>down</button></div>
+	<div id="post-likes" data-atr="<%= locals?.user?.role %>" class="post-likes">
+		<% if(likedPosts.likedPosts?.includes(post.id)){ %>
+			<button style="filter:grayscale(0.5)" data-atr="<%= post.id %>" id="upvote-btn" class="fa-solid fa-chevron-up upvote-btn"></button>
+			<button disabled data-atr="<%= post.id %>" id="downvote-btn" class="fa-solid fa-chevron-down downvote-btn"></button>
+		<% } else if(dislikedPosts.dislikedPosts?.includes(post.id)){ %>
+			<button style="filter:grayscale(0.5)" data-atr="<%= post.id %>" id="upvote-btn" class="fa-solid fa-chevron-up upvote-btn"></button>
+			<button disabled data-atr="<%= post.id %>" id="downvote-btn" class="fa-solid fa-chevron-down downvote-btn"></button> 
+		<% } else { %>
+			<button data-atr="<%= post.id %>" id="upvote-btn" class="fa-solid fa-chevron-up upvote-btn"></button>
+			<button data-atr="<%= post.id %>" id="downvote-btn" class="fa-solid fa-chevron-down downvote-btn"></button> 
+		<% } %>
+	</div>
 </div>

@@ -1,0 +1,11 @@
+$hotPostHeight: 235px;
+$navbarHeight: 75px;
+$additionalMargin: 50px;
+
+@for $i from 2 through 7 {
+	@media (max-height: #{$i * $hotPostHeight + $navbarHeight + $additionalMargin}) {
+		.hot-post:nth-of-type(#{$i}) {
+			display: none;
+		}
+	}
+}

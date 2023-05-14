@@ -29,6 +29,11 @@ const postSchema = mongoose.Schema(
 			maxlength: [10000, 'Zbyt długi post - max. 10000 znaków'],
 			required: [true, 'Brak zawartosci - Dodaj zawartosc posta'],
 		},
+		likes: {
+			type: Number,
+			default: 0,
+			required: true,
+		},
 		tags: {
 			type: [String],
 			trim: true,

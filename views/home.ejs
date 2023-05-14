@@ -10,6 +10,7 @@
 		<script src="/js/sidebars.js" defer></script>
 		<script src="/js/newsletterModal.js" defer></script>
 		<script src="/js/toast.js" defer></script>
+		<script src="/js/postLikes.js" defer></script>
 		<script src="https://kit.fontawesome.com/c780166e7c.js" crossorigin="anonymous"></script>
 		<script src="/js/homepage.js" defer></script>
 	</head>
@@ -22,13 +23,8 @@
 				<%- include('./partials/postComponent', {post: post}) %>
 				<% } %>
 			</div>
-			<div class="hot-wrapper">
-				<% for(let i = 0; i < 6; i++) { %>
-				<%- include('./partials/hotPostComponent', {post: posts[i]}) %>
-				<% } %>
-			</div>
+			<%- include('./partials/hotPostsWrapper') %>
 		</main>
-		<%= console.log(msg, messages) %>
 		<%- include('./partials/toast', {msg: messages.error || messages.message || msg}) %>
 	</body>
 </html>

@@ -119,7 +119,7 @@ function validateSize(ev) {
 		sendBtn.disabled = true
 		sendBtn.classList.add('disabled')
 		const err = new Error(
-			`Image is too big: ${size.toFixed(2) / 1000} MB.
+			`Zdjęcie jest zbyt duże. Rozmiar: ${size.toFixed(2) / 1000} MB.
             max: ${SIZE_LIMIT / 1000} MB`
 		)
 		return err.message

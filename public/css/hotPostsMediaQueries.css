@@ -1,0 +1,30 @@
+@media (max-height: 595px) {
+  .hot-post:nth-of-type(2) {
+    display: none;
+  }
+}
+@media (max-height: 830px) {
+  .hot-post:nth-of-type(3) {
+    display: none;
+  }
+}
+@media (max-height: 1065px) {
+  .hot-post:nth-of-type(4) {
+    display: none;
+  }
+}
+@media (max-height: 1300px) {
+  .hot-post:nth-of-type(5) {
+    display: none;
+  }
+}
+@media (max-height: 1535px) {
+  .hot-post:nth-of-type(6) {
+    display: none;
+  }
+}
+@media (max-height: 1770px) {
+  .hot-post:nth-of-type(7) {
+    display: none;
+  }
+}

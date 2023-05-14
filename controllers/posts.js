@@ -4,6 +4,11 @@ const path = require('path')
 const { storeImage } = require('../middleware/imageHandler')
 const Post = require('../models/Post')
 const assert = require('assert')
+const {
+	getHotPosts,
+	patchLikedPosts,
+	patchDislikedPosts,
+} = require('../services/queries')
 
 /// / req.session.preview usuwane w: getPost, getPostForm, getEditForm / ustawiane w:
 /// / req.session.post usuwane w: getHome / ustawiane w: getPost, getEditForm
@@ -17,6 +22,7 @@ const assert = require('assert')
 
 // @route /:id
 async function getPost(req, res) {
+	const hotPosts = await getHotPosts()
 	const post = await Post.findOne({ id: req.params.id })
 		.populate('author', '-password')
 		.populate('edited_by', '-password')
@@ -36,7 +42,9 @@ async function getPost(req, res) {
 		throw new Error('Nie istnieje taki post')
 	}
 	console.log('DISPLAYED POST (getPost): ', post)
-	return res.status(200).render('post', { post, msg: req.flash('logInfo') })
+	return res
+		.status(200)
+		.render('post', { hotPosts, post, msg: req.flash('logInfo') })
 }
 
 async function getRandomPost(req, res) {
@@ -65,7 +73,9 @@ async function getTaggedPosts(req, res) {
 async function getPostForm(req, res) {
 	const POST_PREVIEW_DATA = req.session.preview
 	req.session.preview = null
+	const hotPosts = await getHotPosts()
 	return res.status(200).render('postForm', {
+		hotPosts,
 		post: POST_PREVIEW_DATA,
 		msg: req.flash('logInfo'),
 	})
@@ -73,15 +83,16 @@ async function getPostForm(req, res) {
 
 // @route /:id/edit
 async function getEditForm(req, res) {
+	const hotPosts = await getHotPosts()
 	const post = await Post.findOne({ id: req.params.id })
-		.populate('author', '-password') // TODO SPRAWDZIC TUTAJ POPULATE CZY NIE LEPIEJ JEST USUWAC -_id i porownywac w permissions samo .author z req.user._id, (Zamiast .author._id)
+		.populate('author', '-password')
 		.populate('edited_by', '-password')
 		.exec()
 	req.session.post = post
 	req.session.preview = null
 	return res
 		.status(200)
-		.render('postForm', { post, msg: req.flash('logInfo') })
+		.render('postForm', { hotPosts, post, msg: req.flash('logInfo') })
 }
 
 /// //////// PREVIEW FUNC ////////////
@@ -304,6 +315,27 @@ async function deletePost(req, res) {
 	return res.redirect('/')
 }
 
+async function patchLikePost(req, res) {
+	const POST_ID = req.params.id
+
+	if (req.query.type === 'upvote') {
+		var [post, liked] = await Promise.all([
+			(Post.updateOne({ id: POST_ID }, { $inc: { likes: 1 } }),
+			patchLikedPosts(res.locals.user._id, POST_ID)),
+		])
+	} else if (req.query.type === 'downvote') {
+		var [post, disliked] = await Promise.all([
+			Post.updateOne({ id: POST_ID }, { $inc: { likes: -1 } }),
+			patchDislikedPosts(res.locals.user._id, POST_ID),
+		])
+	} else {
+		res.status(500)
+		throw new Error('Wystąpił błąd podczas lajkowania posta')
+	}
+	res.status(200)
+	return post
+}
+
 module.exports = {
 	getPost,
 	getRandomPost,
@@ -313,6 +345,7 @@ module.exports = {
 	passPostPreview,
 	getEditForm,
 	postPost,
+	patchLikePost,
 	editPost,
 	deletePost,
 }

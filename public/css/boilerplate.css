@@ -41,6 +41,11 @@ button:hover {
 	text-transform: uppercase;
 }
 
+/* button:disabled,
+button[disabled] {
+	filter: grayscale(0.8);
+} */
+
 :where(li) {
 	list-style-type: none;
 }
@@ -115,6 +120,7 @@ button:hover {
 	--navbar-height: 75px;
 	--sidebar-tablet-height: 69px;
 	--navbar-padding: 1rem;
+	--hotPosts-height: 250px;
 	--header-height: ;
 	--effect-height: ;
 	--avatar-size: 40px;

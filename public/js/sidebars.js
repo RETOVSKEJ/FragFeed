@@ -20,32 +20,6 @@ window.addEventListener('click', function (ev) {
 	}
 })
 
-// document.addEventListener('click', (ev) => {
-// 	if (window.innerWidth > 621) return
-// 	if (ev.target.tagName === 'LABEL' || menuCheck.checked == false) {
-// 		return ev.stopPropagation()
-// 	}
-// 	if (!menu.contains(ev.target) && menuCheck.checked) console.log('test')
-// 	// if (!menu.contains(ev.target)) menuCheck.checked = false
-
-// 	// if (menu.contains(ev.target) || ev.target.tagName === 'LABEL') {
-// 	// 	// The click occurred inside the element
-// 	// 	console.log('test1')
-// 	// 	return
-// 	// }
-// 	// console.log('test2')
-
-// 	// if (ev.target.tagName !== 'LABEL') {
-// 	// 	if (menuCheck.checked) {
-// 	// 		ev.preventDefault()
-// 	// 		return (menuCheck.checked = false)
-// 	// 	}
-// 	// 	return // clicked on label, do nothing
-// 	// }
-
-// 	// The click occurred outside the element
-// })
-
 /// STICKY SIDEBARS ///
 document.body.onscroll = () => {
 	if (window.innerWidth < 620) {

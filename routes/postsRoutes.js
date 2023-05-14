@@ -12,6 +12,7 @@ const {
 	passPostPreview,
 	deletePost,
 	editPost,
+	patchLikePost,
 	getPostForm,
 	getEditForm,
 } = require('../controllers/posts')
@@ -43,6 +44,10 @@ router
 	.route('/:id(\\d+)')
 	.get(catchAsync(getPost))
 	.delete(authUser, catchAsync(canDeletePost), catchAsync(deletePost))
+
+router
+	.route('/:id/like')
+	.patch(authUser, catchAsync(canLikePost), catchAsync(patchLikePost))
 
 router.route('/random').get(catchAsync(getRandomPost))
 router.route('/tag/:tag').get(catchAsync(getTaggedPosts))

@@ -37,6 +37,16 @@ const userSchema = mongoose.Schema(
 			enum: ROLES,
 			default: ROLES.USER,
 		},
+		likedPosts: {
+			type: [Number],
+			trim: true,
+			default: [],
+		},
+		dislikedPosts: {
+			type: [Number],
+			trim: true,
+			default: [],
+		},
 	},
 	{
 		timestamps: true,

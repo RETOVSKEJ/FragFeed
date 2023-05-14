@@ -1,0 +1,75 @@
+.post-wrapper {
+	.post-buttons {
+		display: flex;
+		gap: 1rem;
+		justify-content: flex-end;
+	}
+
+	.post {
+		display: flex;
+		flex-direction: column;
+		border: 3px solid var(--accent-clr);
+		border-radius: 8px;
+		gap: 1em;
+		padding: 1em;
+		background-color: var(--third-clr);
+		box-shadow: var(--shadow);
+
+		.post-title {
+			padding: 0.5em;
+			display: block;
+			font-size: var(--fs-lg);
+			color: var(--text-clr);
+			/* TODO find&replace dla wszystkich whiteSmoke na var(--text-clr) ITP. */
+		}
+		.post-body {
+			font-size: var(--fs-btn);
+		}
+
+		.post-tag {
+			color: #222;
+			background-color: var(--text-clr);
+			padding: 0.25rem 0.75rem;
+			margin-inline: 0.25em;
+			border-radius: 6px;
+			font-size: 12px;
+
+			&:hover {
+				color: var(--text-clr);
+				background-color: #6495ed;
+				border: none;
+			}
+		}
+	}
+}
+
+@media (min-width: 621px) and (max-width: 1040px) {
+	main {
+		grid-template-columns: 1fr 0.5fr;
+	}
+
+	.post-form-wrapper {
+		grid-column: 1;
+	}
+
+	.post-form {
+		width: 88%;
+		margin-inline: 5vw;
+	}
+}
+
+@media (max-width: 620px) {
+	body {
+		overflow: auto;
+	}
+
+	main {
+		grid-template-columns: 1fr;
+	}
+	.post-form-wrapper {
+		grid-column: 1;
+	}
+	.post-form {
+		width: 93%;
+	}
+}

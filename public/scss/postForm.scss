@@ -1,23 +1,38 @@
 @import './boilerplate.css';
+@import './hotPostsWrapper.css';
+@import './hotPostsMediaQueries.css';
+
+// body {
+// 	overflow: hidden;
+// }
+
+// .hot-wrapper {
+// 	max-height: calc(100vh - var(--navbar-height) - 3rem);
+// }
 
 main {
 	gap: 0;
 	margin-top: calc(1.5rem + var(--navbar-height));
-	grid-template-columns: 1fr;
+	grid-template-columns: 0.2fr 1fr 450px;
 	grid-template-rows: initial;
 	padding-bottom: 1rem;
+	max-width: initial;
 }
 
 .page-heading {
 	text-align: center;
-	margin-bottom: 1rem;
+	margin-bottom: 1.5rem;
+}
+
+.post-form-wrapper {
+	grid-column: 2;
 }
 
 .post-form {
 	display: flex;
 	flex-direction: column;
 	gap: 1rem;
-	width: 55%;
+	width: 80%;
 	margin-inline: auto;
 
 	input,
@@ -115,7 +130,32 @@ main {
 	background-color: transparent;
 }
 
+@media (min-width: 621px) and (max-width: 1040px) {
+	main {
+		grid-template-columns: 1fr 0.5fr;
+	}
+
+	.post-form-wrapper {
+		grid-column: 1;
+	}
+
+	.post-form {
+		width: 88%;
+		margin-inline: 5vw;
+	}
+}
+
 @media (max-width: 620px) {
+	body {
+		overflow: auto;
+	}
+
+	main {
+		grid-template-columns: 1fr;
+	}
+	.post-form-wrapper {
+		grid-column: 1;
+	}
 	.post-form {
 		width: 93%;
 	}

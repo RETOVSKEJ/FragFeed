@@ -2,7 +2,7 @@ const User = require('../models/User')
 // const bcrypt = require('bcrypt')
 
 async function getUsers(req, res) {
-	res.render('users')
+	return res.render('users')
 }
 
 async function getUser(req, res) {
@@ -13,16 +13,16 @@ async function getUser(req, res) {
 		throw new Error('Nie ma takiego usera')
 	}
 	console.timeEnd()
-	res.render('user', { user: user.nick })
+	return res.render('user', { user: user.nick })
 }
 
 /// /////// DELETE ALL USERS FROM DATABASE ///////////
-async function clearUsersDB() {
-	const amount = await User.countDocuments()
-	await User.deleteMany({})
-	const left = await User.countDocuments()
-	console.log(`DELETED ${amount - left} users`)
-}
+// async function clearUsersDB() {
+// 	const amount = await User.countDocuments()
+// 	await User.deleteMany({})
+// 	const left = await User.countDocuments()
+// 	console.log(`DELETED ${amount - left} users`)
+// }
 
 module.exports = {
 	getUsers,

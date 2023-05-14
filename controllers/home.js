@@ -2,33 +2,13 @@ const Post = require('../models/Post')
 const appMailer = require('../emails')
 const sgMail = require('@sendgrid/mail')
 sgMail.setApiKey(process.env.SENDGRID_KEY_API)
-
-/// HELPERS
-
-async function retrieveAllPosts(query) {
-	const regex = new RegExp(query)
-	const posts = await Post.find({
-		$or: [{ title: { $regex: regex } }, { body: { $regex: regex } }],
-	})
-		.sort('-id')
-		.populate('author', '-password')
-		.populate('edited_by', '-password')
-		.exec()
-	return posts
-}
-
-async function retrievePosts(
-	postsCount = null,
-	{ sort = 'asc', offset = null, objQuery = null }
-) {
-	return await Post.find({ objQuery })
-		.limit(postsCount)
-		.sort(sort)
-		.skip(offset)
-		.populate('author', '-password')
-		.populate('edited_by', '-password')
-		.exec()
-}
+const {
+	getPosts,
+	getAllPosts,
+	getHotPosts,
+	getLikedPosts,
+	getDislikedPosts,
+} = require('../services/queries')
 
 /// ROUTES
 
@@ -38,11 +18,11 @@ async function getFetchPosts(req, res) {
 	const fetchPostsLimit = parseInt(req.get('posts-count')) ?? null
 
 	if (req.path === '/old') {
-		var posts = await retrievePosts(fetchPostsLimit, {
+		var posts = await getPosts(fetchPostsLimit, {
 			offset: offset,
 		})
 	} else {
-		var posts = await retrievePosts(fetchPostsLimit, {
+		var posts = await getPosts(fetchPostsLimit, {
 			sort: '-id',
 			offset: offset,
 		})
@@ -55,7 +35,18 @@ async function getHome(req, res) {
 	const preloadedPostsLimit = 8
 	const bIsSearch = req.get('search') ? true : false
 
-	let posts
+	let posts, dislikedPosts, likedPosts
+	const hotPosts = await getHotPosts()
+
+	if (res.locals?.user) {
+		;[likedPosts, dislikedPosts] = await Promise.all([
+			getLikedPosts(res.locals.user._id),
+			getDislikedPosts(res.locals.user._id),
+		])
+	}
+
+	if (!likedPosts) throw new Error('likedPostsArray is empty')
+	if (!dislikedPosts) throw new Error('dislikedPostsArray is empty')
 
 	if (bIsSearch) {
 		posts = await Post.find().sort('-id').exec() // slight optimalization
@@ -65,9 +56,9 @@ async function getHome(req, res) {
 	req.session.post = null
 
 	if (req.path === '/old') {
-		posts = await retrievePosts(preloadedPostsLimit)
+		posts = await getPosts(preloadedPostsLimit)
 	} else {
-		posts = await retrievePosts(preloadedPostsLimit, {
+		posts = await getPosts(preloadedPostsLimit, {
 			sort: '-id',
 		})
 	}
@@ -75,7 +66,13 @@ async function getHome(req, res) {
 	//	if(req.query === 'top')
 	//	if(req.query === 'hot')
 	res.vary('accept')
-	return res.status(200).render('home', { posts, msg: req.flash('logInfo') })
+	return res.status(200).render('home', {
+		dislikedPosts,
+		likedPosts,
+		hotPosts,
+		posts,
+		msg: req.flash('logInfo'),
+	})
 }
 
 async function getHomePage(req, res) {
@@ -83,9 +80,14 @@ async function getHomePage(req, res) {
 	const limit = parseInt(req.query.limit) || DEFAULT_LIMIT
 	const page = parseInt(req.params.num) || 1
 	const offset = limit * (page - 1)
-	const postsPromise = retrievePosts(limit, { offset: offset })
+	const postsPromise = getPosts(limit, { offset: offset })
 	const countPromise = Post.countDocuments()
-	const [posts, postsCount] = await Promise.all([postsPromise, countPromise])
+	const hotPostsPromise = getHotPosts()
+	const [posts, postsCount, hotPosts] = await Promise.all([
+		postsPromise,
+		countPromise,
+		hotPostsPromise,
+	])
 
 	// const numOfPages = Math.ceil(offset >= postsCount - limit)
 	const numOfPages = Math.ceil(postsCount / limit)
@@ -96,6 +98,7 @@ async function getHomePage(req, res) {
 		return res.redirect(`/page/${numOfPages}?limit=${limit}`)
 
 	return res.status(200).render('homePage', {
+		hotPosts,
 		posts,
 		page,
 		limit,
@@ -106,7 +109,7 @@ async function getHomePage(req, res) {
 }
 
 async function getSearchResults(req, res) {
-	const results = await retrieveAllPosts(req.query.q)
+	const results = await getAllPosts(req.query.q)
 
 	return res.status(200).render('search', {
 		posts: results,

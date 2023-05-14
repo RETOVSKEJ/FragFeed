@@ -19,7 +19,7 @@
 		</script>
 		<%- include('./partials/navbar') %>
 		<main>
-		
+		<div class="post-form-wrapper">
 		<% if (urlPath.includes('/edit')) { %>
 			<h2 class="page-heading">Edytuj Post</h2>
 			<%- include('./partials/postFormEdit') %>
@@ -27,6 +27,8 @@
 			<h2 class="page-heading">Stwórz Nowy Post</h2>
 			<%- include('./partials/postFormNew') %>
 		<% } %> 
+		</div>
+		<%- include('./partials/hotPostsWrapper') %>
 		</main>
 		<%- include('./partials/toast', {msg: messages.error || messages.message || msg}) %>
 	</body>

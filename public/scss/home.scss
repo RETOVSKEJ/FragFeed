@@ -2,6 +2,7 @@
 @import './newsletterModal.css';
 @import './toast.css';
 @import 'variables';
+@import './hotPostsWrapper.css';
 
 .pc-button {
 	@include flex();
@@ -18,7 +19,7 @@
 main {
 	margin-top: calc(2rem + var(--navbar-height));
 	display: grid;
-	grid-template-columns: 240px 1fr 370px;
+	grid-template-columns: 240px 1fr 400px;
 	grid-auto-columns: 0;
 	max-width: 1400px;
 	margin-inline: auto;
@@ -211,9 +212,19 @@ nav {
 		border: 3px solid var(--accent-clr);
 		border-radius: 8px;
 		gap: 1em;
+		width: 100%;
 		padding: 1em;
 		background-color: var(--third-clr);
 		box-shadow: var(--shadow);
+
+		.post-img {
+			display: flex;
+			justify-content: center;
+			width: 100%;
+			background-color: #000;
+			border: 1px solid var(--third-clr);
+			box-shadow: 0 0 17px 0 rgba(0, 0, 0, 0.5);
+		}
 
 		.post-title {
 			padding: 0.5em;
@@ -240,53 +251,6 @@ nav {
 				border: none;
 			}
 		}
-	}
-}
-
-.hot-wrapper {
-	position: relative;
-	height: fit-content;
-	display: flex;
-	flex-direction: column;
-	gap: 1rem;
-	margin-left: 2rem;
-	margin-right: 1rem;
-
-	.hot-post {
-		position: relative;
-		border: var(--border);
-		border-radius: var(--radius);
-		box-shadow: var(--shadow-btn);
-		height: 250px;
-		overflow: hidden;
-	}
-
-	.hot-post__title {
-		padding: 1rem;
-		width: 100%;
-		background-color: var(--third-clr);
-		font-size: var(--fs-large);
-		border-bottom: 1px solid #343536;
-	}
-
-	img {
-		width: 100%;
-		max-width: 100%;
-		object-fit: contain;
-		object-position: 50%;
-	}
-
-	.hot-post__likes {
-		padding: 0.65rem 0.85rem;
-		font-size: var(--fs-btn);
-		background-color: var(--secondary-clr);
-		position: absolute;
-		left: 0;
-		bottom: 0;
-		margin-left: 1rem;
-		margin-bottom: 1rem;
-		border: 1px solid #343536;
-		border-radius: var(--radius);
 	}
 }
 
@@ -322,6 +286,7 @@ nav {
 	}
 
 	.posts-wrapper {
+		margin-left: 0.75rem;
 		grid-row: 2;
 	}
 }
