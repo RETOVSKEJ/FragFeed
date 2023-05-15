@@ -41,15 +41,15 @@
 			<% } %>
 		<% } %>
 	</div>
-	<div id="post-likes" data-atr="<%= locals?.user?.role %>" class="post-likes">
+	<div id="post-likes" data-atr="<%= locals?.user?._id %>" class="post-likes">
 		<% if(likedPosts.likedPosts?.includes(post.id)){ %>
-			<button style="filter:grayscale(0.5)" data-atr="<%= post.id %>" id="upvote-btn" class="fa-solid fa-chevron-up upvote-btn"></button>
-			<button disabled data-atr="<%= post.id %>" id="downvote-btn" class="fa-solid fa-chevron-down downvote-btn"></button>
-		<% } else if(dislikedPosts.dislikedPosts?.includes(post.id)){ %>
-			<button style="filter:grayscale(0.5)" data-atr="<%= post.id %>" id="upvote-btn" class="fa-solid fa-chevron-up upvote-btn"></button>
-			<button disabled data-atr="<%= post.id %>" id="downvote-btn" class="fa-solid fa-chevron-down downvote-btn"></button> 
+			<button data-voted='true' data-atr="<%= post.id %>" id="upvote-btn" class="fa-solid fa-chevron-up upvote-btn"></button>
 		<% } else { %>
 			<button data-atr="<%= post.id %>" id="upvote-btn" class="fa-solid fa-chevron-up upvote-btn"></button>
+		<% } %>
+		<% if(dislikedPosts.dislikedPosts?.includes(post.id)){ %>
+			<button data-voted="true" data-atr="<%= post.id %>" id="downvote-btn" class="fa-solid fa-chevron-down downvote-btn"></button> 
+		<% } else { %>
 			<button data-atr="<%= post.id %>" id="downvote-btn" class="fa-solid fa-chevron-down downvote-btn"></button> 
 		<% } %>
 	</div>

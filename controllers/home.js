@@ -45,8 +45,8 @@ async function getHome(req, res) {
 		])
 	}
 
-	if (!likedPosts) throw new Error('likedPostsArray is empty')
-	if (!dislikedPosts) throw new Error('dislikedPostsArray is empty')
+	likedPosts ??= []
+	dislikedPosts ??= []
 
 	if (bIsSearch) {
 		posts = await Post.find().sort('-id').exec() // slight optimalization

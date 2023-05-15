@@ -319,21 +319,33 @@ async function patchLikePost(req, res) {
 	const POST_ID = req.params.id
 
 	if (req.query.type === 'upvote') {
-		var [post, liked] = await Promise.all([
+		var [post, placeholder] = await Promise.all([
 			(Post.updateOne({ id: POST_ID }, { $inc: { likes: 1 } }),
-			patchLikedPosts(res.locals.user._id, POST_ID)),
+			patchLikedPosts(res.locals.user._id, POST_ID, 'vote')),
 		])
 	} else if (req.query.type === 'downvote') {
-		var [post, disliked] = await Promise.all([
+		var [post, placeholder] = await Promise.all([
 			Post.updateOne({ id: POST_ID }, { $inc: { likes: -1 } }),
-			patchDislikedPosts(res.locals.user._id, POST_ID),
+			patchDislikedPosts(res.locals.user._id, POST_ID, 'vote'),
+		])
+	} else if (req.query.type === 'removeupvote') {
+		console.log('jestem tutaj')
+		var [post, placeholder] = await Promise.all([
+			Post.updateOne({ id: POST_ID }, { $inc: { likes: -1 } }),
+			patchLikedPosts(res.locals.user._id, POST_ID, 'remove'),
+		])
+	} else if (req.query.type === 'removedownvote') {
+		console.log('jestem tutaj')
+		var [post, placeholder] = await Promise.all([
+			(Post.updateOne({ id: POST_ID }, { $inc: { likes: 1 } }),
+			patchDislikedPosts(res.locals.user._id, POST_ID, 'remove')),
 		])
 	} else {
 		res.status(500)
 		throw new Error('Wystąpił błąd podczas lajkowania posta')
 	}
-	res.status(200)
-	return post
+
+	return res.status(200).json(!!post)
 }
 
 module.exports = {

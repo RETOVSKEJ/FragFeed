@@ -249,6 +249,17 @@ nav .login-info .pc {
   background-color: #6495ed;
   border: none;
 }
+.posts-wrapper .post .post-likes button {
+  background-color: var(--accent-clr);
+  filter: grayscale(0.5);
+}
+.posts-wrapper .post .post-likes button[data-voted] {
+  background-color: var(--accent-clr);
+  filter: grayscale(0);
+}
+.posts-wrapper .post .post-likes button:hover {
+  filter: grayscale(0.25);
+}
 
 @media (max-width: 1040px) {
   .welcome {

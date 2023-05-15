@@ -31,18 +31,36 @@ async function getHotPosts() {
 	return posts
 }
 
-async function patchLikedPosts(userId, postId) {
-	return await User.updateOne(
-		{ _id: userId },
-		{ $addToSet: { likedPosts: postId } }
-	)
+async function patchLikedPosts(userId, postId, type) {
+	if (type === 'vote') {
+		console.log('JESTEM HERE')
+		return await User.updateOne(
+			{ _id: userId },
+			{ $addToSet: { likedPosts: postId } }
+		)
+	} else if (type === 'remove') {
+		console.log('JESTEM HERE REMOVE')
+		return await User.updateOne(
+			{ _id: userId },
+			{ $pull: { likedPosts: postId } }
+		)
+	} else {
+		throw Error('Wrong type passed to PatchLikedPosts')
+	}
 }
 
-async function patchDislikedPosts(userId, postId) {
-	return await User.updateOne(
-		{ _id: userId },
-		{ $addToSet: { dislikedPosts: postId } }
-	)
+async function patchDislikedPosts(userId, postId, type) {
+	if (!(type === 'vote' || type === 'remove'))
+		throw Error('Wrong type passed to PatchDisLikedPosts')
+	return type === 'vote'
+		? await User.updateOne(
+				{ _id: userId },
+				{ $addToSet: { dislikedPosts: postId } }
+		  )
+		: await User.updateOne(
+				{ _id: userId },
+				{ $pull: { dislikedPosts: postId } }
+		  )
 }
 
 async function getLikedPosts(userId) {

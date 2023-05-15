@@ -251,6 +251,22 @@ nav {
 				border: none;
 			}
 		}
+
+		//css selector to select all butons that have set "data-voted" to whatever
+
+		.post-likes {
+			button {
+				background-color: var(--accent-clr);
+				filter: grayscale(0.5);
+			}
+			button[data-voted] {
+				background-color: var(--accent-clr);
+				filter: grayscale(0);
+			}
+			button:hover {
+				filter: grayscale(0.25);
+			}
+		}
 	}
 }
 
