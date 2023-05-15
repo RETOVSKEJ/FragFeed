@@ -1,6 +1,8 @@
 const menu = document.querySelector('.menu')
 const menuCheck = document.getElementById('menu-button')
 const menuLabel = document.querySelector('.menu-container')
+const hotPostWrapper = document.querySelector('.hot-wrapper')
+const NAVBAR_HEIGHT = document.querySelector('nav').offsetHeight
 
 /// HAMBURGER CLICKS ///
 window.addEventListener('click', function (ev) {

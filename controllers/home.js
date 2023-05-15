@@ -6,6 +6,7 @@ const {
 	getPosts,
 	getAllPosts,
 	getHotPosts,
+	getAllLikedPostsService,
 	getLikedPostsService,
 	getDislikedPostsService,
 } = require('../services/queries')
@@ -35,18 +36,12 @@ async function getHome(req, res) {
 	const preloadedPostsLimit = 8
 	const bIsSearch = req.get('search') ? true : false
 
-	let posts, dislikedPosts, likedPosts
 	const hotPosts = await getHotPosts()
 
-	if (res.locals?.user) {
-		;[likedPosts, dislikedPosts] = await Promise.all([
-			getLikedPostsService(res.locals.user._id),
-			getDislikedPostsService(res.locals.user._id),
-		])
-	}
-
-	likedPosts ??= []
-	dislikedPosts ??= []
+	let posts, dislikedPosts, likedPosts
+	;[likedPosts, dislikedPosts] = await getAllLikedPostsService(
+		res.locals?.user
+	)
 
 	if (bIsSearch) {
 		posts = await Post.find().sort('-id').exec() // slight optimalization
@@ -108,16 +103,6 @@ async function getHomePage(req, res) {
 	})
 }
 
-async function getSearchResults(req, res) {
-	const results = await getAllPosts(req.query.q)
-
-	return res.status(200).render('search', {
-		posts: results,
-		postsCount: results.length,
-		msg: req.flash('logInfo'),
-	})
-}
-
 async function postNewsletter(req, res) {
 	const formData = {
 		name: req.body.name,
@@ -162,6 +147,5 @@ module.exports = {
 	getFetchPosts,
 	getHome,
 	getHomePage,
-	getSearchResults,
 	postNewsletter,
 }

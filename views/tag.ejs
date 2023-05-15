@@ -6,17 +6,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="/css/home.css">
+    <link rel="stylesheet" href="/css/hotPostsMediaQueries.css">
+    <script src="/js/searchBar.js" defer></script>
+    <script src="/js/sidebars.js" defer></script>
+    <script src="/js/newsletterModal.js" defer></script>
+    <script src="/js/toast.js" defer></script>
+    <script src="/js/postLikes.js" defer></script>
+    <script src="https://kit.fontawesome.com/c780166e7c.js" crossorigin="anonymous"></script>
 </head>
 <body>
-    <div class="sidebar">
-        <a href="/new">Dodaj Post</a>
-        <a href="/">Home</a>
-    </div>
-    <div class="posts-wrapper">
-        <% for(const post of posts) { %> 
-            <a href="/<%= post.id %>"><%- include('./partials/postComponent', {post: post}) %></a>
-        <% } %>
-    </div>
-    <%- include('./partials/logoutButton') %>
+    <%- include('./partials/navbar') %>
+    <main>
+        <%- include('./partials/sidebar') %>
+        <div class="posts-wrapper">
+            <% for(const post of posts) { %>
+            <%- include('./partials/postComponent', {post: post}) %>
+            <% } %>
+        </div>
+        <%- include('./partials/hotPostsWrapper') %>
+    </main>
+    <%- include('./partials/toast', {msg: messages.error || messages.message || msg}) %>
 </body>
+<script defer>
+    localStorage.setItem('_id', '<%=locals?.user?._id %>')
+    localStorage.setItem('nick', '<%=locals?.user?.nick %>')
+</script>
 </html>

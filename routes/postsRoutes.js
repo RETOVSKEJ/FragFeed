@@ -7,6 +7,7 @@ const {
 	postPost,
 	getPost,
 	getRandomPost,
+	getSearchResults,
 	getTaggedPosts,
 	getPostPreview,
 	passPostPreview,
@@ -19,7 +20,6 @@ const {
 const {
 	getHome,
 	getHomePage,
-	getSearchResults,
 	postNewsletter,
 	getFetchPosts,
 } = require('../controllers/home')

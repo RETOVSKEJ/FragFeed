@@ -1,6 +1,4 @@
 const postWrapper = document.querySelector('.posts-wrapper')
-const hotPostWrapper = document.querySelector('.hot-wrapper')
-const NAVBAR_HEIGHT = document.querySelector('nav').offsetHeight
 
 let postsCount = postWrapper.children.length
 let lastPost = postWrapper.lastElementChild

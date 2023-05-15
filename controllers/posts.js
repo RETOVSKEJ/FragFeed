@@ -5,9 +5,11 @@ const { storeImage } = require('../middleware/imageHandler')
 const Post = require('../models/Post')
 const assert = require('assert')
 const {
+	getAllPosts,
 	getHotPosts,
 	patchLikedPosts,
 	patchDislikedPosts,
+	getAllLikedPostsService,
 	getLikedPostsService,
 	getDislikedPostsService,
 } = require('../services/queries')
@@ -46,16 +48,9 @@ async function getPost(req, res) {
 	}
 
 	let dislikedPosts, likedPosts
-
-	if (res.locals?.user) {
-		;[likedPosts, dislikedPosts] = await Promise.all([
-			getLikedPostsService(res.locals.user._id),
-			getDislikedPostsService(res.locals.user._id),
-		])
-	}
-
-	likedPosts ??= []
-	dislikedPosts ??= []
+	;[likedPosts, dislikedPosts] = await getAllLikedPostsService(
+		res.locals?.user
+	)
 
 	return res.status(200).render('post', {
 		dislikedPosts,
@@ -78,14 +73,38 @@ async function getRandomPost(req, res) {
 	return res.status(200).render('post', { post, msg: req.flash('logInfo') })
 }
 
+async function getSearchResults(req, res) {
+	const results = await getAllPosts(req.query.q)
+
+	return res.status(200).render('search', {
+		likedPosts: [],
+		dislikedPosts: [],
+		posts: results,
+		postsCount: results.length,
+		msg: req.flash('logInfo'),
+	})
+}
+
 async function getTaggedPosts(req, res) {
+	const hotPosts = await getHotPosts()
+	let dislikedPosts, likedPosts
+	;[likedPosts, dislikedPosts] = await getAllLikedPostsService(
+		res.locals?.user
+	)
 	const tag = req.params.tag
 	const posts = await Post.find({ tags: { $in: [tag] } })
 		.populate('author', '-password')
 		.sort('-id')
 		.exec()
 	if (posts.length === 0) return res.redirect('/')
-	return res.status(200).render('tag', { posts: posts, tag: tag })
+	return res.status(200).render('tag', {
+		likedPosts,
+		dislikedPosts,
+		hotPosts,
+		posts: posts,
+		tag: tag,
+		msg: req.flash('logInfo'),
+	})
 }
 
 // @route /new
@@ -356,6 +375,7 @@ async function patchLikePost(req, res) {
 module.exports = {
 	getPost,
 	getRandomPost,
+	getSearchResults,
 	getTaggedPosts,
 	getPostForm,
 	getPostPreview,

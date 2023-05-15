@@ -32,6 +32,20 @@ async function getHotPosts() {
 	return posts
 }
 
+async function getAllLikedPostsService(user) {
+	let dislikedPosts, likedPosts
+	if (user) {
+		;[likedPosts, dislikedPosts] = await Promise.all([
+			getLikedPostsService(user._id),
+			getDislikedPostsService(user._id),
+		])
+	}
+
+	likedPosts ??= []
+	dislikedPosts ??= []
+	return [likedPosts, dislikedPosts]
+}
+
 async function patchLikedPosts(userId, postId, type) {
 	if (type === 'vote') {
 		const succeed = await User.updateOne(
@@ -109,6 +123,7 @@ async function getIsPostDisliked(userId, postId) {
 
 module.exports = {
 	getAllPosts,
+	getAllLikedPostsService,
 	getPosts,
 	getHotPosts,
 	patchLikedPosts,
