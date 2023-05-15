@@ -1,59 +1,59 @@
 .hot-wrapper {
-  position: relative;
-  height: -moz-fit-content;
-  height: fit-content;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  margin-left: 3.5rem;
-  margin-right: 1rem;
+	position: relative;
+	height: -moz-fit-content;
+	height: fit-content;
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+	margin-left: 3.5rem;
+	margin-right: 1rem;
 }
 .hot-wrapper h3 {
-  text-align: center;
+	text-align: center;
 }
 .hot-wrapper .hot-post {
-  position: relative;
-  border: var(--border);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow-btn);
-  height: 235px;
-  overflow: hidden;
+	position: relative;
+	border: var(--border);
+	border-radius: var(--radius);
+	box-shadow: var(--shadow-btn);
+	height: 235px;
+	overflow: hidden;
 }
 .hot-wrapper .hot-post__title {
-  padding: 1rem;
-  width: 100%;
-  background-color: var(--third-clr);
-  font-size: var(--fs-large);
-  border-bottom: 1px solid #343536;
+	padding: 1rem;
+	width: 100%;
+	background-color: var(--third-clr);
+	font-size: var(--fs-large);
+	border-bottom: 1px solid #343536;
 }
 .hot-wrapper img {
-  width: 100%;
-  max-width: 100%;
-  -o-object-fit: contain;
-     object-fit: contain;
-  -o-object-position: 50%;
-     object-position: 50%;
+	width: 100%;
+	max-width: 100%;
+	-o-object-fit: contain;
+	object-fit: contain;
+	-o-object-position: 50%;
+	object-position: 50%;
 }
 .hot-wrapper .hot-post__likes {
-  padding: 0.65rem 0.85rem;
-  font-size: var(--fs-btn);
-  background-color: var(--secondary-clr);
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  margin-left: 1rem;
-  margin-bottom: 1rem;
-  border: 1px solid #343536;
-  border-radius: var(--radius);
+	padding: 0.65rem 0.85rem;
+	font-size: var(--fs-btn);
+	background-color: var(--secondary-clr);
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	margin-left: 1rem;
+	margin-bottom: 1rem;
+	border: 1px solid #343536;
+	border-radius: var(--radius);
 }
 
 @media (min-width: 621px) and (max-width: 1040px) {
-  .hot-wrapper {
-    margin-left: 1rem;
-  }
+	.hot-wrapper {
+		margin-left: 1rem;
+	}
 }
 @media (max-width: 620px) {
-  .hot-wrapper {
-    display: none;
-  }
-}/*# sourceMappingURL=hotPostsWrapper.css.map */
+	.hot-wrapper {
+		display: none;
+	}
+}

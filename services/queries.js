@@ -1,3 +1,4 @@
+const e = require('express')
 const Post = require('../models/Post')
 const User = require('../models/User')
 
@@ -33,34 +34,42 @@ async function getHotPosts() {
 
 async function patchLikedPosts(userId, postId, type) {
 	if (type === 'vote') {
-		console.log('JESTEM HERE')
-		return await User.updateOne(
+		const succeed = await User.updateOne(
 			{ _id: userId },
 			{ $addToSet: { likedPosts: postId } }
 		)
+		succeed &&
+			(await Post.updateOne({ id: postId }, { $inc: { likes: 1 } }))
 	} else if (type === 'remove') {
-		console.log('JESTEM HERE REMOVE')
-		return await User.updateOne(
+		const succeed = await User.updateOne(
 			{ _id: userId },
 			{ $pull: { likedPosts: postId } }
 		)
+		succeed &&
+			(await Post.updateOne({ id: postId }, { $inc: { likes: -1 } }))
 	} else {
 		throw Error('Wrong type passed to PatchLikedPosts')
 	}
 }
 
 async function patchDislikedPosts(userId, postId, type) {
-	if (!(type === 'vote' || type === 'remove'))
-		throw Error('Wrong type passed to PatchDisLikedPosts')
-	return type === 'vote'
-		? await User.updateOne(
-				{ _id: userId },
-				{ $addToSet: { dislikedPosts: postId } }
-		  )
-		: await User.updateOne(
-				{ _id: userId },
-				{ $pull: { dislikedPosts: postId } }
-		  )
+	if (type === 'vote') {
+		const succeed = await User.updateOne(
+			{ _id: userId },
+			{ $addToSet: { dislikedPosts: postId } }
+		)
+		succeed &&
+			(await Post.updateOne({ id: postId }, { $inc: { likes: -1 } }))
+	} else if (type === 'remove') {
+		const succeed = await User.updateOne(
+			{ _id: userId },
+			{ $pull: { dislikedPosts: postId } }
+		)
+		succeed &&
+			(await Post.updateOne({ id: postId }, { $inc: { likes: 1 } }))
+	} else {
+		throw Error('Wrong type passed to PatchLikedPosts')
+	}
 }
 
 async function getLikedPosts(userId) {
@@ -84,6 +93,20 @@ async function getVotedPosts(userId) {
 	return posts
 }
 
+async function getIsPostLiked(userId, postId) {
+	return await User.findOne({
+		_id: userId,
+		likedPosts: { $in: [postId] },
+	}).exec()
+}
+
+async function getIsPostDisliked(userId, postId) {
+	return await User.findOne({
+		_id: userId,
+		dislikedPosts: { $in: [postId] },
+	}).exec()
+}
+
 module.exports = {
 	getAllPosts,
 	getPosts,
@@ -93,4 +116,6 @@ module.exports = {
 	getLikedPosts,
 	getDislikedPosts,
 	getVotedPosts,
+	getIsPostLiked,
+	getIsPostDisliked,
 }

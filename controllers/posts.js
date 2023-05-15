@@ -8,7 +8,10 @@ const {
 	getHotPosts,
 	patchLikedPosts,
 	patchDislikedPosts,
+	getLikedPosts,
+	getDislikedPosts,
 } = require('../services/queries')
+const { get } = require('http')
 
 /// / req.session.preview usuwane w: getPost, getPostForm, getEditForm / ustawiane w:
 /// / req.session.post usuwane w: getHome / ustawiane w: getPost, getEditForm
@@ -41,10 +44,26 @@ async function getPost(req, res) {
 		res.status(400)
 		throw new Error('Nie istnieje taki post')
 	}
-	console.log('DISPLAYED POST (getPost): ', post)
-	return res
-		.status(200)
-		.render('post', { hotPosts, post, msg: req.flash('logInfo') })
+
+	let dislikedPosts, likedPosts
+
+	if (res.locals?.user) {
+		;[likedPosts, dislikedPosts] = await Promise.all([
+			getLikedPosts(res.locals.user._id),
+			getDislikedPosts(res.locals.user._id),
+		])
+	}
+
+	likedPosts ??= []
+	dislikedPosts ??= []
+
+	return res.status(200).render('post', {
+		dislikedPosts,
+		likedPosts,
+		hotPosts,
+		post,
+		msg: req.flash('logInfo'),
+	})
 }
 
 async function getRandomPost(req, res) {
@@ -317,35 +336,21 @@ async function deletePost(req, res) {
 
 async function patchLikePost(req, res) {
 	const POST_ID = req.params.id
+	const USER_ID = res.locals.user._id
 
 	if (req.query.type === 'upvote') {
-		var [post, placeholder] = await Promise.all([
-			(Post.updateOne({ id: POST_ID }, { $inc: { likes: 1 } }),
-			patchLikedPosts(res.locals.user._id, POST_ID, 'vote')),
-		])
+		await patchLikedPosts(USER_ID, POST_ID, 'vote')
 	} else if (req.query.type === 'downvote') {
-		var [post, placeholder] = await Promise.all([
-			Post.updateOne({ id: POST_ID }, { $inc: { likes: -1 } }),
-			patchDislikedPosts(res.locals.user._id, POST_ID, 'vote'),
-		])
+		await patchDislikedPosts(USER_ID, POST_ID, 'vote')
 	} else if (req.query.type === 'removeupvote') {
-		console.log('jestem tutaj')
-		var [post, placeholder] = await Promise.all([
-			Post.updateOne({ id: POST_ID }, { $inc: { likes: -1 } }),
-			patchLikedPosts(res.locals.user._id, POST_ID, 'remove'),
-		])
+		await patchLikedPosts(USER_ID, POST_ID, 'remove')
 	} else if (req.query.type === 'removedownvote') {
-		console.log('jestem tutaj')
-		var [post, placeholder] = await Promise.all([
-			(Post.updateOne({ id: POST_ID }, { $inc: { likes: 1 } }),
-			patchDislikedPosts(res.locals.user._id, POST_ID, 'remove')),
-		])
+		await patchDislikedPosts(USER_ID, POST_ID, 'remove')
 	} else {
 		res.status(500)
 		throw new Error('Wystąpił błąd podczas lajkowania posta')
 	}
-
-	return res.status(200).json(!!post)
+	return res.status(200).json({})
 }
 
 module.exports = {

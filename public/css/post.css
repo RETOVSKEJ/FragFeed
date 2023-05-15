@@ -36,6 +36,17 @@
   background-color: #6495ed;
   border: none;
 }
+.post-wrapper .post .post-likes button {
+  background-color: var(--accent-clr);
+  filter: grayscale(0.5);
+}
+.post-wrapper .post .post-likes button[data-voted] {
+  background-color: var(--accent-clr);
+  filter: grayscale(0);
+}
+.post-wrapper .post .post-likes button:hover {
+  filter: grayscale(0.25);
+}
 
 @media (min-width: 621px) and (max-width: 1040px) {
   main {
