@@ -7,6 +7,8 @@ const { catchAsync } = require('../middleware/errors')
 const {
 	getUsers,
 	getUser,
+	getLikedPosts,
+	getDislikedPosts,
 	postUser,
 	deleteUser,
 	updateUser,
@@ -20,5 +22,8 @@ router
 	.get(catchAsync(getUser))
 	.delete(authUser, catchAsync(deleteUser))
 	.patch(authUser, catchAsync(updateUser))
+
+router.route('/:_id/liked-posts').get(catchAsync(getLikedPosts))
+router.route('/:_id/disliked-posts').get(catchAsync(getDislikedPosts))
 
 module.exports = router

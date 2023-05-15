@@ -1,7 +1,7 @@
 <div class="post" data-atr="<%= post.id %>">
 	<a href="<%= post.id %>"><h5 class="post-title"><%= post.title %></h5></a>
 	<!-- IF ITS NEW/EDITED POST PREVIEW -->
-	<% if(locals.urlPath == '/preview'){ %>
+	<% if(locals.urlPath == "/preview"){ %>
 	<img
 		id="img-preview"
 		src="<%= post.image %>"
@@ -9,9 +9,9 @@
 	/>
 	<script defer>
 		// IF USER JUST UPLOADED IMAGE TO PREVIEW
-		if (localStorage.getItem('img_data')) {
-			const img = document.getElementById('img-preview')
-			img.src = localStorage.getItem('img_data')
+		if (localStorage.getItem("img_data")) {
+			const img = document.getElementById("img-preview")
+			img.src = localStorage.getItem("img_data")
 		}
 	</script>
 	<!-- IF ITS SINGLE POST OR HOMEPAGE -->

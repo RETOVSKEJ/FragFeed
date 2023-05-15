@@ -6,8 +6,8 @@ const {
 	getPosts,
 	getAllPosts,
 	getHotPosts,
-	getLikedPosts,
-	getDislikedPosts,
+	getLikedPostsService,
+	getDislikedPostsService,
 } = require('../services/queries')
 
 /// ROUTES
@@ -40,8 +40,8 @@ async function getHome(req, res) {
 
 	if (res.locals?.user) {
 		;[likedPosts, dislikedPosts] = await Promise.all([
-			getLikedPosts(res.locals.user._id),
-			getDislikedPosts(res.locals.user._id),
+			getLikedPostsService(res.locals.user._id),
+			getDislikedPostsService(res.locals.user._id),
 		])
 	}
 

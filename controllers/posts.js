@@ -8,8 +8,8 @@ const {
 	getHotPosts,
 	patchLikedPosts,
 	patchDislikedPosts,
-	getLikedPosts,
-	getDislikedPosts,
+	getLikedPostsService,
+	getDislikedPostsService,
 } = require('../services/queries')
 const { get } = require('http')
 
@@ -49,8 +49,8 @@ async function getPost(req, res) {
 
 	if (res.locals?.user) {
 		;[likedPosts, dislikedPosts] = await Promise.all([
-			getLikedPosts(res.locals.user._id),
-			getDislikedPosts(res.locals.user._id),
+			getLikedPostsService(res.locals.user._id),
+			getDislikedPostsService(res.locals.user._id),
 		])
 	}
 

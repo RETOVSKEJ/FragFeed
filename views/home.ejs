@@ -11,8 +11,10 @@
 		<script src="/js/newsletterModal.js" defer></script>
 		<script src="/js/toast.js" defer></script>
 		<script src="/js/postLikes.js" defer></script>
+		<script type="text/javascript" src="/js/ejs.min.js" defer></script>
 		<script src="https://kit.fontawesome.com/c780166e7c.js" crossorigin="anonymous"></script>
 		<script src="/js/homepage.js" defer></script>
+
 	</head>
 	<body>
 		<%- include('./partials/navbar') %>
@@ -27,4 +29,8 @@
 		</main>
 		<%- include('./partials/toast', {msg: messages.error || messages.message || msg}) %>
 	</body>
+	<script defer>
+		localStorage.setItem('_id', '<%=locals?.user?._id %>')
+		localStorage.setItem('nick', '<%=locals?.user?.nick %>')
+	</script>
 </html>

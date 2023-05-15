@@ -72,14 +72,14 @@ async function patchDislikedPosts(userId, postId, type) {
 	}
 }
 
-async function getLikedPosts(userId) {
+async function getLikedPostsService(userId) {
 	const posts = await User.findOne({ _id: userId })
 		.select('likedPosts')
 		.exec()
 	return posts
 }
 
-async function getDislikedPosts(userId) {
+async function getDislikedPostsService(userId) {
 	const posts = await User.findOne({ _id: userId })
 		.select('dislikedPosts')
 		.exec()
@@ -113,8 +113,8 @@ module.exports = {
 	getHotPosts,
 	patchLikedPosts,
 	patchDislikedPosts,
-	getLikedPosts,
-	getDislikedPosts,
+	getLikedPostsService,
+	getDislikedPostsService,
 	getVotedPosts,
 	getIsPostLiked,
 	getIsPostDisliked,

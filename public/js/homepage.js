@@ -37,6 +37,18 @@ function reduceTags(tagsArr) {
 }
 
 async function loadNewPosts() {
+	const user = {
+		_id: localStorage.getItem('_id'),
+	}
+	const [likedPosts, dislikedPosts] = await Promise.all([
+		fetch(`${window.origin}/users/${user._id}/liked-posts`).then((res) =>
+			res.json()
+		),
+		fetch(`${window.origin}/users/${user._id}/disliked-posts`).then((res) =>
+			res.json()
+		),
+	])
+
 	const data = await fetch(`${window.origin}/fetch/posts`, {
 		headers: {
 			'Cache-control': 'max-age=120',
@@ -58,26 +70,65 @@ async function loadNewPosts() {
 					`<a class="post-tag" href="/tag/${tag}">${tag}</a>`
 				)
 			)
-			const newPost = `<div class="post">
-	<a href=${elem.id}><h5 class="post-title">${elem.title}</h5></a>
-	<img id="img-preview" src="${elem.image ?? ''}" alt="Post image" />
-	<p class="post-body">${elem.body}</p>
-	<div class="post-author">
-		<p>
-			Autor: ${elem.author.nick} ${'days Ago'}
-		</p>
-	</div>
-	<div class="post-tags">
-		<label for="tags">Tagi: </label>
-        ${reduceTags(tagsArr)}
-	</div>
-	<div class="post-likes"><button>up</button><button>down</button></div>
-</div>`
-			postWrapper.insertAdjacentHTML('beforeend', newPost)
+			const compiled =
+				ejs.compile(`<div class="post" data-atr="<%= post.id %>">
+				<a href="<%= post.id %>"><h5 class="post-title"><%= post.title %></h5></a>
+				<% if(post.image) { %>
+				<a class="post-img" href="/<%= post.id %>"><img id="img-preview" src="<%= post.image %>" alt="Post image" /></a>
+				<% } else { %>
+					<a class="post-img" href="/<%= post.id %>"><img id="img-preview" src="nophoto.png" alt="No Photo available" /></a>
+				<% } %>
+				<p class="post-body"><%= post.body %></p>
+				<div class="post-author">
+					<p>
+						<% if(post.author){ %>Autor: <%= post.author.nick %> <%=
+						post.createdAtString %><%}%>
+					</p>
+					<p>
+						<% if(post.edited_by){ %>Edytowane przez: <%= post.edited_by.nick %>
+						<%= post.updatedAtString %><%}%>
+					</p>
+				</div>
+				<div class="post-tags">
+					<% if(post.tags.length > 0) { %>
+					<label for="tags">Tagi: </label>
+						<% for(const tag of post.tags) {%>
+							<a class="post-tag" href="/tag/<%= tag %>"><%= tag %></a>
+						<% } %>
+					<% } %>
+				</div>
+				<div id="post-likes" data-atr="<%= locals?.user?._id %>" class="post-likes">
+				<% if(likedPosts.likedPosts?.includes(post.id)){ %>
+					<button data-voted='true' data-atr="<%= post.id %>" id="upvote-btn" class="fa-solid fa-chevron-up upvote-btn"></button>
+				<% } else { %>
+					<button data-atr="<%= post.id %>" id="upvote-btn" class="fa-solid fa-chevron-up upvote-btn"></button>
+				<% } %>
+				<% if(dislikedPosts.dislikedPosts?.includes(post.id)){ %>
+					<button data-voted="true" data-atr="<%= post.id %>" id="downvote-btn" class="fa-solid fa-chevron-down downvote-btn"></button> 
+				<% } else { %>
+					<button data-atr="<%= post.id %>" id="downvote-btn" class="fa-solid fa-chevron-down downvote-btn"></button> 
+				<% } %>
+			</div>
+			</div>
+		`)
+
+			const newPostTest = compiled({
+				post: elem,
+				locals: {
+					user: user,
+				},
+				likedPosts: likedPosts,
+				dislikedPosts: dislikedPosts,
+			})
+
+			postWrapper.insertAdjacentHTML('beforeend', newPostTest)
 		})
 	}
 	postsOffset += result.length
 	postsCount += result.length
 	lastPost = postWrapper.lastElementChild
 	LastPostObserver.observe(lastPost)
+	AddListenersToButtons()
 }
+
+console.log(upvoteBtnsArray)

@@ -1,8 +1,4 @@
 const likesDiv = document.getElementById('post-likes')
-var upvoteBtns = document.getElementsByClassName('upvote-btn')
-var downvoteBtns = document.getElementsByClassName('downvote-btn')
-var upvoteBtnsArray = Array.from(upvoteBtns)
-var downvoteBtnsArray = Array.from(downvoteBtns)
 
 const types = ['upvote', 'downvote', 'removeupvote', 'removedownvote']
 
@@ -69,10 +65,21 @@ async function handleDownvote(ev) {
 	click.ok ? ev.target.setAttribute('data-voted', 'true') : null
 }
 
-upvoteBtnsArray.forEach((elem) => elem.addEventListener('click', handleUpvote))
-downvoteBtnsArray.forEach((elem) =>
-	elem.addEventListener('click', handleDownvote)
-)
+function AddListenersToButtons() {
+	var upvoteBtns = document.getElementsByClassName('upvote-btn')
+	var downvoteBtns = document.getElementsByClassName('downvote-btn')
+	var upvoteBtnsArray = Array.from(upvoteBtns)
+	var downvoteBtnsArray = Array.from(downvoteBtns)
+
+	upvoteBtnsArray.forEach((elem) =>
+		elem.addEventListener('click', handleUpvote)
+	)
+	downvoteBtnsArray.forEach((elem) =>
+		elem.addEventListener('click', handleDownvote)
+	)
+}
+
+AddListenersToButtons()
 
 async function removeUpvote(POST_ID, ev) {
 	await fetch(`${window.location.origin}/${POST_ID}/like?type=${types[2]}`, {

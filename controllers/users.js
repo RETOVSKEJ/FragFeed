@@ -1,4 +1,8 @@
 const User = require('../models/User')
+const {
+	getLikedPostsService,
+	getDislikedPostsService,
+} = require('../services/queries')
 // const bcrypt = require('bcrypt')
 
 async function getUsers(req, res) {
@@ -16,6 +20,16 @@ async function getUser(req, res) {
 	return res.render('user', { user: user.nick })
 }
 
+async function getLikedPosts(req, res) {
+	const posts = await getLikedPostsService(req.params._id)
+	return res.json(posts)
+}
+
+async function getDislikedPosts(req, res) {
+	const posts = await getDislikedPostsService(req.params._id)
+	return res.json(posts)
+}
+
 /// /////// DELETE ALL USERS FROM DATABASE ///////////
 // async function clearUsersDB() {
 // 	const amount = await User.countDocuments()
@@ -27,4 +41,6 @@ async function getUser(req, res) {
 module.exports = {
 	getUsers,
 	getUser,
+	getLikedPosts,
+	getDislikedPosts,
 }
