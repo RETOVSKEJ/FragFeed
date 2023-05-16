@@ -39,9 +39,11 @@ function validate(ev) {
 		}
 	}
 
-	const infoMsg = document.createElement('p', { classList: 'info' })
-	infoMsg.textContent = 'Uploading...'
-	preview.prepend(infoMsg)
+	if (!preview.querySelector('p')) {
+		const infoMsg = document.createElement('p', { classList: 'info' })
+		infoMsg.textContent = 'Uploading...'
+		preview.prepend(infoMsg)
+	}
 }
 
 function previewImg(ev) {

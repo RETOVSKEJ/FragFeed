@@ -22,19 +22,20 @@
   overflow: hidden;
 }
 .hot-wrapper .hot-post__title {
+  position: relative;
   padding: 1rem;
   width: 100%;
   background-color: var(--third-clr);
   font-size: var(--fs-large);
   border-bottom: 1px solid #343536;
+  z-index: 10;
 }
 .hot-wrapper img {
   width: 100%;
   max-width: 100%;
-  -o-object-fit: contain;
-     object-fit: contain;
-  -o-object-position: 50%;
-     object-position: 50%;
+  position: relative;
+  top: -10%;
+  z-index: 5;
 }
 .hot-wrapper .hot-post__likes {
   padding: 0.5rem 0.75rem;
@@ -47,6 +48,7 @@
   margin-bottom: 1rem;
   border: 1px solid #343536;
   border-radius: var(--radius);
+  z-index: 10;
 }
 
 @media (min-width: 621px) and (max-width: 1040px) {

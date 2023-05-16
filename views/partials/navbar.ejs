@@ -10,15 +10,19 @@
            <%- include('./sidebarMobile') %>
         </div>
     </div>
-    <button id="newsletter-btn" class="newsletter-btn pc pc-button" type="button">Newsletter</button>
-    <%- include('./newsletter') %>
+    <a id="logo" class="pc logo" href="/"><img class="logo" src="/assets/logo.svg" alt="logo"/></a>
     <%- include('./searchBar') %>
-    <div class="login-info">
-        <div class="pc">
+    <div class="nav-buttons">
+        <button id="newsletter-btn" class="newsletter-btn pc pc-button" type="button">Newsletter</button>
+        <%- include('./newsletter') %>
+        <div class="login-info">
+            <div class="pc">
             <%- include('./logoutButton') %>
-        </div>
-        <div class="mobile">
+            </div>
+            <div class="mobile">
             <%- include('./logoutButtonMobile') %>
+            </div>
         </div>
     </div>
+    
 </nav>

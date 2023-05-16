@@ -6,6 +6,15 @@ let postsOffset = postWrapper.childElementCount
 // const activeSidebarLink = document.querySelector('sidebar-link[href="/old"]')
 // activeSidebarLink.classList.remove('active')
 
+/// HIDE not accessible images
+
+const imgs = Array.from(document.getElementsByTagName('img'))
+imgs.forEach((img) => {
+	if (img.src == null || img.src === location.href) {
+		img.style.display = 'none'
+	}
+})
+
 /// INTERSECTION OBSERVER
 const LastPostObserver = new IntersectionObserver(
 	(entry) => {
@@ -106,7 +115,7 @@ async function loadNewPosts() {
 				<% if(post.image) { %>
 					<a class="post-img" href="/<%= post.id %>"><img id="img-preview" src="<%= post.image %>" alt="Post image" />
 				<% } else { %>
-					<a class="post-img" href="/<%= post.id %>"><img id="img-preview" src="nophoto.png" alt="No Photo available" />
+					<a class="post-img" href="/<%= post.id %>"><img id="img-preview" src="/assets/nophoto.png" alt="No Photo available" />
 				<% }} %>
 					<div id="post-likes" data-atr="<%= locals?.user?._id %>" class="post-likes">
 						<% if(likedPosts.likedPosts?.includes(post.id)){ %>

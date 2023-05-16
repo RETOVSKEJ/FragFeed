@@ -66,6 +66,9 @@
   border: 1px solid var(--third-clr);
   box-shadow: 0 0 17px 0 rgba(0, 0, 0, 0.5);
 }
+.post .post-img img {
+  max-height: 500px;
+}
 .post .post-body {
   display: flex;
   flex-direction: column;
@@ -84,6 +87,7 @@
 }
 .post .post-tags {
   display: flex;
+  flex-wrap: wrap;
   gap: 0.5rem;
 }
 .post .post-tag {
@@ -145,7 +149,8 @@
     margin-inline: 0;
   }
   .posts-wrapper.posts-wrapper {
-    width: 94%;
+    width: 98%;
+    margin-inline: auto;
   }
   .post .post-top {
     padding: 1rem 1.5rem 0.5rem;

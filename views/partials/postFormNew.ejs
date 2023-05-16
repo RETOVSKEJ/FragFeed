@@ -59,3 +59,12 @@
 			    <button id="sendBtn" type="submit">Dodaj Post</button>
             </div>
 		</form>
+		<script defer>
+			document.getElementById('logo').style.marginBottom = '5px';
+			title.value = localStorage.getItem('title')
+			body.value = localStorage.getItem('body')
+			previewBtn.addEventListener('click', ev => {
+				localStorage.setItem('title', title.value)
+				localStorage.setItem('body', body.value)
+			})
+		</script>

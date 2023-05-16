@@ -7,6 +7,10 @@
 	overflow-wrap: break-word;
 }
 
+.fa-solid {
+	font-family: 'Font Awesome 6 Free' !important;
+}
+
 :where(a, button, i) {
 	color: var(--text-clr);
 	cursor: pointer;
@@ -168,6 +172,10 @@ footer {
 }
 
 /* GENERIC CLASES */
+
+.page-heading {
+	text-align: center;
+}
 
 :where(.hidden) {
 	display: none;

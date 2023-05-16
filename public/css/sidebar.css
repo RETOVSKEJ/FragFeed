@@ -80,14 +80,27 @@
     padding: 0.5rem 0;
     transform: translateX(0%);
   }
+  .sidebar-mobile a:first-child {
+    padding-block: 0.5rem;
+    display: block;
+    height: -moz-fit-content;
+    height: fit-content;
+  }
   .sidebar-mobile > * {
-    padding: 0.5rem 1rem;
+    padding: 0.5rem 1.25rem;
   }
   .sidebar-mobile > *:hover {
     filter: brightness(1.22);
   }
   .sidebar-mobile > *.active {
     filter: brightness(1.2);
+  }
+  .logo {
+    display: block;
+    margin-inline: auto;
+    height: 20px;
+    width: 155px;
+    text-align: center;
   }
   button.sidebar-link {
     justify-content: center;

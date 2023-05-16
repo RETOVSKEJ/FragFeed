@@ -17,6 +17,7 @@ body {
 main {
 	display: flex;
 	height: 100vh;
+	height: 100dvh;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
@@ -153,6 +154,15 @@ form {
 }
 
 @media (min-width: 621px) {
+	body {
+		background: linear-gradient(
+			90deg,
+			var(--primary-clr) 5%,
+			var(--accent-clr-darker) 50%,
+			var(--primary-clr) 95%
+		);
+	}
+
 	.auth-nav {
 		padding: 3rem;
 		border: 3px solid var(--accent-clr-green);
@@ -164,6 +174,15 @@ form {
 }
 
 @media (min-width: 1041px) {
+	body {
+		background: linear-gradient(
+			98deg,
+			var(--primary-clr) 8%,
+			var(--accent-clr-darker) 53%,
+			var(--primary-clr) 84%
+		);
+	}
+
 	.pc.pc.pc {
 		display: block;
 	}
@@ -200,9 +219,17 @@ form {
 
 	.form-wrapper {
 		display: flex;
-		justify-content: center;
+		height: 80%;
+		justify-content: flex-start;
+		gap: 2.5rem;
+		align-items: center;
 		width: 58%;
 		margin-top: initial;
+		flex-direction: column;
+
+		img {
+			width: 70%;
+		}
 	}
 
 	form {

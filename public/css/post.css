@@ -3,8 +3,14 @@ body {
   padding-bottom: 2.75rem;
 }
 
+main {
+  padding-top: 1.5rem;
+  margin-top: var(--navbar-height);
+}
+
 @media (min-width: 621px) and (max-width: 1040px) {
   main {
+    padding-top: 0;
     grid-template-columns: 1fr 0.5fr;
     -moz-column-gap: 0.5rem;
          column-gap: 0.5rem;

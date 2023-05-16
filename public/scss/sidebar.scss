@@ -86,9 +86,15 @@
 	.sidebar-mobile {
 		padding: 0.5rem 0;
 		transform: translateX(0%);
+
+		a:first-child {
+			padding-block: 0.5rem;
+			display: block;
+			height: fit-content;
+		}
 	}
 	.sidebar-mobile > * {
-		padding: 0.5rem 1rem;
+		padding: 0.5rem 1.25rem;
 		&:hover {
 			filter: brightness(1.22);
 		}
@@ -96,6 +102,15 @@
 			filter: brightness(1.2);
 		}
 	}
+
+	.logo {
+		display: block;
+		margin-inline: auto;
+		height: 20px;
+		width: 155px;
+		text-align: center;
+	}
+
 	button.sidebar-link {
 		justify-content: center;
 		&:hover {

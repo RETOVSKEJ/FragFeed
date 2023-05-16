@@ -29,7 +29,7 @@
 	<% if(post.image) { %>
 		<a class="post-img" href="/<%= post.id %>"><img id="img-preview" src="<%= post.image %>" alt="Post image" />
 	<% } else { %>
-		<a class="post-img" href="/<%= post.id %>"><img id="img-preview" src="nophoto.png" alt="No Photo available" />
+		<a class="post-img" href="/<%= post.id %>"><img id="img-preview" src="/assets/nophoto.png" alt="No Photo available" />
 	<% }} %>
 		<div id="post-likes" data-atr="<%= locals?.user?._id %>" class="post-likes">
 			<% if(likedPosts.likedPosts?.includes(post.id)){ %>
@@ -48,10 +48,17 @@
 	<div class="post-body">
 		<p class="post-text"><%= post.body %></p>
 		<div class="post-tags">
-			<% if(post.tags.length > 0) { %>
-			<label for="tags"><strong>Tagi:</strong> </label>
-				<% for(const tag of post.tags) {%>
+			<% console.log(post.tags); if(locals.urlPath == "/preview"){ %>
+				<label for="tags"><strong>Tagi:</strong> </label>
+				<% for(const tag of post.tags) { console.log(tag)%>
 					<a class="post-tag" href="/tag/<%= tag %>"><%= tag %></a>
+				<% } %>
+			<% } else { %>
+				<% if(post.tags.length > 0) { %>
+				<label for="tags"><strong>Tagi:</strong> </label>
+					<% for(const tag of post.tags) {%>
+						<a class="post-tag" href="/tag/<%= tag %>"><%= tag %></a>
+					<% } %>
 				<% } %>
 			<% } %>
 		</div>

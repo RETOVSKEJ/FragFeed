@@ -57,6 +57,10 @@
 		background-color: #000;
 		border: 1px solid var(--third-clr);
 		box-shadow: 0 0 17px 0 rgba(0, 0, 0, 0.5);
+
+		img {
+			max-height: 500px;
+		}
 	}
 
 	.post-body {
@@ -84,6 +88,7 @@
 
 	.post-tags {
 		display: flex;
+		flex-wrap: wrap;
 		gap: 0.5rem;
 	}
 
@@ -126,7 +131,8 @@
 	}
 
 	.posts-wrapper.posts-wrapper {
-		width: 94%;
+		width: 98%;
+		margin-inline: auto;
 	}
 
 	.post {

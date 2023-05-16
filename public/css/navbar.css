@@ -13,17 +13,41 @@ nav {
   background-color: var(--third-clr);
   border-bottom: 1px solid #303131;
 }
-nav .hamburger {
+nav .hamburger,
+nav .mobile,
+nav .welcome {
   display: none;
 }
-nav .mobile {
-  display: none;
+nav .pc.logo {
+  align-self: flex-end;
+  padding-bottom: 3px;
+}
+nav .pc.logo img {
+  width: 140px;
 }
 nav .search-bar {
+  margin-left: auto;
   position: relative;
   width: 300px;
   background-color: var(--secondary-clr);
   border-radius: 12px;
+}
+nav .nav-buttons {
+  margin-left: auto;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+nav .nav-buttons button {
+  padding: 0.5rem 1rem;
+  font-family: sans-serif, "Segoe UI";
+  font-size: var(--fs-btn);
+  border: var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-black);
+  background-color: var(--accent-clr);
+  text-transform: uppercase;
+  cursor: pointer;
 }
 nav .search {
   display: flex;
@@ -122,16 +146,40 @@ nav .login-info .pc {
   gap: 1rem;
 }
 
+@media (max-width: 1041px) {
+  nav {
+    padding-inline: 0.75rem;
+  }
+  nav a {
+    width: 110px;
+    align-self: center;
+    margin-bottom: 3px;
+  }
+  nav .search-bar {
+    width: 250px;
+  }
+  nav .nav-buttons {
+    gap: 0.4rem;
+  }
+  nav .nav-buttons button {
+    padding-inline: 0.75rem;
+    font-size: 11px;
+  }
+}
 @media (max-width: 620px) {
   nav {
     justify-content: space-between;
     /* HAMBURGER */
     /* NAVBAR */
   }
+  nav a {
+    width: unset;
+  }
   nav .fa-solid {
     font-size: 20px;
   }
-  nav .pc {
+  nav .pc,
+  nav .hot-wrapper {
     display: none;
   }
   nav .mobile {
@@ -145,9 +193,6 @@ nav .login-info .pc {
   }
   nav .hamburger.mobile {
     position: relative;
-  }
-  nav .hot-wrapper {
-    display: none;
   }
   nav .search-results {
     position: fixed;

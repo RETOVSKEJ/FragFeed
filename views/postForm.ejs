@@ -4,8 +4,8 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Document</title>
 		<script src="/js/postFormCompressValidate.js" defer></script>
-		<script src="/js/searchBar.js" defer></script>
 		<script src="/js/postFormTags.js" defer></script>
+		<script src="/js/searchBar.js" defer></script>
 		<script src="/js/newsletterModal.js" defer></script>
 		<script src="/js/toast.js" defer></script>
 		<script src="https://kit.fontawesome.com/c780166e7c.js" crossorigin="anonymous"></script>
@@ -30,5 +30,8 @@
 		<%- include('./partials/hotPostsWrapper') %>
 		</main>
 		<%- include('./partials/toast', {msg: messages.error || messages.message || msg}) %>
+		<script defer>
+			document.getElementById('logo').style.marginBottom = '5px';
+		</script>
 	</body>
 </html>

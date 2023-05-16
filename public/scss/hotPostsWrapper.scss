@@ -25,22 +25,26 @@
 	}
 
 	.hot-post__title {
+		position: relative;
 		padding: 1rem;
 		width: 100%;
 		background-color: var(--third-clr);
 		font-size: var(--fs-large);
 		border-bottom: 1px solid #343536;
+		z-index: 10;
 	}
 
 	img {
 		width: 100%;
 		max-width: 100%;
-		object-fit: contain;
-		object-position: 50%;
+		position: relative;
+		top: -10%;
+		z-index: 5;
 	}
 
 	.hot-post__likes {
 		@include likesCount();
+		z-index: 10;
 	}
 }
 

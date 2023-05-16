@@ -4,7 +4,7 @@
 	<% if(post.image) { %>
         <img id="hot-img__preview" src="<%= post.image %>" alt="Post image" />
 	<% } else { %>
-        <img src="nophoto.png" alt="no photo">
+        <img src="/assets/nophoto.png" alt="no photo">
     <% } %>
     <div class="hot-post__likes"><%= post.likes || 0 %></div>
 </a>

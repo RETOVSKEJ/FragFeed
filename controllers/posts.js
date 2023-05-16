@@ -210,6 +210,7 @@ function passPostPreview(req, res) {
 
 	// kopiujemy image z ostatnio widzaniego posta, aby mozna bylo go wyswietlic w Edit -> preview
 	const image = req.session.post?.image
+
 	req.session.preview = {
 		author: req.user,
 		title: req.body.title,
@@ -218,6 +219,8 @@ function passPostPreview(req, res) {
 		image,
 		tags: req.body.tags,
 	}
+
+	req.session.preview.tags = req.body.tags.split(',')
 
 	return res.redirect('/preview')
 }
@@ -232,11 +235,9 @@ async function postPost(req, res) {
 	const IMAGE_PROVIDED = !!req.file // JESLI WSTAWIMY NOWE ZDJECIE
 
 	const POST_TAGS =
-		req.body.tags.length > 0 ? req.body.tags.split(',') : req.body.tags
+		req.body?.tags?.length > 0 ? req.body.tags.split(',') : req.body.tags
 	const POST_PREVIEW_TAGS =
-		POST_PREVIEW?.tags?.length > 0
-			? POST_PREVIEW?.tags.split(',')
-			: POST_PREVIEW?.tags
+		POST_PREVIEW?.tags?.length > 0 ? POST_PREVIEW?.tags : null
 
 	let post
 	let imageSrcPath
@@ -285,7 +286,6 @@ async function postPost(req, res) {
 		})
 	}
 
-	console.log('TEST NOWY', post)
 	res.status(201)
 	return res.redirect(`/${post.id}`)
 }
@@ -299,7 +299,7 @@ async function editPost(req, res) {
 	const IMAGE_PROVIDED = !!req.file
 	console.log('EDITED POST TEST', POST_PREVIEW, req.session.post)
 	const POST_TAGS =
-		req.body.tags.length > 0 ? req.body.tags.split(',') : req.body.tags
+		req.body?.tags?.length > 0 ? req.body.tags.split(',') : req.body.tags
 	const POST_PREVIEW_TAGS =
 		POST_PREVIEW?.tags?.length > 0
 			? POST_PREVIEW?.tags.split(',')

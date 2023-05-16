@@ -14,19 +14,37 @@ nav {
 	background-color: var(--third-clr);
 	border-bottom: 1px solid #303131;
 
-	.hamburger {
+	.hamburger,
+	.mobile,
+	.welcome {
 		display: none;
 	}
 
-	.mobile {
-		display: none;
+	.pc.logo {
+		align-self: flex-end;
+		padding-bottom: 3px;
+		img {
+			width: 140px;
+		}
 	}
 
 	.search-bar {
+		margin-left: auto;
 		position: relative;
 		width: 300px;
 		background-color: var(--secondary-clr);
 		border-radius: 12px;
+	}
+
+	.nav-buttons {
+		margin-left: auto;
+		display: flex;
+		gap: 1rem;
+		align-items: center;
+
+		button {
+			@include button(0.5rem 1rem);
+		}
 	}
 
 	.search {
@@ -129,14 +147,43 @@ nav {
 	}
 }
 
+@media (max-width: 1041px) {
+	nav {
+		padding-inline: 0.75rem;
+
+		a {
+			width: 110px;
+			align-self: center;
+			margin-bottom: 3px;
+		}
+
+		.search-bar {
+			width: 250px;
+		}
+
+		.nav-buttons {
+			gap: 0.4rem;
+			button {
+				padding-inline: 0.75rem;
+				font-size: 11px;
+			}
+		}
+	}
+}
+
 @media (max-width: 620px) {
 	nav {
 		justify-content: space-between;
 
+		a {
+			width: unset;
+		}
+
 		.fa-solid {
 			font-size: 20px;
 		}
-		.pc {
+		.pc,
+		.hot-wrapper {
 			display: none;
 		}
 		.mobile {
@@ -150,10 +197,6 @@ nav {
 		}
 		.hamburger.mobile {
 			position: relative;
-		}
-
-		.hot-wrapper {
-			display: none;
 		}
 
 		.search-results {
