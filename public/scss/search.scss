@@ -1,0 +1,49 @@
+@import 'variables';
+@import './postComponent.css';
+
+main {
+	margin-top: var(--navbar-height);
+	grid-template-columns: 1fr;
+	max-width: 1150px;
+	padding-bottom: 2rem;
+}
+
+.posts-wrapper {
+	margin-top: 2rem;
+	max-width: none;
+	width: 90%;
+	margin-inline: auto;
+
+	.page-heading {
+		margin-bottom: -2rem;
+		z-index: 150;
+	}
+}
+
+@media (min-width: 621px) and (max-width: 1040px) {
+	main {
+		grid-template-rows: unset;
+	}
+
+	.posts-wrapper {
+		margin-top: 2rem;
+		max-width: none;
+		width: 90%;
+		margin-inline: auto;
+
+		.page-heading {
+			margin-bottom: -2rem;
+			z-index: 150;
+		}
+	}
+}
+
+@media (max-width: 620px) {
+	body {
+		overflow: auto;
+	}
+
+	main {
+		grid-template-columns: 1fr;
+	}
+}

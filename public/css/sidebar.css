@@ -67,6 +67,11 @@
     filter: brightness(1.22);
   }
 }
+@media (min-width: 621px) and (max-width: 666px) {
+  .sidebar {
+    gap: 0.25rem;
+  }
+}
 @media (max-width: 620px) {
   .sidebar {
     display: none;

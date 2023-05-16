@@ -102,6 +102,7 @@ async function getSearchResults(req, res) {
 	return res.status(200).render('search', {
 		likedPosts: [],
 		dislikedPosts: [],
+		search: req.query.q,
 		posts: results,
 		postsCount: results.length,
 		msg: req.flash('logInfo'),

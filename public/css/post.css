@@ -1,37 +1,23 @@
 @import './postComponent.css';
-
 body {
-	background: linear-gradient(
-		90deg,
-		var(--primary-clr) 7%,
-		var(--accent-clr-darker) 42%,
-		var(--primary-clr) 84%
-	);
+  padding-bottom: 2.75rem;
 }
 
 @media (min-width: 621px) and (max-width: 1040px) {
-	main {
-		grid-template-columns: 1fr 0.5fr;
-	}
-	.post-form-wrapper {
-		grid-column: 1;
-	}
-	.post-form {
-		width: 88%;
-		margin-inline: 5vw;
-	}
+  main {
+    grid-template-columns: 1fr 0.5fr;
+    -moz-column-gap: 0.5rem;
+         column-gap: 0.5rem;
+  }
+  .post-wrapper {
+    margin-left: 0.75rem;
+  }
 }
 @media (max-width: 620px) {
-	body {
-		overflow: auto;
-	}
-	main {
-		grid-template-columns: 1fr;
-	}
-	.post-form-wrapper {
-		grid-column: 1;
-	}
-	.post-form {
-		width: 93%;
-	}
+  body {
+    overflow: auto;
+  }
+  main {
+    grid-template-columns: 1fr;
+  }
 }

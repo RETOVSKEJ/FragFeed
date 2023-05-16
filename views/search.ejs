@@ -5,17 +5,20 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Document</title>
-		<link rel="stylesheet" href="/css/home.css" />
+		<link rel="stylesheet" href="/css/home.css">
+		<link rel="stylesheet" href="/css/search.css" />
 		<link rel="stylesheet" href="/css/hotPostsMediaQueries.css">
 		<script src="/js/searchBar.js" defer></script>
-		<script src="/js/sidebars.js" defer></script>
+		<script src="/js/postLikes.js" defer></script>
 		<script src="/js/newsletterModal.js" defer></script>
 		<script src="/js/toast.js" defer></script>
 		<script src="https://kit.fontawesome.com/c780166e7c.js" crossorigin="anonymous"></script>
 	</head>
+	<%- include('./partials/navbar') %>
 	<body>
-		<%- include('./partials/sidebar') %>
+	<main>
         <div class="posts-wrapper">
+			<h2 class="page-heading">Znalezione Posty dla wyszukiwania "<%= search %>":</h2>
             <% for(const post of posts) { %>
             <%- include('./partials/postComponent', {post: post}) %>
             <% } %>

@@ -118,3 +118,24 @@
 		@include likesCount();
 	}
 }
+
+@media (max-width: 620px) {
+	main {
+		width: 100%;
+		margin-inline: 0;
+	}
+
+	.posts-wrapper.posts-wrapper {
+		width: 94%;
+	}
+
+	.post {
+		.post-top {
+			padding: 1rem 1.5rem 0.5rem;
+		}
+
+		.post-body {
+			margin: 1rem 1.5rem 1rem;
+		}
+	}
+}

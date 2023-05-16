@@ -45,6 +45,9 @@ main {
   width: 100%;
   max-width: 1000px;
 }
+.posts-wrapper .page-heading {
+  text-align: center;
+}
 
 @media (max-width: 1040px) {
   .welcome {
