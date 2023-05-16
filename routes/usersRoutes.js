@@ -23,7 +23,7 @@ router
 	.delete(authUser, catchAsync(deleteUser))
 	.patch(authUser, catchAsync(updateUser))
 
-router.route('/:_id/liked-posts').get(catchAsync(getLikedPosts))
-router.route('/:_id/disliked-posts').get(catchAsync(getDislikedPosts))
+router.route('/:_id/liked-posts').get(authUser, catchAsync(getLikedPosts))
+router.route('/:_id/disliked-posts').get(authUser, catchAsync(getDislikedPosts))
 
 module.exports = router

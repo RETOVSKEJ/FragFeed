@@ -2,140 +2,140 @@
 @import './hotPostsWrapper.css';
 @import './hotPostsMediaQueries.css';
 main {
-	gap: 0;
-	margin-top: calc(1.5rem + var(--navbar-height));
-	grid-template-columns: 0.2fr 1fr 450px;
-	grid-template-rows: initial;
-	padding-bottom: 1rem;
-	max-width: initial;
+  gap: 0;
+  margin-top: calc(1.5rem + var(--navbar-height));
+  grid-template-columns: 0.2fr 1fr 450px;
+  grid-template-rows: initial;
+  padding-bottom: 1rem;
+  max-width: initial;
 }
 
 .page-heading {
-	text-align: center;
-	margin-bottom: 1.5rem;
+  text-align: center;
+  margin-bottom: 1.5rem;
 }
 
 .post-form-wrapper {
-	grid-column: 2;
+  grid-column: 2;
 }
 
 .post-form {
-	display: flex;
-	flex-direction: column;
-	gap: 1rem;
-	width: 80%;
-	margin-inline: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 80%;
+  margin-inline: auto;
 }
 .post-form input,
 .post-form textarea {
-	font-family: 'sans-serif', 'Segoe UI';
-	background-color: var(--third-clr);
-	border: 1px solid #404142;
-	border-radius: var(--radius);
-	color: var(--text-clr);
-	padding: 1em;
-	outline: none;
-	width: 100%;
+  font-family: "sans-serif", "Segoe UI";
+  background-color: var(--third-clr);
+  border: 1px solid #404142;
+  border-radius: var(--radius);
+  color: var(--text-clr);
+  padding: 1em;
+  outline: none;
+  width: 100%;
 }
 .post-form input:focus,
 .post-form textarea:focus {
-	border: 1px solid #606162;
+  border: 1px solid #606162;
 }
 .post-form .img-div,
 .post-form .tags-div {
-	display: flex;
-	flex-direction: column;
-	gap: 0.4rem;
-	margin-top: -3px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin-top: -3px;
 }
 .post-form .tags-div {
-	margin-top: -6px;
+  margin-top: -6px;
 }
 .post-form .post-body {
-	height: 30vh;
+  height: 30vh;
 }
 .post-form .button-div {
-	display: flex;
-	width: 100%;
-	gap: 1rem;
+  display: flex;
+  width: 100%;
+  gap: 1rem;
 }
 .post-form .button-div button {
-	width: 100%;
+  width: 100%;
 }
 
 #file-upload-button {
-	background-color: red;
+  background-color: red;
 }
 
 .img-preview {
-	border: 3px solid var(--accent-clr);
-	box-shadow: var(--shadow);
-	border-radius: 12px;
-	-o-object-fit: cover;
-	object-fit: cover;
+  border: 3px solid var(--accent-clr);
+  box-shadow: var(--shadow);
+  border-radius: 12px;
+  -o-object-fit: cover;
+     object-fit: cover;
 }
 
 /* TAGS */
 #tags-container {
-	width: 100%;
-	padding: 4px;
-	background-color: var(--third-clr);
-	border: 1px solid #404142;
-	border-radius: var(--radius);
-	color: var(--text-clr);
+  width: 100%;
+  padding: 4px;
+  background-color: var(--third-clr);
+  border: 1px solid #404142;
+  border-radius: var(--radius);
+  color: var(--text-clr);
 }
 
 #tags-list {
-	display: flex;
-	flex-wrap: wrap;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 #tag {
-	padding: 5px 8px;
-	border-radius: 4px;
-	list-style-type: none;
-	margin: 0.25em;
-	background-color: var(--secondary-clr);
-	color: var(--btn-clr);
+  padding: 5px 8px;
+  border-radius: 4px;
+  list-style-type: none;
+  margin: 0.25em;
+  background-color: var(--secondary-clr);
+  color: var(--btn-clr);
 }
 #tag i {
-	color: var(--btn-clr);
-	margin-inline: 4px;
+  color: var(--btn-clr);
+  margin-inline: 4px;
 }
 #tag i:hover {
-	color: var(--text-clr);
+  color: var(--text-clr);
 }
 
 #tags-input {
-	border: none;
-	border-radius: 4px;
-	outline: none;
-	background-color: transparent;
+  border: none;
+  border-radius: 4px;
+  outline: none;
+  background-color: transparent;
 }
 
 @media (min-width: 621px) and (max-width: 1040px) {
-	main {
-		grid-template-columns: 1fr 0.5fr;
-	}
-	.post-form-wrapper {
-		grid-column: 1;
-	}
-	.post-form {
-		width: 88%;
-		margin-inline: 5vw;
-	}
+  main {
+    grid-template-columns: 1fr 0.5fr;
+  }
+  .post-form-wrapper {
+    grid-column: 1;
+  }
+  .post-form {
+    width: 88%;
+    margin-inline: 5vw;
+  }
 }
 @media (max-width: 620px) {
-	body {
-		overflow: auto;
-	}
-	main {
-		grid-template-columns: 1fr;
-	}
-	.post-form-wrapper {
-		grid-column: 1;
-	}
-	.post-form {
-		width: 93%;
-	}
+  body {
+    overflow: auto;
+  }
+  main {
+    grid-template-columns: 1fr;
+  }
+  .post-form-wrapper {
+    grid-column: 1;
+  }
+  .post-form {
+    width: 93%;
+  }
 }

@@ -30,3 +30,16 @@
 	justify-content: center;
 	align-items: center;
 }
+
+@mixin likesCount() {
+	padding: 0.5rem 0.75rem;
+	font-size: var(--fs-btn);
+	background-color: var(--secondary-clr);
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	margin-left: 1rem;
+	margin-bottom: 1rem;
+	border: 1px solid #343536;
+	border-radius: var(--radius);
+}

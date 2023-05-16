@@ -1,3 +1,5 @@
+@import 'variables';
+
 .post-wrapper {
 	.post-buttons {
 		display: flex;
@@ -10,25 +12,58 @@
 		flex-direction: column;
 		border: 3px solid var(--accent-clr);
 		border-radius: 8px;
-		gap: 1em;
-		padding: 1em;
 		background-color: var(--third-clr);
 		box-shadow: var(--shadow);
 
-		.post-title {
-			padding: 0.5em;
-			display: block;
-			font-size: var(--fs-lg);
-			color: var(--text-clr);
-			/* TODO find&replace dla wszystkich whiteSmoke na var(--text-clr) ITP. */
+		.post-top {
+			padding: 1.25rem 1.75rem 1rem;
+			background-color: #353638;
+			border-bottom: 1px solid var(--accent-clr);
+
+			.post-title {
+				display: block;
+				font-size: var(--fs-lg);
+				color: var(--text-clr);
+				/* TODO find&replace dla wszystkich whiteSmoke na var(--text-clr) ITP. */
+			}
+
+			.post-author {
+				font-size: var(--fs-btn);
+				margin-top: 0.25rem;
+				display: flex;
+
+				a {
+					margin-left: 0.5rem;
+				}
+			}
+
+			.post-date {
+				margin-left: auto;
+			}
 		}
+
+		.post-img {
+			position: relative;
+			display: flex;
+			justify-content: center;
+			width: 100%;
+			background-color: #000;
+			border: 1px solid var(--third-clr);
+			box-shadow: 0 0 17px 0 rgba(0, 0, 0, 0.5);
+		}
+
 		.post-body {
+			padding: 1rem;
 			font-size: var(--fs-btn);
+			letter-spacing: 0.3px;
+		}
+
+		.post-tags {
+			padding: 1rem;
 		}
 
 		.post-tag {
-			color: #222;
-			background-color: var(--text-clr);
+			background-color: var(--accent-clr);
 			padding: 0.25rem 0.75rem;
 			margin-inline: 0.25em;
 			border-radius: 6px;
@@ -36,12 +71,18 @@
 
 			&:hover {
 				color: var(--text-clr);
-				background-color: #6495ed;
+				background-color: #6295d6;
 				border: none;
 			}
 		}
 
 		.post-likes {
+			position: absolute;
+			bottom: 0;
+			right: 0;
+			margin-bottom: 1rem;
+			margin-right: 1rem;
+
 			button {
 				background-color: var(--accent-clr);
 				filter: grayscale(0.5);
@@ -53,6 +94,10 @@
 			button:hover {
 				filter: grayscale(0.25);
 			}
+		}
+
+		.post-likes__count {
+			@include likesCount();
 		}
 	}
 }

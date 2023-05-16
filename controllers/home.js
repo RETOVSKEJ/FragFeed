@@ -4,11 +4,8 @@ const sgMail = require('@sendgrid/mail')
 sgMail.setApiKey(process.env.SENDGRID_KEY_API)
 const {
 	getPosts,
-	getAllPosts,
 	getHotPosts,
 	getAllLikedPostsService,
-	getLikedPostsService,
-	getDislikedPostsService,
 } = require('../services/queries')
 
 /// ROUTES
@@ -18,8 +15,9 @@ async function getFetchPosts(req, res) {
 	const offset = bIsFetch ? parseInt(req.get('offset')) : null // TODO chyba mozna usunac nulla
 	const fetchPostsLimit = parseInt(req.get('posts-count')) ?? null
 
-	if (req.path === '/old') {
+	if (req.query.q === 'old') {
 		var posts = await getPosts(fetchPostsLimit, {
+			sort: 'createdAt',
 			offset: offset,
 		})
 	} else {
@@ -51,7 +49,9 @@ async function getHome(req, res) {
 	req.session.post = null
 
 	if (req.path === '/old') {
-		posts = await getPosts(preloadedPostsLimit)
+		posts = await getPosts(preloadedPostsLimit, {
+			sort: 'createdAt',
+		})
 	} else {
 		posts = await getPosts(preloadedPostsLimit, {
 			sort: '-id',

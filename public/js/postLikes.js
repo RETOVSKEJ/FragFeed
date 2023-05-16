@@ -17,6 +17,7 @@ function LoggedIn() {
 }
 
 async function handleUpvote(ev) {
+	ev.preventDefault()
 	if (!LoggedIn()) return
 	const POST_ID = ev.target.getAttribute('data-atr')
 	const next = ev.target.nextElementSibling
@@ -42,6 +43,7 @@ async function handleUpvote(ev) {
 }
 
 async function handleDownvote(ev) {
+	ev.preventDefault()
 	if (!LoggedIn()) return
 	const POST_ID = ev.target.getAttribute('data-atr')
 	const prev = ev.target.previousElementSibling

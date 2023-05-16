@@ -46,8 +46,12 @@ async function loadNewPosts() {
 			res.json()
 		),
 	])
+	const URL =
+		window.location.pathname === '/old'
+			? `${window.origin}/fetch/posts?q=old`
+			: `${window.origin}/fetch/posts`
 
-	const data = await fetch(`${window.origin}/fetch/posts`, {
+	const data = await fetch(URL, {
 		headers: {
 			'Cache-control': 'max-age=120',
 			'Content-type': 'application/json',

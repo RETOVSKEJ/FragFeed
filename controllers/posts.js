@@ -62,15 +62,39 @@ async function getPost(req, res) {
 }
 
 async function getRandomPost(req, res) {
+	const hotPosts = await getHotPosts()
+	let dislikedPosts, likedPosts
+	;[likedPosts, dislikedPosts] = await getAllLikedPostsService(
+		res.locals?.user
+	)
 	const postsCount = await Post.countDocuments()
 	const randInt = Math.floor(Math.random() * postsCount)
-	const post = await Post.findOne().skip(randInt).exec()
+	const post = await Post.findOne()
+		.skip(randInt)
+		.populate('author', '-password')
+		.populate('edited_by', '-password')
+		.exec()
+
+	post.createdAtString = post.createdAt.toLocaleString('pl', {
+		dateStyle: 'long',
+		timeStyle: 'short',
+	}) // local variable for templates
+	post.updatedAtString = post.updatedAt.toLocaleString('pl', {
+		dateStyle: 'long',
+		timeStyle: 'short',
+	}) // local variable for templates
 	if (!post) {
 		res.status(400)
 		throw new Error('Nie istnieje taki post')
 	}
-	req.flash('logInfo', 'RANDOM POST ID: ' + post.id)
-	return res.status(200).render('post', { post, msg: req.flash('logInfo') })
+	req.flash('logInfo', 'Wylosowałes post nr: ' + post.id)
+	return res.status(200).render('post', {
+		hotPosts,
+		likedPosts,
+		dislikedPosts,
+		post,
+		msg: req.flash('logInfo'),
+	})
 }
 
 async function getSearchResults(req, res) {
@@ -146,6 +170,9 @@ async function getPostPreview(req, res) {
 		res.locals.referer = req.headers.referer
 		res.locals.post_id = req.session.post?.id
 		return res.render('preview', {
+			hotPosts: await getHotPosts(),
+			likedPosts: [],
+			dislikedPosts: [],
 			post: req.session.preview,
 			msg: req.flash('logInfo'),
 		})

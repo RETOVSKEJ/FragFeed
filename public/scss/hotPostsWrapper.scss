@@ -1,3 +1,5 @@
+@import 'variables';
+
 .hot-wrapper {
 	position: relative;
 	height: fit-content;
@@ -36,16 +38,7 @@
 	}
 
 	.hot-post__likes {
-		padding: 0.65rem 0.85rem;
-		font-size: var(--fs-btn);
-		background-color: var(--secondary-clr);
-		position: absolute;
-		left: 0;
-		bottom: 0;
-		margin-left: 1rem;
-		margin-bottom: 1rem;
-		border: 1px solid #343536;
-		border-radius: var(--radius);
+		@include likesCount();
 	}
 }
 
