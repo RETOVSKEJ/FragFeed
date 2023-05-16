@@ -1,4 +1,5 @@
 const Post = require('../models/Post')
+const Newsletter = require('../models/Newsletter')
 const appMailer = require('../emails')
 const sgMail = require('@sendgrid/mail')
 sgMail.setApiKey(process.env.SENDGRID_KEY_API)
@@ -109,37 +110,36 @@ async function postNewsletter(req, res) {
 		email: req.body.email.toLowerCase(),
 	}
 
-	const msg = {
-		to: formData.email, // Adres e-mail odbiorcy
-		from: 'retovskej@wp.pl', // Adres e-mail nadawcy
-		subject: 'Temat emaila', // Temat wiadomości
-		text: 'witaj siwecie!', // Treść wiadomości w formacie tekstowym
-		html: '<strong>and easy to do anywhere, even with Node.js</strong>',
-	}
+	// const msg = {
+	// 	to: formData.email, // Adres e-mail odbiorcy
+	// 	from: 'retovskej@wp.pl', // Adres e-mail nadawcy
+	// 	subject: 'Temat emaila', // Temat wiadomości
+	// 	text: 'witaj swecie!', // Treść wiadomości
+	// 	html: '<strong>and easy to do anywhere, even with Node.js</strong>',
+	// }
 
 	// Wysłanie wiadomości e-mail
-	sgMail
-		.send(msg)
-		.then(() => {
-			console.log('Wiadomość e-mail została wysłana.')
-		})
-		.catch((error) => {
-			console.error(error)
-			res.status(500).json({
-				message: 'Wystąpił błąd podczas wysyłania wiadomości e-mail.',
-			})
-		})
+	// sgMail
+	// 	.send(msg)
+	// 	.then(() => {
+	// 		console.log('Wiadomość e-mail została wysłana.')
+	// 	})
+	// 	.catch((error) => {
+	// 		console.error(error)
+	// 		res.status(500).json({
+	// 			message: 'Wystąpił błąd podczas wysyłania wiadomości e-mail.',
+	// 		})
+	// 	})
 
-	// console.log(formData)
-	// // store in DB
+	const succeed = await Newsletter.create(formData)
 
 	// // send notifiaciton
 	// await appMailer.applicationNotify({
 	// 	email: formData.email,
 	// 	data: { name: formData.name },
 	// })
-
-	req.flash('logInfo', 'Zostałeś dodany do newslettera!')
+	if (succeed) req.flash('logInfo', 'Zostałeś dodany do newslettera!')
+	if (!succeed) req.flash('logInfo', 'Coś poszło nie tak!')
 	return res.status(200).redirect('/')
 }
 

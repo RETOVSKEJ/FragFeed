@@ -1,8 +1,18 @@
 const postWrapper = document.querySelector('.posts-wrapper')
-
 let postsCount = postWrapper.children.length
 let lastPost = postWrapper.lastElementChild
 let postsOffset = postWrapper.childElementCount
+
+// const activeSidebarLink = document.querySelector('sidebar-link[href="/old"]')
+// activeSidebarLink.classList.remove('active')
+
+if (window.location.pathname === '/old') {
+	document.getElementById('old').classList.add('active')
+} else if (window.location.pathname === '/random') {
+	document.getElementById('random').classList.add('active')
+} else if (window.location.pathname === '/newest') {
+	document.getElementById('newest').classList.add('active')
+}
 
 /// INTERSECTION OBSERVER
 const LastPostObserver = new IntersectionObserver(

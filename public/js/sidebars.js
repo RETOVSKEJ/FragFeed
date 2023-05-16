@@ -4,6 +4,21 @@ const menuLabel = document.querySelector('.menu-container')
 const hotPostWrapper = document.querySelector('.hot-wrapper')
 const NAVBAR_HEIGHT = document.querySelector('nav').offsetHeight
 
+// if (window.location.pathname === '/old') {
+// 	document.getElementById('old').classList.add('active')
+// } else if (window.location.pathname === '/random') {
+// 	document.getElementById('random').classList.add('active')
+// } else if (window.location.pathname === '/newest') {
+// 	document.getElementById('newest').classList.add('active')
+// }
+
+const links = Array.from(document.getElementsByClassName('sidebar-link'))
+links.forEach((link) => {
+	if (link.href === window.location.href) {
+		link.classList.add('active')
+	}
+})
+
 /// HAMBURGER CLICKS ///
 window.addEventListener('click', function (ev) {
 	if (window.innerWidth > 621) return

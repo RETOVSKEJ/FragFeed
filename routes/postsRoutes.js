@@ -36,7 +36,7 @@ const {
 	canCommentPost,
 } = require('../middleware/permissions')
 
-router.route(['/', '/old']).get(catchAsync(getHome))
+router.route(['/', '/newest', '/old']).get(catchAsync(getHome))
 router.route(['/page', '/page/:num']).get(catchAsync(getHomePage))
 router.route('/fetch/posts').get(catchAsync(getFetchPosts))
 
@@ -73,14 +73,10 @@ router
 		uploadCompressedDisk.single('image'),
 		catchAsync(postPost)
 	)
-// .post(authUser, catchAsync(canAddPost), uploadCompressedDisk.single('image'), catchAsync(postPost))
 
 router
 	.route('/preview')
 	.get(authUser, catchAsync(canAddPost), catchAsync(getPostPreview))
 	.post(catchAsync(canAddPost), passPostPreview)
-
-// router.route('/upload')
-// .post(, postUpload) // catchAsync(canUploadImage)
 
 module.exports = router

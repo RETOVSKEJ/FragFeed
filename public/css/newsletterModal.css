@@ -1,89 +1,98 @@
 .modal {
-    position: fixed;
-    inset: 0;
-    margin: auto;
-    margin-bottom: 0;
-    padding: 2.5rem 4rem;
-    border-radius: 15px;
-    border: 3px solid var(--accent-clr);
-    box-shadow: var(--shadow);
-    background-color: var(--bg-alpha);
-    backdrop-filter: blur(3px);
+	position: fixed;
+	inset: 0;
+	margin: auto;
+	margin-bottom: 0;
+	padding: 2.5rem 4rem;
+	border-radius: 15px;
+	border: 3px solid var(--accent-clr);
+	box-shadow: var(--shadow);
+	background-color: var(--bg-alpha);
+	backdrop-filter: blur(3px);
 }
 
 .modal::backdrop {
-    background-color: rgba(0, 0, 0, 0.5)
+	background-color: rgba(0, 0, 0, 0.5);
 }
 
 .modal-wrapper {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    border-radius: var(--radius);
-    width: 100%;
-    max-height: 100%;
-    max-width: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	border-radius: var(--radius);
+	width: 100%;
+	max-height: 100%;
+	max-width: 100%;
 }
 
 .modal h2 {
-    margin-block: 1rem;
-    color: var(--text-clr);
+	margin-block: 1rem;
+	color: var(--text-clr);
 }
 
-
 .modal-form {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    width: 100%;
-    margin: 0.5rem;
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+	width: 100%;
+	margin: 0.5rem;
 }
 
 .modal-form button[type='submit'] {
-    margin-top: 1rem;
+	margin-top: 1rem;
 }
 
 .modal label {
-    color: var(--text-clr);
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 1rem;
+	color: var(--text-clr);
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	gap: 1rem;
 }
 
 .modal label span {
-    font-weight: 700;
-    width: 50px;
-    padding-bottom: 3px;
+	font-weight: 700;
+	width: 50px;
+	padding-bottom: 3px;
 }
 
 .modal input {
-    border: 2px solid #404142;
-    border-radius: var(--radius);
-    padding: var(--small);
-    background-color: var(--secondary-clr);
-    color: var(--text-clr);
-    width: 240px;
+	border: 2px solid #404142;
+	border-radius: var(--radius);
+	padding: var(--small);
+	background-color: var(--secondary-clr);
+	color: var(--text-clr);
+	width: 240px;
 }
 
 .modal input:focus {
-    outline: none;
-    border: 2px solid var(--accent-clr);
+	outline: none;
+	border: 2px solid var(--accent-clr);
 }
 
 #newsletter-close {
-    position: absolute;
-    top: 0;
-    right: 0;
+	position: absolute;
+	top: 0;
+	right: 0;
+}
+
+.newsletter-warning {
+	margin-top: 0.5rem;
+	margin-bottom: -0.75rem;
+	color: var(--text-clr);
+}
+
+.newsletter-warning i {
+	color: var(--accent-clr);
 }
 
 @media (max-width: 640px) {
-    .modal {
-        padding: 1rem;
-    }
+	.modal {
+		padding: 1rem;
+	}
 
-    .modal input {
-        width: 100%;
-    }
+	.modal input {
+		width: 100%;
+	}
 }
