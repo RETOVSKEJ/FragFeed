@@ -25,10 +25,12 @@
 
 	&.active {
 		filter: brightness(1.11);
-		background-color: var(--third-clr);
+		box-shadow: inset 0 0 100px 100px rgba(255, 255, 255, 0.08);
 	}
 
 	&:hover {
+		box-shadow: inset 0 0 100px 100px rgba(255, 255, 255, 0.13);
+		opacity: 1;
 		filter: brightness(1.22);
 	}
 
@@ -65,7 +67,7 @@
 		padding: 0.5rem;
 
 		> *:hover {
-			background-color: var(--primary-clr);
+			filter: brightness(1.22);
 		}
 	}
 }

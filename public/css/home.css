@@ -1,5 +1,7 @@
 @import './boilerplate.css';
+@import './postComponent.css';
 @import './sidebar.css';
+@import './navbar.css';
 @import './newsletterModal.css';
 @import './toast.css';
 @import './hotPostsWrapper.css';
@@ -31,229 +33,17 @@ main {
   display: grid;
   grid-template-columns: 240px 1fr 400px;
   grid-auto-columns: 0;
-  max-width: 1440px;
+  max-width: 1470px;
   margin-inline: auto;
 }
 
 /* SEARCH BAR */
-nav {
-  position: fixed;
-  height: var(--navbar-height);
-  top: 0;
-  left: 0;
-  width: 100%;
-  justify-content: space-between;
-  align-items: center;
-  display: flex;
-  flex-direction: row;
-  padding: var(--navbar-padding);
-  z-index: 900;
-  background-color: var(--third-clr);
-}
-nav .hamburger {
-  display: none;
-}
-nav .mobile {
-  display: none;
-}
-nav .search-bar {
-  position: relative;
-  width: 300px;
-  background-color: var(--secondary-clr);
-  border-radius: 12px;
-}
-nav .search {
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-  gap: 0.5rem;
-  padding: 0.5rem 0.75rem;
-  border-radius: var(--radius);
-}
-nav .search i {
-  display: flex;
-  align-items: center;
-  color: var(--btn-clr);
-}
-nav .search .search-input {
-  background-color: transparent;
-  padding: 0.5em;
-  width: 100%;
-  color: var(--text-clr);
-  border: none;
-  outline: none;
-  border-left: 1px solid var(--third-clr);
-}
-nav .search-results {
-  /* display: none; */
-  position: absolute;
-  width: 500px;
-  top: 110%;
-  left: -100px;
-  border: 1px solid #343536;
-  border-radius: var(--radius);
-  padding: 1rem;
-  display: flex;
-  gap: 0.5rem;
-  flex-direction: column;
-  justify-content: center;
-  background-color: var(--third-clr);
-  -webkit-backdrop-filter: blur(4px);
-          backdrop-filter: blur(4px);
-}
-nav .search-result {
-  margin-block: 0.5rem;
-}
-nav .search-result .flex-c {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 3px;
-  margin-bottom: 0.25em;
-}
-nav .search-result .flex-c em {
-  font-size: var(--fs-small);
-}
-nav .search-result a {
-  display: flex;
-  flex-direction: column;
-  border-radius: 12px;
-  flex-direction: row;
-  gap: 1rem;
-  background-color: #343536;
-}
-nav .search-result a img {
-  width: 55px;
-  border-radius: 10px;
-  height: 55px;
-  border-right: 1px solid #404142;
-}
-nav .search-result a strong {
-  margin-right: auto;
-  align-self: center;
-}
-nav .search-info {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-}
-nav .search-info span {
-  font-size: var(--fs-btn);
-}
-nav .search-info .show-more {
-  padding: 0.6rem 1rem;
-  font-family: sans-serif, "Segoe UI";
-  font-size: var(--fs-btn);
-  border: var(--border);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow-black);
-  background-color: var(--accent-clr);
-  text-transform: uppercase;
-  cursor: pointer;
-}
-nav .login-info .pc {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 1rem;
-}
-
 .posts-wrapper {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 4rem;
   width: 100%;
   max-width: 1000px;
-}
-.posts-wrapper .post {
-  display: flex;
-  flex-direction: column;
-  border: 3px solid var(--accent-clr);
-  border-radius: 8px;
-  background-color: var(--third-clr);
-  box-shadow: var(--shadow);
-}
-.posts-wrapper .post .post-top {
-  padding: 1.25rem 1.75rem 1rem;
-  background-color: #353638;
-  border-bottom: 1px solid var(--accent-clr);
-}
-.posts-wrapper .post .post-top .post-title {
-  display: block;
-  font-size: var(--fs-lg);
-  color: var(--text-clr);
-  /* TODO find&replace dla wszystkich whiteSmoke na var(--text-clr) ITP. */
-}
-.posts-wrapper .post .post-top .post-author {
-  font-size: var(--fs-btn);
-  margin-top: 0.25rem;
-  display: flex;
-}
-.posts-wrapper .post .post-top .post-author a {
-  margin-left: 0.5rem;
-}
-.posts-wrapper .post .post-top .post-date {
-  margin-left: auto;
-}
-.posts-wrapper .post .post-img {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  background-color: #000;
-  border: 1px solid var(--third-clr);
-  box-shadow: 0 0 17px 0 rgba(0, 0, 0, 0.5);
-}
-.posts-wrapper .post .post-body {
-  padding: 1rem;
-  font-size: var(--fs-btn);
-  letter-spacing: 0.3px;
-}
-.posts-wrapper .post .post-tags {
-  padding: 1rem;
-}
-.posts-wrapper .post .post-tag {
-  background-color: var(--accent-clr);
-  padding: 0.25rem 0.75rem;
-  margin-inline: 0.25em;
-  border-radius: 6px;
-  font-size: 12px;
-}
-.posts-wrapper .post .post-tag:hover {
-  color: var(--text-clr);
-  background-color: #6295d6;
-  border: none;
-}
-.posts-wrapper .post .post-likes {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  margin-bottom: 1rem;
-  margin-right: 1rem;
-}
-.posts-wrapper .post .post-likes button {
-  background-color: var(--accent-clr);
-  filter: grayscale(0.5);
-}
-.posts-wrapper .post .post-likes button[data-voted] {
-  background-color: var(--accent-clr);
-  filter: grayscale(0);
-}
-.posts-wrapper .post .post-likes button:hover {
-  filter: grayscale(0.25);
-}
-.posts-wrapper .post .post-likes__count {
-  padding: 0.5rem 0.75rem;
-  font-size: var(--fs-btn);
-  background-color: var(--secondary-clr);
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  margin-left: 1rem;
-  margin-bottom: 1rem;
-  border: 1px solid #343536;
-  border-radius: var(--radius);
 }
 
 @media (max-width: 1040px) {
@@ -268,21 +58,6 @@ nav .login-info .pc {
     grid-template-rows: var(--sidebar-tablet-height) 1fr;
     gap: 1rem;
   }
-  .sidebar {
-    height: var(--sidebar-tablet-height);
-    align-self: start;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    background-color: var(--secondary-clr);
-    grid-row: 1;
-    grid-column: 1/3;
-    z-index: 550;
-    font-size: 16px;
-    padding: 0.5rem;
-  }
-  .sidebar > *:hover {
-    background-color: var(--primary-clr);
-  }
   .posts-wrapper {
     margin-left: 0.75rem;
     grid-row: 2;
@@ -295,95 +70,5 @@ nav .login-info .pc {
   }
   .sidebar {
     display: none;
-  }
-  nav {
-    justify-content: space-between;
-    /* HAMBURGER */
-    /* NAVBAR */
-  }
-  nav .fa-solid {
-    font-size: 20px;
-  }
-  nav .pc {
-    display: none;
-  }
-  nav .mobile {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    background-color: transparent;
-    border: none;
-    padding: 0.25rem 0.75rem;
-  }
-  nav .hamburger.mobile {
-    position: relative;
-  }
-  nav .hot-wrapper {
-    display: none;
-  }
-  nav .search-results {
-    position: fixed;
-    width: 100vw;
-    width: 100dvw;
-    top: var(--navbar-height);
-    left: 0;
-  }
-  nav .login-info .pc {
-    display: none;
-  }
-  nav #menu-button {
-    display: none;
-    -webkit-appearance: none;
-       -moz-appearance: none;
-            appearance: none;
-  }
-  nav .menu-container {
-    display: inline-flex;
-    flex-direction: column;
-    gap: 5px;
-    /* wystarczy zmienic gap na 13px i wyjdzie piekna strzalka! */
-    cursor: pointer;
-    position: relative;
-    z-index: 999;
-    /* inline-flex do buttona */
-  }
-  nav .menu-container span {
-    width: var(--hamburger-width);
-    height: var(--hamburger-height);
-    background-color: white;
-    border-radius: 10px;
-    pointer-events: none;
-    transition: transform 400ms ease-in-out, opacity 200ms;
-  }
-  nav #menu-button:checked + label .top {
-    transform: translateY(8px) rotate(45deg);
-  }
-  nav #menu-button:checked + label .bottom {
-    transform: translateY(-8px) rotate(-45deg);
-  }
-  nav #menu-button:checked + label .middle {
-    opacity: 0;
-  }
-  nav .hidden-ham.hidden-ham.hidden-ham {
-    display: flex;
-    position: absolute;
-    left: calc(-1 * var(--navbar-padding));
-    top: calc(100% + var(--navbar-padding));
-    align-items: center;
-    width: -moz-fit-content;
-    width: fit-content;
-    height: -moz-fit-content;
-    height: fit-content;
-    overflow: hidden;
-    flex-direction: column;
-    background-color: #292929;
-    border: 1px solid #333;
-    border-radius: var(--radius);
-    transition: transform 400ms;
-    transform: translateX(-120%);
-  }
-  nav #menu-button:checked ~ .menu {
-    transform: translateX(0%);
   }
 }

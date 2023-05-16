@@ -6,14 +6,6 @@ let postsOffset = postWrapper.childElementCount
 // const activeSidebarLink = document.querySelector('sidebar-link[href="/old"]')
 // activeSidebarLink.classList.remove('active')
 
-if (window.location.pathname === '/old') {
-	document.getElementById('old').classList.add('active')
-} else if (window.location.pathname === '/random') {
-	document.getElementById('random').classList.add('active')
-} else if (window.location.pathname === '/newest') {
-	document.getElementById('newest').classList.add('active')
-}
-
 /// INTERSECTION OBSERVER
 const LastPostObserver = new IntersectionObserver(
 	(entry) => {
@@ -84,43 +76,63 @@ async function loadNewPosts() {
 			)
 			const compiled =
 				ejs.compile(`<div class="post" data-atr="<%= post.id %>">
-				<a href="<%= post.id %>"><h5 class="post-title"><%= post.title %></h5></a>
+				<div class="post-top">
+					<a href="<%= post.id %>"><h5 class="post-title"><%= post.title %></h5></a>
+				<div class="post-author-div">
+					<p class="post-author">
+						<strong>Autor:</strong> <a class="author" href="/users/<%= post.author.nick %>"> <%= post.author.nick %></a> 
+						<em class="post-date"><%= post.createdAtString %></em>
+					</p>
+					<p class="post-author">
+						<% if(post.edited_by){ %>Edytowane przez:<a class="author" href="/users/<%= post.edited_by.nick %>"> <%= post.edited_by.nick %></a>
+						<em class="post-date"><%= post.updatedAtString %><%}%></em>
+					</p>
+				</div>
+				</div>
+				<% if(locals.urlPath == "/preview"){ %>
+				<img
+					id="img-preview"
+					src="<%= post.image %>"
+					alt="Uploaded Image preview"
+				/>
+				<script defer>
+					// IF USER JUST UPLOADED IMAGE TO PREVIEW
+					if (localStorage.getItem("img_data")) {
+						const img = document.getElementById("img-preview")
+						img.src = localStorage.getItem("img_data")
+					}
+				</script>
+				<% } else { %>
 				<% if(post.image) { %>
-				<a class="post-img" href="/<%= post.id %>"><img id="img-preview" src="<%= post.image %>" alt="Post image" /></a>
+					<a class="post-img" href="/<%= post.id %>"><img id="img-preview" src="<%= post.image %>" alt="Post image" />
 				<% } else { %>
-					<a class="post-img" href="/<%= post.id %>"><img id="img-preview" src="nophoto.png" alt="No Photo available" /></a>
-				<% } %>
-				<p class="post-body"><%= post.body %></p>
-				<div class="post-author">
-					<p>
-						<% if(post.author){ %>Autor: <%= post.author.nick %> <%=
-						post.createdAtString %><%}%>
-					</p>
-					<p>
-						<% if(post.edited_by){ %>Edytowane przez: <%= post.edited_by.nick %>
-						<%= post.updatedAtString %><%}%>
-					</p>
-				</div>
-				<div class="post-tags">
-					<% if(post.tags.length > 0) { %>
-					<label for="tags">Tagi: </label>
-						<% for(const tag of post.tags) {%>
-							<a class="post-tag" href="/tag/<%= tag %>"><%= tag %></a>
+					<a class="post-img" href="/<%= post.id %>"><img id="img-preview" src="nophoto.png" alt="No Photo available" />
+				<% }} %>
+					<div id="post-likes" data-atr="<%= locals?.user?._id %>" class="post-likes">
+						<% if(likedPosts.likedPosts?.includes(post.id)){ %>
+							<button data-voted='true' data-atr="<%= post.id %>" id="upvote-btn" class="fa-solid fa-chevron-up upvote-btn"></button>
+						<% } else { %>
+							<button data-atr="<%= post.id %>" id="upvote-btn" class="fa-solid fa-chevron-up upvote-btn"></button>
 						<% } %>
-					<% } %>
+						<% if(dislikedPosts.dislikedPosts?.includes(post.id)){ %>
+							<button data-voted="true" data-atr="<%= post.id %>" id="downvote-btn" class="fa-solid fa-chevron-down downvote-btn"></button> 
+						<% } else { %>
+							<button data-atr="<%= post.id %>" id="downvote-btn" class="fa-solid fa-chevron-down downvote-btn"></button> 
+						<% } %>
+					</div>
+					<div class="post-likes__count"><%= post.likes || 0 %></div>
+					</a>
+				<div class="post-body">
+					<p class="post-text"><%= post.body %></p>
+					<div class="post-tags">
+						<% if(post.tags.length > 0) { %>
+						<label for="tags"><strong>Tagi:</strong> </label>
+							<% for(const tag of post.tags) {%>
+								<a class="post-tag" href="/tag/<%= tag %>"><%= tag %></a>
+							<% } %>
+						<% } %>
+					</div>
 				</div>
-				<div id="post-likes" data-atr="<%= locals?.user?._id %>" class="post-likes">
-				<% if(likedPosts.likedPosts?.includes(post.id)){ %>
-					<button data-voted='true' data-atr="<%= post.id %>" id="upvote-btn" class="fa-solid fa-chevron-up upvote-btn"></button>
-				<% } else { %>
-					<button data-atr="<%= post.id %>" id="upvote-btn" class="fa-solid fa-chevron-up upvote-btn"></button>
-				<% } %>
-				<% if(dislikedPosts.dislikedPosts?.includes(post.id)){ %>
-					<button data-voted="true" data-atr="<%= post.id %>" id="downvote-btn" class="fa-solid fa-chevron-down downvote-btn"></button> 
-				<% } else { %>
-					<button data-atr="<%= post.id %>" id="downvote-btn" class="fa-solid fa-chevron-down downvote-btn"></button> 
-				<% } %>
-			</div>
 			</div>
 		`)
 

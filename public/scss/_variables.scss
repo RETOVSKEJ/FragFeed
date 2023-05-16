@@ -18,6 +18,19 @@
 	cursor: pointer;
 }
 
+@mixin button-small-caps($padding: 0.2rem 0.5rem) {
+	@include button($padding);
+	font-size: var(--fs-small);
+	text-transform: none;
+	border-radius: 50px;
+
+	&:hover {
+		color: var(--text-clr);
+		background-color: #6295d6;
+		border: none;
+	}
+}
+
 @mixin flex() {
 	display: flex;
 	justify-content: center;

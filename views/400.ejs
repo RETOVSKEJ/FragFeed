@@ -1,14 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link href="/css/errors.css" rel="stylesheet"  type="text/css">
-    <link rel="shortcut icon" href="/assets/favicon-error-16x16.png" type="image/png">
-</head>
-<body>
-    <h1><%= err %></h1>
-</body>
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+		<link rel="stylesheet" href="/css/errors.css" />
+		<link
+			rel="shortcut icon"
+			href="/assets/favicon-error-16x16.png"
+			type="image/png"
+		/>
+	</head>
+	<body style="padding: 1rem; transform: translateY(35vh)">
+		<h1><%= err %></h1>
+		<div class="buttons">
+			<button
+				type="button"
+				onclick="(function(){
+			history.back();
+		})();"
+			>
+				Poprzednia strona
+			</button>
+			<button
+				type="button"
+				onclick="(function(){
+			location.pathname = '/';
+		})();"
+			>
+				Strona główna
+			</button>
+			<button
+				type="button"
+				onclick="(function(){
+			location.reload();
+		})();"
+			>
+				Spróbuj ponownie
+			</button>
+		</div>
+	</body>
 </html>

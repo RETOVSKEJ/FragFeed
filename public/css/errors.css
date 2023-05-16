@@ -5,6 +5,13 @@ body {
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	flex-direction: column;
+	gap: 1.25rem;
+}
+
+.buttons > * {
+	margin-block: 0.25rem;
+	margin-inline: 1rem;
 }
 
 h1 {

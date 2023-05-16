@@ -1,0 +1,232 @@
+@import 'variables';
+nav {
+	position: fixed;
+	height: var(--navbar-height);
+	top: 0;
+	left: 0;
+	width: 100%;
+	justify-content: space-between;
+	align-items: center;
+	display: flex;
+	flex-direction: row;
+	padding: var(--navbar-padding);
+	z-index: 900;
+	background-color: var(--third-clr);
+	border-bottom: 1px solid #303131;
+
+	.hamburger {
+		display: none;
+	}
+
+	.mobile {
+		display: none;
+	}
+
+	.search-bar {
+		position: relative;
+		width: 300px;
+		background-color: var(--secondary-clr);
+		border-radius: 12px;
+	}
+
+	.search {
+		display: flex;
+		flex-direction: row;
+		width: 100%;
+		gap: 0.5rem;
+		padding: 0.5rem 0.75rem;
+		border-radius: var(--radius);
+
+		i {
+			display: flex;
+			align-items: center;
+			color: var(--btn-clr);
+		}
+
+		.search-input {
+			background-color: transparent;
+			padding: 0.5em;
+			width: 100%;
+			color: var(--text-clr);
+			border: none;
+			outline: none;
+			border-left: 1px solid var(--third-clr);
+		}
+	}
+
+	.search-results {
+		/* display: none; */
+		position: absolute;
+		width: 500px;
+		top: 110%;
+		left: -100px;
+		border: 1px solid #343536;
+		border-radius: var(--radius);
+		padding: 1rem;
+		display: flex;
+		gap: 0.5rem;
+		flex-direction: column;
+		justify-content: center;
+		background-color: var(--third-clr);
+		backdrop-filter: blur(4px);
+	}
+
+	.search-result {
+		margin-block: 0.5rem;
+
+		.flex-c {
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			gap: 3px;
+			margin-bottom: 0.25em;
+
+			em {
+				font-size: var(--fs-small);
+			}
+		}
+
+		a {
+			display: flex;
+			flex-direction: column;
+			border-radius: 12px;
+			flex-direction: row;
+			gap: 1rem;
+			background-color: #343536;
+		}
+
+		a img {
+			width: 55px;
+			border-radius: 10px;
+			height: 55px;
+			border-right: 1px solid #404142;
+		}
+
+		a strong {
+			margin-right: auto;
+			align-self: center;
+		}
+	}
+
+	.search-info {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		align-items: center;
+
+		span {
+			font-size: var(--fs-btn);
+		}
+
+		.show-more {
+			@include button();
+		}
+	}
+
+	.login-info .pc {
+		@include flex();
+		gap: 1rem;
+	}
+}
+
+@media (max-width: 620px) {
+	nav {
+		justify-content: space-between;
+
+		.fa-solid {
+			font-size: 20px;
+		}
+		.pc {
+			display: none;
+		}
+		.mobile {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			height: 100%;
+			background-color: transparent;
+			border: none;
+			padding: 0.25rem 0.75rem;
+		}
+		.hamburger.mobile {
+			position: relative;
+		}
+
+		.hot-wrapper {
+			display: none;
+		}
+
+		.search-results {
+			position: fixed;
+			width: 100vw;
+			width: 100dvw;
+			top: var(--navbar-height);
+			left: 0;
+		}
+
+		.login-info .pc {
+			display: none;
+		}
+
+		/* HAMBURGER */
+		#menu-button {
+			display: none;
+			appearance: none;
+		}
+
+		.menu-container {
+			display: inline-flex;
+			flex-direction: column;
+			gap: 5px;
+			/* wystarczy zmienic gap na 13px i wyjdzie piekna strzalka! */
+			cursor: pointer;
+			position: relative;
+			z-index: 999;
+			/* inline-flex do buttona */
+
+			span {
+				width: var(--hamburger-width);
+				height: var(--hamburger-height);
+				background-color: white;
+				border-radius: 10px;
+				pointer-events: none;
+				transition: transform 400ms ease-in-out, opacity 200ms;
+			}
+		}
+
+		#menu-button:checked + label .top {
+			transform: translateY(8px) rotate(45deg);
+		}
+
+		#menu-button:checked + label .bottom {
+			transform: translateY(-8px) rotate(-45deg);
+		}
+
+		#menu-button:checked + label .middle {
+			opacity: 0;
+		}
+
+		/* NAVBAR */
+
+		.hidden-ham.hidden-ham.hidden-ham {
+			display: flex;
+			position: absolute;
+			left: calc(-1 * var(--navbar-padding));
+			top: calc(100% + var(--navbar-padding));
+			align-items: center;
+			width: fit-content;
+			height: fit-content;
+			overflow: hidden;
+			flex-direction: column;
+			background-color: #292929;
+			border: 1px solid #333;
+			border-radius: var(--radius);
+			transition: transform 400ms;
+			transform: translateX(-120%);
+		}
+
+		#menu-button:checked ~ .menu {
+			transform: translateX(-0%);
+		}
+	}
+}

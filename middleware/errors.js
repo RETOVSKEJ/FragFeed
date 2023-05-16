@@ -32,15 +32,15 @@ function errorHandler(err, req, res, next) {
 
 	if (err.name === 'MongoServerError' && err.code === 11000) {
 		if (err.keyValue.email) {
-			req.flash('logInfo', 'This email is already taken')
+			req.flash('logInfo', 'Ten email jest już zajęty!')
 		}
 		if (err.keyValue.nick) {
-			req.flash('logInfo', 'This nick is already taken')
+			req.flash('logInfo', 'Ten nick jest już zajęty!')
 		}
 		return res.redirect('back')
 	}
 	if (err.name == 'MongoServerError') {
-		return res.render('500')
+		return res.status(500).sendFile(path.resolve('public/500.html'))
 	}
 
 	/// /// ROLES /////
@@ -65,7 +65,7 @@ function errorHandler(err, req, res, next) {
 	/// //// DEFAULT HANDLERS ////////////
 	if (err.message == 400 || res.statusCode == 400) {
 		return res.render('400', { err })
-	} // DEV - domyslnie modal popup
+	}
 
 	if (err.message == 404 || res.statusCode == 404) {
 		if (req.accepts('html')) {
@@ -74,7 +74,7 @@ function errorHandler(err, req, res, next) {
 		return res.json({ error: '404 json' })
 	}
 
-	return res.status(500).sendFile(path.resolve('public/error.html')) // resolve to join, ale zwraca ABSOLUTE path do glownej sciezki projektu
+	return res.status(500).sendFile(path.resolve('public/500.html')) // resolve to join, ale zwraca ABSOLUTE path do glownej sciezki projektu
 }
 
 // wrapper ktory dodajemy przed kazda async funkcja w routach.
