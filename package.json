@@ -28,6 +28,7 @@
 	"main": "index.js",
 	"scripts": {
 		"server": "nodemon index.js",
+		"build": "npm install",
 		"start": "node index.js",
 		"lint": "eslint . --watch-disabled",
 		"lint:fix": "eslint --fix .",
