@@ -35,13 +35,29 @@ function authRoles(role) {
 }
 
 // @route /:id
-async function canAddPost(req, res, next) {
-	if (req.user.role === ROLES.ADMIN || req.user.role === ROLES.VIP) {
+async function canSendPost(req, res, next) {
+	if (
+		req.user.role === ROLES.ADMIN ||
+		req.user.role === ROLES.VIP ||
+		req.user.role === ROLES.USER
+	) {
 		return next()
 	}
 
 	res.status(403)
 	throw new Error('You are not allowed to add posts')
+}
+
+async function canAddPost(req, res, next) {
+	if (req.user.role === ROLES.ADMIN || req.user.role === ROLES.VIP) {
+		return next()
+	}
+
+	req.flash(
+		'logInfo',
+		'Post został wysłany i oczekuje na akceptację moderatora'
+	)
+	return res.status(200).redirect('/')
 }
 
 // @route /:id
@@ -108,6 +124,7 @@ module.exports = {
 	authUser,
 	notAuthUser,
 	authRoles,
+	canSendPost,
 	canAddPost,
 	canEditPost,
 	canDeletePost,

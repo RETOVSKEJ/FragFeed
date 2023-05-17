@@ -30,6 +30,7 @@ const {
 	notAuthUser,
 	authRoles,
 	canAddPost,
+	canSendPost,
 	canEditPost,
 	canDeletePost,
 	canLikePost,
@@ -66,7 +67,7 @@ router
 
 router
 	.route('/new')
-	.get(authUser, catchAsync(canAddPost), catchAsync(getPostForm))
+	.get(authUser, catchAsync(canSendPost), catchAsync(getPostForm))
 	.post(
 		authUser,
 		catchAsync(canAddPost),
@@ -76,7 +77,7 @@ router
 
 router
 	.route('/preview')
-	.get(authUser, catchAsync(canAddPost), catchAsync(getPostPreview))
+	.get(authUser, catchAsync(canSendPost), catchAsync(getPostPreview))
 	.post(catchAsync(canAddPost), passPostPreview)
 
 module.exports = router

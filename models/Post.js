@@ -6,6 +6,7 @@ const mongoose = require('mongoose')
 const postSchema = mongoose.Schema(
 	{
 		id: { type: Number, index: true, unique: true },
+		visible: Boolean,
 		author: {
 			type: mongoose.SchemaTypes.ObjectId,
 			ref: 'User',
