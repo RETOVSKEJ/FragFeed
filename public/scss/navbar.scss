@@ -42,7 +42,8 @@ nav {
 		gap: 1rem;
 		align-items: center;
 
-		button {
+		button,
+		a {
 			@include button(0.5rem 1rem);
 		}
 	}
@@ -151,7 +152,7 @@ nav {
 	nav {
 		padding-inline: 0.75rem;
 
-		a {
+		a.logo {
 			width: 110px;
 			align-self: center;
 			margin-bottom: 3px;
@@ -163,7 +164,8 @@ nav {
 
 		.nav-buttons {
 			gap: 0.4rem;
-			button {
+			button,
+			a {
 				padding-inline: 0.75rem;
 				font-size: 11px;
 			}

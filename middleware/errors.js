@@ -55,6 +55,10 @@ function errorHandler(err, req, res, next) {
 		return res.redirect('back')
 	}
 
+	if (err.message === 429 || res.statusCode === 429) {
+		return res.sendFile(path.resolve('public/429.html'))
+	}
+
 	/// ///// STATIC FILES //////////////
 
 	if (req.path.match('.css|.html|.jpg|.png')) {

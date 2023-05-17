@@ -16,6 +16,7 @@ const User = require('./models/User')
 const { setUser, setPath } = require('./middleware/utils')
 const { logEvents, logOtherEvents } = require('./middleware/logEvents')
 const { errorHandler } = require('./middleware/errors')
+const limiter = require('./middleware/rateLimit')
 const connectDB = require('./db')
 const initializePassword = require('./passport-config')
 
@@ -32,6 +33,7 @@ app.set('view engine', 'ejs')
 /// /// CUSTOM MIDDLEWARES  /////
 
 app.use(logEvents)
+app.use(limiter)
 
 /// //////// MIDDLEWARES /////////////////
 

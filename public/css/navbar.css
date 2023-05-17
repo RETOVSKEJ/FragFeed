@@ -38,7 +38,8 @@ nav .nav-buttons {
   gap: 1rem;
   align-items: center;
 }
-nav .nav-buttons button {
+nav .nav-buttons button,
+nav .nav-buttons a {
   padding: 0.5rem 1rem;
   font-family: sans-serif, "Segoe UI";
   font-size: var(--fs-btn);
@@ -150,7 +151,7 @@ nav .login-info .pc {
   nav {
     padding-inline: 0.75rem;
   }
-  nav a {
+  nav a.logo {
     width: 110px;
     align-self: center;
     margin-bottom: 3px;
@@ -161,7 +162,8 @@ nav .login-info .pc {
   nav .nav-buttons {
     gap: 0.4rem;
   }
-  nav .nav-buttons button {
+  nav .nav-buttons button,
+  nav .nav-buttons a {
     padding-inline: 0.75rem;
     font-size: 11px;
   }
