@@ -25,9 +25,10 @@
 	},
 	"name": "spikerush",
 	"version": "1.0.0",
-	"main": "server.js",
+	"main": "index.js",
 	"scripts": {
-		"server": "nodemon server.js",
+		"server": "nodemon index.js",
+		"start": "node index.js",
 		"lint": "eslint . --watch-disabled",
 		"lint:fix": "eslint --fix .",
 		"prettier": "npx prettier --write .",
@@ -39,7 +40,6 @@
 	"license": "ISC",
 	"description": "",
 	"devDependencies": {
-		"@vercel/node": "^2.14.2",
 		"eslint": "^8.34.0",
 		"eslint-config-airbnb-base": "^15.0.0",
 		"eslint-config-prettier": "^8.6.0",
