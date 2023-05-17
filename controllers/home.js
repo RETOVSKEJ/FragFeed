@@ -1,8 +1,8 @@
 const Post = require('../models/Post')
 const Newsletter = require('../models/Newsletter')
-const appMailer = require('../emails')
-const sgMail = require('@sendgrid/mail')
-sgMail.setApiKey(process.env.SENDGRID_KEY_API)
+// const appMailer = require('../emails')
+// const sgMail = require('@sendgrid/mail')
+// sgMail.setApiKey(process.env.SENDGRID_KEY_API)
 const {
 	getPosts,
 	getHotPosts,
