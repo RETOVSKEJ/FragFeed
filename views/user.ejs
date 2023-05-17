@@ -5,9 +5,39 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Document</title>
-		<link rel="stylesheet" href="/css/auth.css" />
+		<link rel="stylesheet" href="/css/home.css" />
+		<link rel="stylesheet" href="/css/user.css" />
+		<script src="/js/searchBar.js" defer></script>
+		<script src="/js/sidebars.js" defer></script>
+		<script src="/js/newsletterModal.js" defer></script>
+		<script src="/js/toast.js" defer></script>
+		<script src="https://kit.fontawesome.com/c780166e7c.js" crossorigin="anonymous"></script>
 	</head>
 	<body>
-		<%= locals.user %>
+		<%- include('./partials/navbar') %>
+		<main>
+			<div class="user-card flex-r">
+				<div class="left flex-c">
+					<img class="user-avatar" src="/assets/avatar.png">
+					<div class="flex-c user-info">
+						<p class="flex-r user-nick"><strong>Nick:</strong><span><%= user.nick %></span></p>
+						<p class="flex-r"><strong>Email:</strong><span><%= user.email %></span></p>
+						<p class="flex-r"><strong>Konto od:</strong><span><%= new Date(user.createdAt).toLocaleString('pl') %></span></p>
+					</div>	
+				</div>
+				<div class="right flex-c">
+					<div class="liked flex-c">
+						<h3 class="liked-title"><strong>Polubione posty:</strong></h3>
+						<div class="liked-posts flex-c">
+							<% for(const post of likedPosts) { %>
+								<%- include('./partials/searchResult', {post: post, date: new Date(post.createdAt)}) %>
+							<% } %>
+						</div>
+					</div>
+				</div>
+			</div>
+		</main>
+		<%- include('./partials/toast', {msg: messages.error || messages.message || msg}) %>
+		<%- include('./partials/footer') %>
 	</body>
 </html>

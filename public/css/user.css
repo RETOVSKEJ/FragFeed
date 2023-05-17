@@ -1,0 +1,138 @@
+body {
+  overflow: hidden;
+}
+
+main {
+  grid-template-columns: 1fr;
+  margin-top: 0;
+  margin-bottom: 0;
+  height: 100vh;
+}
+
+.user-card {
+  max-width: 1000px;
+  width: 90%;
+  gap: 2.25rem;
+  margin: auto;
+  padding: 1.5rem 2.5rem;
+  background-color: rgba(255, 255, 255, 0.06);
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.25);
+  border-radius: 1rem;
+  border: 1px solid #353637;
+  -webkit-backdrop-filter: blur(4px);
+          backdrop-filter: blur(4px);
+}
+.user-card .left {
+  padding-right: 2.25rem;
+  width: 35%;
+  align-items: center;
+  justify-content: space-around;
+  border-right: 2px solid var(--secondary-clr);
+}
+.user-card .left img {
+  width: 200px;
+  height: 200px;
+  border-radius: 25%;
+}
+.user-card .left p {
+  gap: 2rem;
+  justify-content: space-between;
+}
+.user-card .left .user-info {
+  gap: 0.25rem;
+}
+.user-card .right {
+  flex-grow: 1;
+}
+.user-card .right .liked {
+  gap: 0.75rem;
+  max-height: 50vh;
+}
+.user-card .right .liked-posts {
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+.user-card .right .liked-title {
+  text-align: center;
+}
+
+.search-result {
+  margin-block: 0.5rem;
+}
+.search-result .flex-c {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 3px;
+  margin-bottom: 0.25em;
+}
+.search-result .flex-c em {
+  font-size: var(--fs-small);
+}
+.search-result a {
+  display: flex;
+  flex-direction: column;
+  border-radius: 12px;
+  flex-direction: row;
+  gap: 1rem;
+  background-color: #343536;
+}
+.search-result a img {
+  width: 55px;
+  border-radius: 10px;
+  height: 55px;
+  border-right: 1px solid #404142;
+}
+.search-result a strong {
+  margin-right: auto;
+  align-self: center;
+}
+
+@media (max-width: 1041px) {
+  body {
+    overflow: hidden;
+  }
+  main {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+    margin-top: 0;
+    margin-bottom: 0;
+    height: 100vh;
+  }
+  .left.left {
+    padding-right: 1.25rem;
+  }
+  .user-card.user-card {
+    padding-inline: 1rem;
+    gap: 1.25rem;
+  }
+}
+@media (max-width: 620px) {
+  body {
+    overflow: auto;
+  }
+  main {
+    grid-template-columns: 1fr;
+    margin-top: var(--navbar-height);
+    margin-bottom: var(--footer-height);
+    height: 100vh;
+    height: 100dvh;
+  }
+  .user-card {
+    flex-direction: column;
+    width: 90%;
+    margin-top: 1rem;
+    padding-bottom: 1rem;
+  }
+  .user-card .left {
+    width: 100%;
+    gap: 1rem;
+    padding-right: 0;
+    border-right: none;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid var(--secondary-clr);
+  }
+  footer {
+    display: none;
+  }
+}

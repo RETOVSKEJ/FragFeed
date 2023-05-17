@@ -2,6 +2,7 @@ const Joi = require('joi')
 const fs = require('fs')
 const path = require('path')
 const { storeImage } = require('../middleware/imageHandler')
+const { checkAdminVip } = require('../middleware/utils')
 const Post = require('../models/Post')
 const assert = require('assert')
 const {
@@ -26,6 +27,8 @@ const {
 
 // @route /:id
 async function getPost(req, res) {
+	const VISIBLE = checkAdminVip(res)
+	console.log(VISIBLE)
 	const hotPosts = await getHotPosts()
 	const post = await Post.findOne({ id: req.params.id })
 		.populate('author', '-password')
@@ -229,10 +232,13 @@ function passPostPreview(req, res) {
 
 // @route /new
 async function postPost(req, res) {
+	console.log(res.get('X-Ratelimit-Remaining'))
+	console.log(res.headers)
 	const LAST_ID = (await Post.findOne().sort('-id'))?.id ?? 0 // przypisuje id 0 jesli zaden post nie istnieje // Lepsze od countDocuments, bo nie zmienia ID w przypadku usuniecia
 	const POST_PREVIEW = req.session.preview ?? {}
 	const PREVIEW_IMAGE_PROVIDED = !!POST_PREVIEW.filename // JESLI WSTAWIMY NOWE ZDJECIE I WCISNIEMY PREVIEW
 	const IMAGE_PROVIDED = !!req.file // JESLI WSTAWIMY NOWE ZDJECIE
+	const VISIBLE = checkAdminVip(res)
 
 	const POST_TAGS =
 		req.body?.tags?.length > 0 ? req.body.tags.split(',') : req.body.tags
@@ -269,6 +275,7 @@ async function postPost(req, res) {
 		// Tylko jesli wstawiamy bezposrednio po preview
 		post = await Post.create({
 			id: LAST_ID + 1,
+			visible: VISIBLE,
 			title: POST_PREVIEW.title,
 			body: POST_PREVIEW.body,
 			author: req.user,
@@ -278,6 +285,7 @@ async function postPost(req, res) {
 	} else {
 		post = await Post.create({
 			id: LAST_ID + 1,
+			visible: VISIBLE,
 			title: req.body.title,
 			body: req.body.body,
 			author: req.user,
@@ -286,6 +294,14 @@ async function postPost(req, res) {
 		})
 	}
 
+	if (!VISIBLE) {
+		req.flash(
+			'logInfo',
+			'Twoj Post został wysłany i oczekuje na akceptacje!'
+		)
+		return res.status(201).redirect('/')
+	}
+	req.flash('logInfo', 'Twoj Post został dodany!')
 	res.status(201)
 	return res.redirect(`/${post.id}`)
 }

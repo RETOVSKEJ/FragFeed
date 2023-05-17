@@ -1,4 +1,3 @@
-const e = require('express')
 const Post = require('../models/Post')
 const User = require('../models/User')
 
@@ -16,9 +15,9 @@ async function getAllPosts(query) {
 
 async function getPosts(
 	postsCount = null,
-	{ sort = 'asc', offset = null, objQuery = null }
+	{ sort = 'asc', objQuery = { visible: true }, offset = null }
 ) {
-	return await Post.find({ objQuery })
+	return await Post.find(objQuery)
 		.limit(postsCount)
 		.sort(sort)
 		.skip(offset)
@@ -28,7 +27,10 @@ async function getPosts(
 }
 
 async function getHotPosts() {
-	const posts = await Post.find().sort('-likes').limit(6).exec()
+	const posts = await Post.find({ visible: true })
+		.sort('-likes')
+		.limit(6)
+		.exec()
 	return posts
 }
 
@@ -121,6 +123,10 @@ async function getIsPostDisliked(userId, postId) {
 	}).exec()
 }
 
+async function getLikedPostsPopulatedService(likedPostsArr) {
+	return await Post.find({ id: { $in: likedPostsArr } })
+}
+
 module.exports = {
 	getAllPosts,
 	getAllLikedPostsService,
@@ -129,6 +135,7 @@ module.exports = {
 	patchLikedPosts,
 	patchDislikedPosts,
 	getLikedPostsService,
+	getLikedPostsPopulatedService,
 	getDislikedPostsService,
 	getVotedPosts,
 	getIsPostLiked,

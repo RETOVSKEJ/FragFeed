@@ -13,7 +13,14 @@ function setPath(req, res, next) {
 	return next()
 }
 
+function checkAdminVip(res) {
+	return res.locals.user?.role === 'ADMIN' || res.locals.user?.role === 'VIP'
+		? true
+		: false
+}
+
 module.exports = {
 	setUser,
 	setPath,
+	checkAdminVip,
 }

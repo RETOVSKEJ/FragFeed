@@ -30,12 +30,12 @@ const {
 	notAuthUser,
 	authRoles,
 	canAddPost,
-	canSendPost,
 	canEditPost,
 	canDeletePost,
 	canLikePost,
 	canCommentPost,
 } = require('../middleware/permissions')
+const { postingLimiter } = require('../middleware/rateLimit')
 
 router.route(['/', '/newest', '/old']).get(catchAsync(getHome))
 router.route(['/page', '/page/:num']).get(catchAsync(getHomePage))
@@ -61,23 +61,25 @@ router
 	.patch(
 		authUser,
 		catchAsync(canEditPost),
+		postingLimiter,
 		uploadCompressedDisk.single('image'),
 		catchAsync(editPost)
 	)
 
 router
 	.route('/new')
-	.get(authUser, catchAsync(canSendPost), catchAsync(getPostForm))
+	.get(authUser, catchAsync(canAddPost), catchAsync(getPostForm))
 	.post(
 		authUser,
 		catchAsync(canAddPost),
+		postingLimiter,
 		uploadCompressedDisk.single('image'),
 		catchAsync(postPost)
 	)
 
 router
 	.route('/preview')
-	.get(authUser, catchAsync(canSendPost), catchAsync(getPostPreview))
+	.get(authUser, catchAsync(canAddPost), catchAsync(getPostPreview))
 	.post(catchAsync(canAddPost), passPostPreview)
 
 module.exports = router

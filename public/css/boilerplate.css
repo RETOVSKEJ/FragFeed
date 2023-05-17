@@ -116,6 +116,7 @@ button[disabled] {
 
 	--sidebar-width: 300px;
 	--sidebar-right-width: 250px;
+	--footer-height: 35px;
 	--navbar-height: 75px;
 	--sidebar-tablet-height: 69px;
 	--navbar-padding: 1rem;

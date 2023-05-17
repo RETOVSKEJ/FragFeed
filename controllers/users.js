@@ -1,23 +1,29 @@
 const User = require('../models/User')
 const {
 	getLikedPostsService,
+	getLikedPostsPopulatedService,
 	getDislikedPostsService,
 } = require('../services/queries')
 // const bcrypt = require('bcrypt')
 
 async function getUsers(req, res) {
-	return res.render('users')
+	return res.status(200).render('users')
 }
 
 async function getUser(req, res) {
-	console.time()
 	const user = await User.findOne({ nick: req.params.nick }).exec()
 	if (!user) {
 		res.status(400)
 		throw new Error('Nie ma takiego usera')
 	}
-	console.timeEnd()
-	return res.render('user', { user: user.nick })
+
+	const likedPosts = await getLikedPostsPopulatedService(user.likedPosts)
+
+	return res.render('user', {
+		user: user,
+		msg: req.flash('logInfo'),
+		likedPosts: likedPosts,
+	})
 }
 
 async function getLikedPosts(req, res) {
