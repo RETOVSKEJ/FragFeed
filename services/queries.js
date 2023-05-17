@@ -43,8 +43,10 @@ async function getAllLikedPostsService(user) {
 		])
 	}
 
-	likedPosts ??= []
-	dislikedPosts ??= []
+	// likedPosts ??= []
+	// dislikedPosts ??= []
+	likedPosts = likedPosts || []
+	dislikedPosts = dislikedPosts || []
 	return [likedPosts, dislikedPosts]
 }
 
