@@ -39,7 +39,7 @@ app.use(limiter)
 
 app.use(express.urlencoded({ limit: '5mb', extended: true })) // extended true - moge postować nested objekty, false - flat
 app.use(express.json())
-app.use(express.static(path.resolve('public'), { index: '_' })) // index zeby nie czytalo index.html jako strony glownej, pomaga obslugiwac html css i obrazki
+app.use(express.static(path.resolve('public'))) // index zeby nie czytalo index.html jako strony glownej, pomaga obslugiwac html css i obrazki
 app.use(
 	'*/uploads',
 	express.static(path.resolve('public', 'assets', 'uploads'))
