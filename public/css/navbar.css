@@ -167,6 +167,9 @@ nav .login-info .pc {
     padding-inline: 0.75rem;
     font-size: 11px;
   }
+  nav .newsletter-btn {
+    display: none;
+  }
 }
 @media (max-width: 620px) {
   nav {

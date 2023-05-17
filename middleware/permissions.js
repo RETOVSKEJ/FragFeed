@@ -24,8 +24,6 @@ function notAuthUser(req, res, next) {
 /// OGOLNA FUNKCJA DO SPRAWDZANIA ROLI UZYTKOWNIKA
 function authRoles(role) {
 	return (req, res, next) => {
-		console.log(req.user)
-
 		if (req.user.role === role) {
 			return next()
 		}
@@ -65,8 +63,6 @@ async function canEditPost(req, res, next) {
 		return next()
 	}
 
-	console.log(req.session)
-	console.log(req.session.post?.author?._id, req.user._id.toString())
 	res.status(403)
 	throw new Error('You are not allowed to edit this post')
 }

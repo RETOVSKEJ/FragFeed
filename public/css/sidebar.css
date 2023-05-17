@@ -80,6 +80,15 @@
     padding: 0.5rem 0;
     transform: translateX(0%);
   }
+  .sidebar-mobile .newsletter-btn {
+    display: block;
+  }
+  .sidebar-mobile .profil-btn {
+    font-size: 14px;
+    padding-block: 0;
+    text-align: center;
+    background-color: var(--accent-clr);
+  }
   .sidebar-mobile a:first-child {
     padding-block: 0.5rem;
     display: block;

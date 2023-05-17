@@ -13,7 +13,6 @@ const fetchEvent = new Event('custom:fetchLoaded')
 
 // Do something only after fetch has ended
 document.addEventListener('custom:fetchLoaded', (ev) => {
-	console.log(ev)
 	searchInput.addEventListener('keyup', async (ev) => {
 		if (ev.key === 'Enter' && ev.target.value !== '') {
 			window.location.replace(

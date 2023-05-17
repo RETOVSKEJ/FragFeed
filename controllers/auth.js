@@ -26,8 +26,6 @@ async function getRegister(req, res) {
 
 async function postRegister(req, res, next) {
 	const { nick, password, conf_password, email } = req.body
-	console.time()
-	console.log(req.body)
 
 	if (password !== conf_password) {
 		req.flash('logInfo', 'Hasła nie są takie same')
@@ -56,7 +54,6 @@ async function postRegister(req, res, next) {
 		email,
 	})
 
-	console.timeEnd()
 	req.flash('logInfo', 'Zarejestrowano pomyślnie')
 	return res.redirect('/login')
 }

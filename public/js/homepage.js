@@ -19,9 +19,7 @@ imgs.forEach((img) => {
 const LastPostObserver = new IntersectionObserver(
 	(entry) => {
 		if (entry[0].isIntersecting && postsCount > 2) {
-			console.log('eee')
 			loadNewPosts()
-			console.log(entry[0], lastPost)
 			LastPostObserver.unobserve(entry[0].target)
 		}
 	},
@@ -75,7 +73,6 @@ async function loadNewPosts() {
 		var result = await data.json()
 		if (result.length === 0)
 			return document.body.dispatchEvent(noPostsToFetch)
-		console.log(result)
 		result.forEach((elem, index) => {
 			let tagsArr = []
 			elem.tags.forEach((tag) =>
@@ -163,5 +160,3 @@ async function loadNewPosts() {
 	LastPostObserver.observe(lastPost)
 	AddListenersToButtons()
 }
-
-console.log(upvoteBtnsArray)

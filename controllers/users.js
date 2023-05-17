@@ -36,14 +36,6 @@ async function getDislikedPosts(req, res) {
 	return res.json(posts)
 }
 
-/// /////// DELETE ALL USERS FROM DATABASE ///////////
-// async function clearUsersDB() {
-// 	const amount = await User.countDocuments()
-// 	await User.deleteMany({})
-// 	const left = await User.countDocuments()
-// 	console.log(`DELETED ${amount - left} users`)
-// }
-
 module.exports = {
 	getUsers,
 	getUser,

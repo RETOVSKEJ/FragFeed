@@ -28,7 +28,6 @@ const {
 // @route /:id
 async function getPost(req, res) {
 	const VISIBLE = checkAdminVip(res)
-	console.log(VISIBLE)
 	const hotPosts = await getHotPosts()
 	const post = await Post.findOne({ id: req.params.id })
 		.populate('author', '-password')
@@ -232,8 +231,6 @@ function passPostPreview(req, res) {
 
 // @route /new
 async function postPost(req, res) {
-	console.log(res.get('X-Ratelimit-Remaining'))
-	console.log(res.headers)
 	const LAST_ID = (await Post.findOne().sort('-id'))?.id ?? 0 // przypisuje id 0 jesli zaden post nie istnieje // Lepsze od countDocuments, bo nie zmienia ID w przypadku usuniecia
 	const POST_PREVIEW = req.session.preview ?? {}
 	const PREVIEW_IMAGE_PROVIDED = !!POST_PREVIEW.filename // JESLI WSTAWIMY NOWE ZDJECIE I WCISNIEMY PREVIEW
@@ -313,7 +310,6 @@ async function editPost(req, res) {
 	const POST_PREVIEW = req.session.preview ?? {}
 	const PREVIEW_IMAGE_PROVIDED = !!POST_PREVIEW.filename
 	const IMAGE_PROVIDED = !!req.file
-	console.log('EDITED POST TEST', POST_PREVIEW, req.session.post)
 	const POST_TAGS =
 		req.body?.tags?.length > 0 ? req.body.tags.split(',') : req.body.tags
 	const POST_PREVIEW_TAGS =

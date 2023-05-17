@@ -55,7 +55,7 @@ document.body.onscroll = () => {
 		NAVBAR_HEIGHT -
 		WRAPPER_MARGIN_TOP -
 		ADDITIONAL_MARGIN_BOTTOM
-	console.log(pos, HOT_WRAPPER_HEIGHT)
+
 	if (pos > HOT_WRAPPER_HEIGHT) {
 		hotPostWrapper.style.marginTop = `${pos - HOT_WRAPPER_HEIGHT}px`
 	} else {

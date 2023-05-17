@@ -38,6 +38,7 @@ button:hover {
 	background-color: var(--accent-clr);
 	color: var(--text-clr);
 	text-transform: uppercase;
+	font-family: sans-serif, 'Segoe UI', 'Tahoma';
 }
 
 /* button:disabled,

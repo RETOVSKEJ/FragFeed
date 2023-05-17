@@ -5,4 +5,7 @@
     <a class="sidebar-link" href="/old"><div class="dot"><i class="fa-solid fa-chevron-down"></i></div><span>Oldest</span></a>
     <a class="sidebar-link" href="/random"><div class="dot"><i class="fa-solid fa-random"></i></div><span>Random</span></a>
     <div><button class="newsletter-btn sidebar-link" id="newsletter-btn" class="mobile fa-solid fa-envelope" type="button">Newsletter</button></div>
+    <% if(locals.user) { %>
+        <div><a href='/users/<%= locals.user.nick %>' class="profil-btn sidebar-link mobile" type="button">PROFIL</a></div>
+    <% } %>
 </div>
