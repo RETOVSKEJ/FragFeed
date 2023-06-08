@@ -10,6 +10,8 @@
 	padding: 1rem;
 	top: var(--navbar-height);
 	height: fit-content;
+	background-color: rgba(0, 0, 0, 0.2);
+	box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
 }
 
 .sidebar-link {

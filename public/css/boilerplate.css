@@ -171,6 +171,7 @@ footer {
 	color: var(--text-clr);
 	width: 100%;
 	bottom: 0;
+	z-index: 9999;
 }
 
 /* GENERIC CLASES */

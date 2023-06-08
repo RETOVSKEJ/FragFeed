@@ -53,7 +53,7 @@ document.addEventListener('custom:fetchLoaded', (ev) => {
 				}
 				const elem = `<div class="search-result">
 					<a href="/${posts[i].id}">
-						<img src="${imgSrc}" alt="image">
+					<img onerror="this.onerror=null; this.src='/assets/nophoto.png'; this.alt = 'No Photo Available'"  id="img-preview" src=${imgSrc} alt="Post image" />
 						<div class='flex-c fs-small'>
 							<strong>${title}</strong>
 							<em>${date.toLocaleString('pl', options)}</em>
@@ -83,7 +83,8 @@ function filterPosts(query) {
 	let postsArrFiltered = postsArr
 		.map((elem) => elem)
 		.filter((elem) =>
-			elem.title.includes(query) || elem.body.includes(query)
+			elem.title.toLowerCase().includes(query) ||
+			elem.body.includes(query)
 				? elem
 				: null
 		)

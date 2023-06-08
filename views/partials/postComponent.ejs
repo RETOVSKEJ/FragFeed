@@ -27,7 +27,7 @@
 	</script>
 	<% } else { %>
 	<% if(post.image) { %>
-		<a class="post-img" href="/<%= post.id %>"><img id="img-preview" src="<%= post.image %>" alt="Post image" />
+		<a class="post-img" href="/<%= post.id %>"><img onerror="this.onerror=null; this.src='/assets/nophoto.png'; this.alt = 'No Photo Available'"  id="img-preview" src="<%= post.image %>" alt="Post image" />
 	<% } else { %>
 		<a class="post-img" href="/<%= post.id %>"><img id="img-preview" src="/assets/nophoto.png" alt="No Photo available" />
 	<% }} %>

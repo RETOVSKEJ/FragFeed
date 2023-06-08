@@ -1,6 +1,6 @@
 <div class="search-result">
     <a href="/<%= post.id %>">
-        <img src="<%= post.image %>" alt="image">
+        <img onerror="this.onerror=null; this.src='/assets/nophoto.png'; this.alt = 'No Photo Available'"  id="img-preview" src="<%= post.image %>" alt="Post image" />
         <div class='flex-c fs-small text'>
             <strong><%= post.title %></strong>
             <em><%= date.toLocaleString('pl', {

@@ -29,12 +29,13 @@
 }
 
 main {
-  margin-top: calc(2rem + var(--navbar-height));
+  margin-top: calc(var(--navbar-height));
   display: grid;
   grid-template-columns: 240px 1fr 400px;
   grid-auto-columns: 0;
   max-width: 1470px;
   margin-inline: auto;
+  padding-top: 2rem;
 }
 
 /* SEARCH BAR */
@@ -60,6 +61,7 @@ main {
     grid-template-columns: 1fr 260px;
     grid-template-rows: var(--sidebar-tablet-height) 1fr;
     gap: 1rem;
+    padding-top: 0;
   }
   .posts-wrapper {
     margin-left: 0.75rem;
