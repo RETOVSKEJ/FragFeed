@@ -5,7 +5,8 @@
 }
 
 .shadow-btn.shadow-btn {
-  box-shadow: var(--shadow-btn);
+  -webkit-box-shadow: var(--shadow-btn);
+          box-shadow: var(--shadow-btn);
 }
 
 body {
@@ -13,12 +14,21 @@ body {
 }
 
 main {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
   height: 100vh;
   height: 100dvh;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   color: var(--text-clr);
 }
 
@@ -44,8 +54,13 @@ h1 {
 }
 
 form {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  flex-direction: column;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
   margin: 1rem;
   border-radius: 6px;
 }
@@ -55,8 +70,12 @@ form .header {
   text-align: center;
 }
 form .remember-me {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  align-items: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   gap: 1rem;
   margin-top: 0.5rem;
 }
@@ -87,7 +106,8 @@ form .login {
   font-size: var(--fs-btn);
   border: var(--border);
   border-radius: var(--radius);
-  box-shadow: var(--shadow-black);
+  -webkit-box-shadow: var(--shadow-black);
+          box-shadow: var(--shadow-black);
   background-color: var(--accent-clr);
   text-transform: uppercase;
   cursor: pointer;
@@ -100,8 +120,13 @@ form .input-div {
   border-radius: 4px;
   padding: 0.75rem 1.25rem;
   margin-top: -1px;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  flex-direction: row;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
   gap: 1em;
 }
 form .input-div:focus-within {
@@ -124,14 +149,19 @@ form .input-div input {
           backdrop-filter: blur(4px);
   position: relative;
   text-align: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   margin-top: auto;
   width: 100%;
   padding: 1rem;
   border: var(--border-accent);
   border-radius: var(--radius);
-  box-shadow: var(--shadow-accent);
+  -webkit-box-shadow: var(--shadow-accent);
+          box-shadow: var(--shadow-accent);
 }
 .auth-nav a {
   padding: 0.6rem 1rem;
@@ -139,7 +169,8 @@ form .input-div input {
   font-size: var(--fs-btn);
   border: var(--border);
   border-radius: var(--radius);
-  box-shadow: var(--shadow-black);
+  -webkit-box-shadow: var(--shadow-black);
+          box-shadow: var(--shadow-black);
   background-color: var(--accent-clr);
   text-transform: uppercase;
   cursor: pointer;
@@ -156,6 +187,8 @@ form .input-div input {
 
 @media (min-width: 621px) {
   body {
+    background: -webkit-gradient(linear, left top, right top, color-stop(5%, var(--primary-clr)), color-stop(50%, var(--accent-clr-darker)), color-stop(95%, var(--primary-clr)));
+    background: -o-linear-gradient(left, var(--primary-clr) 5%, var(--accent-clr-darker) 50%, var(--primary-clr) 95%);
     background: linear-gradient(90deg, var(--primary-clr) 5%, var(--accent-clr-darker) 50%, var(--primary-clr) 95%);
   }
   .auth-nav {
@@ -168,6 +201,7 @@ form .input-div input {
 }
 @media (min-width: 1041px) {
   body {
+    background: -o-linear-gradient(352deg, var(--primary-clr) 8%, var(--accent-clr-darker) 53%, var(--primary-clr) 84%);
     background: linear-gradient(98deg, var(--primary-clr) 8%, var(--accent-clr-darker) 53%, var(--primary-clr) 84%);
   }
   .pc.pc.pc {
@@ -177,15 +211,28 @@ form .input-div input {
     display: none;
   }
   main {
-    align-items: center;
-    justify-content: center;
-    flex-direction: row;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+            flex-direction: row;
     overflow: hidden;
   }
   .auth-nav {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    flex-direction: column;
-    justify-content: space-around;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -ms-flex-pack: distribute;
+        justify-content: space-around;
     width: 42%;
     height: 100vh;
     height: 100dvh;
@@ -194,21 +241,31 @@ form .input-div input {
     background-color: var(--secondary-clr);
     border: none;
     border-left: 4px solid var(--accent-clr-green);
-    box-shadow: var(--shadow-accent);
+    -webkit-box-shadow: var(--shadow-accent);
+            box-shadow: var(--shadow-accent);
   }
   .auth-nav a {
     width: 35%;
     margin-inline: auto;
   }
   .form-wrapper {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
     height: 80%;
-    justify-content: flex-start;
+    -webkit-box-pack: start;
+        -ms-flex-pack: start;
+            justify-content: flex-start;
     gap: 2.5rem;
-    align-items: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
     width: 58%;
     margin-top: initial;
-    flex-direction: column;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
   }
   .form-wrapper img {
     width: 70%;

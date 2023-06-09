@@ -29,10 +29,16 @@ const {
 async function getPost(req, res) {
 	const VISIBLE = checkAdminVip(res)
 	const hotPosts = await getHotPosts()
-	const post = await Post.findOne({ id: req.params.id })
+	const post = await Post.findOne({ visible: true, id: req.params.id })
 		.populate('author', '-password')
 		.populate('edited_by', '-password')
 		.exec()
+
+	if (!post) {
+		res.status(400)
+		throw new Error('Ten post nie istnieje lub został usunięty')
+	}
+
 	post.createdAtString = post.createdAt.toLocaleString('pl', {
 		dateStyle: 'long',
 		timeStyle: 'short',
@@ -43,10 +49,6 @@ async function getPost(req, res) {
 	}) // local variable for templates
 	req.session.post = post
 	req.session.preview = null
-	if (!post) {
-		res.status(400)
-		throw new Error('Nie istnieje taki post')
-	}
 
 	let dislikedPosts, likedPosts
 	;[likedPosts, dislikedPosts] = await getAllLikedPostsService(
@@ -68,9 +70,9 @@ async function getRandomPost(req, res) {
 	;[likedPosts, dislikedPosts] = await getAllLikedPostsService(
 		res.locals?.user
 	)
-	const postsCount = await Post.countDocuments()
+	const postsCount = await Post.countDocuments({ visible: true })
 	const randInt = Math.floor(Math.random() * postsCount)
-	const post = await Post.findOne()
+	const post = await Post.findOne({ visible: true })
 		.skip(randInt)
 		.populate('author', '-password')
 		.populate('edited_by', '-password')

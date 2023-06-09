@@ -1,8 +1,8 @@
 const rateLimit = require('express-rate-limit')
 
 const limiter = rateLimit({
-	windowMs: 30 * 1000, // 15 seconds
-	max: 420,
+	windowMs: 25 * 1000, // 25 seconds
+	max: 400,
 	message: 'Zbyt dużo zapytań z tego adresu IP. Spróbuj ponownie za minutę.',
 	standardHeaders: true,
 	handler: (req, res) => {

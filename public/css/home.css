@@ -6,15 +6,22 @@
 @import './toast.css';
 @import './hotPostsWrapper.css';
 .pc-button {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   padding: 0.6rem 1rem;
   font-family: sans-serif, "Segoe UI";
   font-size: var(--fs-btn);
   border: var(--border);
   border-radius: var(--radius);
-  box-shadow: var(--shadow-black);
+  -webkit-box-shadow: var(--shadow-black);
+          box-shadow: var(--shadow-black);
   background-color: var(--accent-clr);
   text-transform: uppercase;
   cursor: pointer;
@@ -40,8 +47,13 @@ main {
 
 /* SEARCH BAR */
 .posts-wrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  flex-direction: column;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
   gap: 4rem;
   width: 100%;
   max-width: 1000px;

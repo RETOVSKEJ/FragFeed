@@ -4,10 +4,19 @@ nav {
   top: 0;
   left: 0;
   width: 100%;
-  justify-content: space-between;
-  align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  flex-direction: row;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
   padding: var(--navbar-padding);
   z-index: 900;
   background-color: var(--third-clr);
@@ -19,7 +28,8 @@ nav .welcome {
   display: none;
 }
 nav .pc.logo {
-  align-self: flex-end;
+  -ms-flex-item-align: end;
+      align-self: flex-end;
   padding-bottom: 3px;
 }
 nav .pc.logo img {
@@ -34,9 +44,13 @@ nav .search-bar {
 }
 nav .nav-buttons {
   margin-left: auto;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
   gap: 1rem;
-  align-items: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 nav .nav-buttons button,
 nav .nav-buttons a {
@@ -45,22 +59,32 @@ nav .nav-buttons a {
   font-size: var(--fs-btn);
   border: var(--border);
   border-radius: var(--radius);
-  box-shadow: var(--shadow-black);
+  -webkit-box-shadow: var(--shadow-black);
+          box-shadow: var(--shadow-black);
   background-color: var(--accent-clr);
   text-transform: uppercase;
   cursor: pointer;
 }
 nav .search {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  flex-direction: row;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
   width: 100%;
   gap: 0.5rem;
   padding: 0.5rem 0.75rem;
   border-radius: var(--radius);
 }
 nav .search i {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  align-items: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   color: var(--btn-clr);
 }
 nav .search .search-input {
@@ -81,10 +105,17 @@ nav .search-results {
   border: 1px solid #343536;
   border-radius: var(--radius);
   padding: 1rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
   gap: 0.5rem;
-  flex-direction: column;
-  justify-content: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   background-color: var(--third-clr);
   -webkit-backdrop-filter: blur(4px);
           backdrop-filter: blur(4px);
@@ -93,9 +124,16 @@ nav .search-result {
   margin-block: 0.5rem;
 }
 nav .search-result .flex-c {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   gap: 3px;
   margin-bottom: 0.25em;
 }
@@ -103,10 +141,16 @@ nav .search-result .flex-c em {
   font-size: var(--fs-small);
 }
 nav .search-result a {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  flex-direction: column;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
   border-radius: 12px;
-  flex-direction: row;
+  -ms-flex-direction: row;
+      flex-direction: row;
   gap: 1rem;
   background-color: #343536;
 }
@@ -118,13 +162,23 @@ nav .search-result a img {
 }
 nav .search-result a strong {
   margin-right: auto;
-  align-self: center;
+  -ms-flex-item-align: center;
+      align-self: center;
 }
 nav .search-info {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 nav .search-info span {
   font-size: var(--fs-btn);
@@ -135,15 +189,22 @@ nav .search-info .show-more {
   font-size: var(--fs-btn);
   border: var(--border);
   border-radius: var(--radius);
-  box-shadow: var(--shadow-black);
+  -webkit-box-shadow: var(--shadow-black);
+          box-shadow: var(--shadow-black);
   background-color: var(--accent-clr);
   text-transform: uppercase;
   cursor: pointer;
 }
 nav .login-info .pc {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   gap: 1rem;
 }
 
@@ -153,7 +214,8 @@ nav .login-info .pc {
   }
   nav a.logo {
     width: 110px;
-    align-self: center;
+    -ms-flex-item-align: center;
+        align-self: center;
     margin-bottom: 3px;
   }
   nav .search-bar {
@@ -173,7 +235,9 @@ nav .login-info .pc {
 }
 @media (max-width: 620px) {
   nav {
-    justify-content: space-between;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
     /* HAMBURGER */
     /* NAVBAR */
   }
@@ -188,9 +252,15 @@ nav .login-info .pc {
     display: none;
   }
   nav .mobile {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
     height: 100%;
     background-color: transparent;
     border: none;
@@ -216,8 +286,13 @@ nav .login-info .pc {
             appearance: none;
   }
   nav .menu-container {
+    display: -webkit-inline-box;
+    display: -ms-inline-flexbox;
     display: inline-flex;
-    flex-direction: column;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
     gap: 5px;
     /* wystarczy zmienic gap na 13px i wyjdzie piekna strzalka! */
     cursor: pointer;
@@ -231,36 +306,61 @@ nav .login-info .pc {
     background-color: white;
     border-radius: 10px;
     pointer-events: none;
+    -webkit-transition: opacity 200ms, -webkit-transform 400ms ease-in-out;
+    transition: opacity 200ms, -webkit-transform 400ms ease-in-out;
+    -o-transition: transform 400ms ease-in-out, opacity 200ms;
     transition: transform 400ms ease-in-out, opacity 200ms;
+    transition: transform 400ms ease-in-out, opacity 200ms, -webkit-transform 400ms ease-in-out;
   }
   nav #menu-button:checked + label .top {
-    transform: translateY(8px) rotate(45deg);
+    -webkit-transform: translateY(8px) rotate(45deg);
+        -ms-transform: translateY(8px) rotate(45deg);
+            transform: translateY(8px) rotate(45deg);
   }
   nav #menu-button:checked + label .bottom {
-    transform: translateY(-8px) rotate(-45deg);
+    -webkit-transform: translateY(-8px) rotate(-45deg);
+        -ms-transform: translateY(-8px) rotate(-45deg);
+            transform: translateY(-8px) rotate(-45deg);
   }
   nav #menu-button:checked + label .middle {
     opacity: 0;
   }
   nav .hidden-ham.hidden-ham.hidden-ham {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
     position: absolute;
     left: calc(-1 * var(--navbar-padding));
     top: calc(100% + var(--navbar-padding));
-    align-items: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    width: -webkit-fit-content;
     width: -moz-fit-content;
     width: fit-content;
+    height: -webkit-fit-content;
     height: -moz-fit-content;
     height: fit-content;
     overflow: hidden;
-    flex-direction: column;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
     background-color: #292929;
     border: 1px solid #333;
     border-radius: var(--radius);
+    -webkit-transition: -webkit-transform 400ms;
+    transition: -webkit-transform 400ms;
+    -o-transition: transform 400ms;
     transition: transform 400ms;
-    transform: translateX(-120%);
+    transition: transform 400ms, -webkit-transform 400ms;
+    -webkit-transform: translateX(-120%);
+        -ms-transform: translateX(-120%);
+            transform: translateX(-120%);
   }
   nav #menu-button:checked ~ .menu {
-    transform: translateX(0%);
+    -webkit-transform: translateX(0%);
+        -ms-transform: translateX(0%);
+            transform: translateX(0%);
   }
 }

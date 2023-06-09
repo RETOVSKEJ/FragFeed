@@ -2,6 +2,7 @@
 	"dependencies": {
 		"@sendgrid/mail": "^7.7.0",
 		"assert": "^2.0.0",
+		"autoprefixer": "^10.4.14",
 		"bcrypt": "^5.1.0",
 		"connect-mongo": "^4.6.0",
 		"cookie-parser": "^1.4.6",
@@ -40,6 +41,9 @@
 	"author": "",
 	"license": "ISC",
 	"description": "",
+	"browserlists": [
+		"last 5 versions"
+	],
 	"devDependencies": {
 		"eslint": "^8.34.0",
 		"eslint-config-airbnb-base": "^15.0.0",

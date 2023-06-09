@@ -22,7 +22,9 @@
 			<%- include('./partials/sidebar') %>
 			<div class="posts-wrapper">
 				<% for(const post of posts) { %>
-				<%- include('./partials/postComponent', {post: post}) %>
+					<% if(post.visible) { %>
+						<%- include('./partials/postComponent', {post: post}) %>
+					<% } %>
 				<% } %>
 			</div>
 			<%- include('./partials/hotPostsWrapper') %>

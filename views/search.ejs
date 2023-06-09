@@ -19,9 +19,9 @@
 	<main>
         <div class="posts-wrapper">
 			<h2 class="page-heading">Znalezione Posty dla wyszukiwania "<%= search %>":</h2>
-            <% for(const post of posts) { %>
-            <%- include('./partials/postComponent', {post: post}) %>
-            <% } %>
+			<% for(const post of posts) { %>
+					<%- include('./partials/postComponent', {post: post}) %>
+			<% } %>
         </div>
     </main>
     <%- include('./partials/toast', {msg: messages.error || messages.message || msg}) %>

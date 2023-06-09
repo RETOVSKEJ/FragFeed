@@ -10,6 +10,11 @@
 	display: block;
 }
 
+.hot-wrapper {
+	top: calc(var(--navbar-height) + 0.75rem);
+	position: sticky;
+}
+
 @media (max-width: 621px) {
 	main {
 		grid-template-rows: 40px 1fr;

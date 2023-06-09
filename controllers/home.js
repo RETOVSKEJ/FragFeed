@@ -43,7 +43,7 @@ async function getHome(req, res) {
 	)
 
 	if (bIsSearch) {
-		posts = await Post.find().sort('-id').exec() // slight optimalization
+		posts = await Post.find({ visible: true }).sort('-id').exec() // slight optimalization
 		return res.vary('accept').status(200).send(posts)
 	}
 

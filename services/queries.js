@@ -4,6 +4,7 @@ const User = require('../models/user')
 async function getAllPosts(query) {
 	const regex = new RegExp(query)
 	const posts = await Post.find({
+		visible: true,
 		$or: [{ title: { $regex: regex } }, { body: { $regex: regex } }],
 	})
 		.sort('-id')

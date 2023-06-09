@@ -39,7 +39,10 @@ window.addEventListener('click', function (ev) {
 
 /// STICKY SIDEBARS ///
 document.body.onscroll = () => {
-	if (window.innerWidth < 620) {
+	if (
+		window.innerWidth < 620 ||
+		window.location.pathname.startsWith('/tag/')
+	) {
 		return
 	}
 	const HOT_WRAPPER_HEIGHT = hotPostWrapper.offsetHeight

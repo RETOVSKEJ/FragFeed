@@ -12,8 +12,9 @@ main {
   main {
     padding-top: 0;
     grid-template-columns: 1fr 0.5fr;
-    -moz-column-gap: 0.5rem;
-         column-gap: 0.5rem;
+    -webkit-column-gap: 0.5rem;
+       -moz-column-gap: 0.5rem;
+            column-gap: 0.5rem;
   }
   .post-wrapper {
     margin-left: 0.75rem;
