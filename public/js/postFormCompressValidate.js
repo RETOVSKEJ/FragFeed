@@ -37,6 +37,8 @@ function validate(ev) {
 			ev.preventDefault()
 			throw res
 		}
+		sendBtn.setAttribute('disabled', true)
+		previewBtn.setAttribute('disabled', true)
 	}
 
 	if (!preview.querySelector('p')) {

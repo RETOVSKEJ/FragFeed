@@ -18,6 +18,7 @@ function LoggedIn() {
 
 async function handleUpvote(ev) {
 	ev.preventDefault()
+	ev.target.setAttribute('disabled', true)
 	if (!LoggedIn()) return
 	const POST_ID = ev.target.getAttribute('data-atr')
 	const next = ev.target.nextElementSibling
@@ -38,12 +39,14 @@ async function handleUpvote(ev) {
 		nextVoted && removeDownvote(POST_ID, ev),
 	])
 
+	ev.target.removeAttribute('disabled')
 	nextClick ? next.removeAttribute('data-voted') : null
 	click.ok ? ev.target.setAttribute('data-voted', 'true') : null
 }
 
 async function handleDownvote(ev) {
 	ev.preventDefault()
+	ev.target.setAttribute('disabled', true)
 	if (!LoggedIn()) return
 	const POST_ID = ev.target.getAttribute('data-atr')
 	const prev = ev.target.previousElementSibling
@@ -63,6 +66,7 @@ async function handleDownvote(ev) {
 		prevVoted && removeUpvote(POST_ID, ev),
 	])
 
+	ev.target.removeAttribute('disabled')
 	prevClick ? prev.removeAttribute('data-voted') : null
 	click.ok ? ev.target.setAttribute('data-voted', 'true') : null
 }
@@ -88,6 +92,7 @@ async function removeUpvote(POST_ID, ev) {
 		method: 'PATCH',
 	})
 	ev.target.removeAttribute('data-voted')
+	ev.target.removeAttribute('disabled')
 	return true // DONE
 }
 
@@ -96,5 +101,6 @@ async function removeDownvote(POST_ID, ev) {
 		method: 'PATCH',
 	})
 	ev.target.removeAttribute('data-voted')
+	ev.target.removeAttribute('disabled')
 	return true // DONE
 }
