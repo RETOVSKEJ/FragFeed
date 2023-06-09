@@ -38,6 +38,8 @@ function validate(ev) {
 		const res = validateSize()
 		if (res) {
 			ev.preventDefault()
+			sendBtn.removeAttribute('disabled')
+			previewBtn.removeAttribute('disabled')
 			throw res
 		}
 	}
