@@ -3,3 +3,5 @@ node_modules
 TESTOWY.js  
 TESTOWY2.js
 logs/*
+!public/assets/uploads
+public/assets/uploads/*
