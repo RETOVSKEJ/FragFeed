@@ -31,14 +31,15 @@ function updateSendBtn() {
 }
 
 function validate(ev) {
+	sendBtn.setAttribute('disabled', true)
+	previewBtn.setAttribute('disabled', true)
+
 	if (imageInput.files[0]) {
 		const res = validateSize()
 		if (res) {
 			ev.preventDefault()
 			throw res
 		}
-		sendBtn.setAttribute('disabled', true)
-		previewBtn.setAttribute('disabled', true)
 	}
 
 	if (!preview.querySelector('p')) {
