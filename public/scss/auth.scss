@@ -11,6 +11,12 @@
 }
 
 body {
+	background: linear-gradient(
+		90deg,
+		var(--primary-clr) 5%,
+		var(--accent-clr-darker) 50%,
+		var(--primary-clr) 95%
+	);
 	overflow: hidden;
 }
 
@@ -43,6 +49,13 @@ h1 {
 
 .form-wrapper {
 	margin-top: auto;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+
+	img {
+		margin-inline: 1rem;
+	}
 }
 
 form {
@@ -171,6 +184,14 @@ form {
 	form .p {
 		margin-top: 2rem;
 	}
+
+	.form-wrapper {
+		img {
+			max-width: 100%;
+			margin-inline: initial;
+			padding-right: 0.75rem;
+		}
+	}
 }
 
 @media (min-width: 1041px) {
@@ -228,7 +249,7 @@ form {
 		flex-direction: column;
 
 		img {
-			width: 70%;
+			width: 66%;
 		}
 	}
 
@@ -242,6 +263,16 @@ form {
 		.register-btn {
 			margin-top: 1rem;
 			width: 100%;
+		}
+	}
+}
+
+@media screen and (max-height: 530px) {
+	main {
+		.form-wrapper {
+			img {
+				display: none;
+			}
 		}
 	}
 }
