@@ -26,6 +26,7 @@
   -webkit-box-shadow: var(--shadow-btn);
           box-shadow: var(--shadow-btn);
   overflow: hidden;
+  height: 235px;
 }
 .hot-wrapper .hot-post__title {
   position: relative;
@@ -63,6 +64,9 @@
 @media (min-width: 621px) and (max-width: 1040px) {
   .hot-wrapper {
     margin-left: 1rem;
+  }
+  .hot-wrapper img {
+    top: 0;
   }
 }
 @media (max-width: 620px) {

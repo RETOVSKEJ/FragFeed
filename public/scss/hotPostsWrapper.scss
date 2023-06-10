@@ -21,6 +21,7 @@
 		border-radius: var(--radius);
 		box-shadow: var(--shadow-btn);
 		overflow: hidden;
+		height: 235px;
 	}
 
 	.hot-post__title {
@@ -53,6 +54,10 @@
 @media (min-width: 621px) and (max-width: 1040px) {
 	.hot-wrapper {
 		margin-left: 1rem;
+
+		img {
+			top: 0;
+		}
 	}
 }
 
