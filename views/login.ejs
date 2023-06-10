@@ -7,6 +7,7 @@
     <title>Document</title>
     <link rel="stylesheet" href="/css/auth.css">
     <script src="/js/toast.js" defer></script>
+    <script src="/js/auth.js" defer></script>
     <script src="https://kit.fontawesome.com/c780166e7c.js" crossorigin="anonymous"></script>
 </head>
 <body>
@@ -23,6 +24,8 @@
             <div class="input-div">
                 <i class="fa-solid fa-lock"></i>
                 <input placeholder="Password" id="password" name="password" type="password" required>
+                <label id="showPasswordLabel" tabindex="0" class="show-password-label" for="showPassword"><i aria-hidden="true" id="showPasswordIcon" class="fa-solid fa-eye"></i></label>
+                <input class="show-password" type="checkbox" id="showPassword" name="showPassword">
             </div>
             <div class="remember-me">
                 <labe for="remember_me">Pamiętaj mnie: </labe><input type="checkbox" id="remember_me" name="remember_me">

@@ -143,6 +143,9 @@ form .input-div {
   -webkit-box-direction: normal;
       -ms-flex-direction: row;
           flex-direction: row;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   gap: 1em;
 }
 form .input-div:focus-within {
@@ -157,6 +160,21 @@ form .input-div input {
   border: none;
   outline: none;
   background-color: transparent;
+}
+form .input-div .show-password {
+  display: none;
+}
+form .input-div .show-password-label {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin-left: auto;
 }
 
 .auth-nav {

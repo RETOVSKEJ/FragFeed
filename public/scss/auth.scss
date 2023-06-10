@@ -117,6 +117,7 @@ form {
 		margin-top: -1px;
 		display: flex;
 		flex-direction: row;
+		align-items: center;
 		gap: 1em;
 
 		&:focus-within {
@@ -133,6 +134,17 @@ form {
 			border: none;
 			outline: none;
 			background-color: transparent;
+		}
+
+		.show-password {
+			display: none;
+		}
+
+		.show-password-label {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			margin-left: auto;
 		}
 	}
 }
