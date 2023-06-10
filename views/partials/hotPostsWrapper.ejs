@@ -1,6 +1,7 @@
 <div class="hot-wrapper">
     <h3>Gorące posty:</h3>
-    <% for(let i = 0; i < 6; i++) { %>
-    <%- include('./hotPostComponent', {post: hotPosts[i]}) %>
+    <% for(let i = 0; i < 6; i++) { if (hotPosts[i]) { %>
+        <%- include('./hotPostComponent', {post: hotPosts[i]}) %>
+        <% } %>
     <% } %>
 </div>

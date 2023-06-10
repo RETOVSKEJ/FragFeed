@@ -49,6 +49,9 @@ function validate(ev) {
 		infoMsg.textContent = 'Uploading...'
 		preview.prepend(infoMsg)
 	}
+
+	localStorage.removeItem('title')
+	localStorage.removeItem('body')
 }
 
 function previewImg(ev) {
