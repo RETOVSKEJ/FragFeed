@@ -17,7 +17,7 @@
 	.hot-post {
 		font-style: italic;
 		position: relative;
-		border: var(--border);
+		border: 3px solid var(--accent-clr);
 		border-radius: var(--radius);
 		box-shadow: var(--shadow-btn);
 		overflow: hidden;
@@ -29,7 +29,7 @@
 		width: 100%;
 		background-color: var(--third-clr);
 		font-size: var(--fs-large);
-		border-bottom: 1px solid #343536;
+		border-bottom: 1px solid var(--accent-clr);
 		z-index: 10;
 		text-decoration: underline;
 	}
@@ -37,6 +37,8 @@
 	img {
 		width: 100%;
 		max-width: 100%;
+		background-color: var(--third-clr);
+		padding-inline: 1px;
 		position: relative;
 		top: -11%;
 		z-index: 5;
