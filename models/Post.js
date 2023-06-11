@@ -49,7 +49,7 @@ const postSchema = mongoose.Schema(
 				message: 'Tag cannot be shorter than 2 characters',
 			},
 		},
-		image: String, // tylko sciezka do zdjecia  /public/assets/uploads
+		image: String, // tylko sciezka do zdjecia  ID-yyyy-mm-dd.ext
 	},
 	{
 		timestamps: true, // tworzy createdAt i updatedAt

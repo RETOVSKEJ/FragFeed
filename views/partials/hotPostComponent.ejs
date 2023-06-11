@@ -3,7 +3,7 @@
                 <h5 class="hot-post__title"><%= post.title %></h5>
                 <!-- IF POST DOES HAVE AN IMAGE -->
                 <% if(post.image) { %>
-                <img id="hot-img__preview" onerror="this.onerror=null; this.src='/assets/nophoto.png'; this.alt = 'Hot post No Photo Available'"  id="img-preview" src="<%= post.image %>" alt="Hot Post image" />
+                <img id="hot-img__preview" onerror="this.onerror=null; this.src='/assets/nophoto.png'; this.alt = 'Hot post No Photo Available'"  id="img-preview" src="https://fragfeed-bucket.s3.eu-central-1.amazonaws.com/<%= post.image %>" alt="Hot Post image" />
                 <% } else { %>
                 <img src="/assets/nophoto.png" alt="no photo">
         <% } %>

@@ -52,7 +52,7 @@
 				document.getElementById('post-likes').style.display = 'none'
 				const img = document.getElementById('img-preview')
 				if (img.src == null || img.src == location.href){
-					img.style.display = 'none'
+					img.setAttribute('src', "/assets/nophoto.png")
 				}
 			</script>
 	</body>

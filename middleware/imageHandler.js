@@ -74,26 +74,23 @@ module.exports = { uploadMemory, uploadCompressedDisk, storeImage }
 /// stores compressed images
 async function storeImage(data, uploadedFilename, newFilename) {
 	const fileExt = pathModule.extname(uploadedFilename)
-	const filePath = pathModule.resolve(
-		'public',
-		'assets',
-		'uploads',
-		`${newFilename}${fileExt}`
-	)
-	const buffer = storeBase64inBuffer(data, fileExt)
+	newFilename = `${newFilename}${fileExt}`
+
+	const fileInMemory = storeBase64inBuffer(data, fileExt)
 	try {
-		await storeBufferinFile(buffer, filePath)
+		await uploadFile(fileInMemory, newFilename)
 	} catch (err) {
 		throw new Error('Image storing failed')
 	}
 
-	return filePath
+	return newFilename
 }
 
 function storeBase64inBuffer(data, uploadedFilename) {
 	/// / SEPARATES DATA FROM MIMETYPE AND RETURNS BUFFER
 	const filetype =
 		/\.jpeg|\.JPEG|\.jpg|\.JPG|\.jfif|\.JFIF|\.pjp|\.PJP|\.png|\.PNG|\.webp|\.WEBP|\.svg|\.SVG|\.gif|\.GIF/
+
 	const isImage = filetype.test(uploadedFilename)
 	if (!isImage) {
 		return console.error('File is not an image')
@@ -101,24 +98,27 @@ function storeBase64inBuffer(data, uploadedFilename) {
 
 	const arr = data.split(',')
 	const dataArr = arr[1]
-	// const mime = arr[0].match(/:(.*?);/)[1]
+	const mimetype = arr[0].match(/:(.*?);/)[1]
 
-	return Buffer.from(dataArr, 'base64')
+	return {
+		buffer: Buffer.from(dataArr, 'base64'),
+		mimetype,
+	}
 }
 
-async function storeBufferinFile(buffer, FilePath) {
-	try {
-		await uploadFile()
-		await fs.promises.writeFile(FilePath, buffer)
-		console.log('IMAGE BUFFER STORED')
-		return true
-	} catch (error) {
-		console.error('NIE udalo sie wrzucic pliku', error)
-		return false
-	}
-} /// RETURNS successFlag
-
 /// // DEPRECATED
+
+// async function storeBufferinFile(buffer, FilePath) {
+// 	try {
+// 		await fs.promises.writeFile(FilePath, buffer)
+// 		console.log('IMAGE BUFFER STORED')
+// 		return true
+// 	} catch (error) {
+// 		console.error('NIE udalo sie wrzucic pliku', error)
+// 		return false
+// 	}
+// } /// RETURNS successFlag
+
 // const diskStorage = multer.diskStorage({
 //     destination: (req, file, cb)  => {  // callback function WHERE TO STORE IMAGES
 //         cb(null, 'public/assets/uploads')              // cb(error / dest)

@@ -7,6 +7,7 @@ const { checkAdminVip } = require('../middleware/utils')
 const Post = require('../models/Post')
 const assert = require('assert')
 const {
+	getOnePost,
 	getAllPosts,
 	getHotPosts,
 	patchLikedPosts,
@@ -15,7 +16,7 @@ const {
 	getLikedPostsService,
 	getDislikedPostsService,
 } = require('../services/queries')
-const { uploadFile, getImage } = require('../s3')
+const { uploadFile, deleteFile } = require('../s3')
 
 /// / req.session.preview usuwane w: getPost, getPostForm, getEditForm / ustawiane w:
 /// / req.session.post usuwane w: getHome / ustawiane w: getPost, getEditForm
@@ -31,11 +32,7 @@ const { uploadFile, getImage } = require('../s3')
 async function getPost(req, res) {
 	const VISIBLE = checkAdminVip(res)
 	const hotPosts = await getHotPosts()
-	const post = await Post.findOne({ visible: true, id: req.params.id })
-		.populate('author', '-password')
-		.populate('edited_by', '-password')
-		.exec()
-	post.image = await getImage(post.image)
+	const post = await getOnePost({ id: req.params.id, visible: true })
 
 	if (!post) {
 		res.status(400)
@@ -74,12 +71,14 @@ async function getRandomPost(req, res) {
 		res.locals?.user
 	)
 	const postsCount = await Post.countDocuments({ visible: true })
+
 	const randInt = Math.floor(Math.random() * postsCount)
-	const post = await Post.findOne({ visible: true })
-		.skip(randInt)
-		.populate('author', '-password')
-		.populate('edited_by', '-password')
-		.exec()
+	const post = await getOnePost({ visible: true }, randInt)
+
+	if (!post) {
+		res.status(400)
+		throw new Error('Ten post nie istnieje lub został usunięty')
+	}
 
 	post.createdAtString = post.createdAt.toLocaleString('pl', {
 		dateStyle: 'long',
@@ -128,6 +127,7 @@ async function getTaggedPosts(req, res) {
 		.sort('-id')
 		.exec()
 	if (posts.length === 0) return res.redirect('/')
+
 	return res.status(200).render('tag', {
 		likedPosts,
 		dislikedPosts,
@@ -143,6 +143,7 @@ async function getPostForm(req, res) {
 	const POST_PREVIEW_DATA = req.session.preview
 	req.session.preview = null
 	const hotPosts = await getHotPosts()
+
 	return res.status(200).render('postForm', {
 		hotPosts,
 		post: POST_PREVIEW_DATA,
@@ -157,6 +158,7 @@ async function getEditForm(req, res) {
 		.populate('author', '-password')
 		.populate('edited_by', '-password')
 		.exec()
+
 	req.session.post = post
 	req.session.preview = null
 	return res
@@ -176,8 +178,11 @@ async function getPostPreview(req, res) {
 	) {
 		res.locals.referer = req.headers.referer
 		res.locals.post_id = req.session.post?.id
+
+		const hotPosts = await getHotPosts()
+
 		return res.render('preview', {
-			hotPosts: await getHotPosts(),
+			hotPosts: hotPosts,
 			likedPosts: [],
 			dislikedPosts: [],
 			post: req.session.preview,
@@ -196,7 +201,7 @@ function passPostPreview(req, res) {
 		Post.schema.paths.body.options
 	console.log(req.headers.referer)
 
-	/// needs to use JOI since we're not posting the post yet. (OPTIMALIZATION)
+	/// needs to use JOI since we're not posting the post yet. (OPTIMIZATION)
 	const Schema = Joi.object({
 		title: Joi.string()
 			.min(titleMinLength[0])
@@ -217,6 +222,7 @@ function passPostPreview(req, res) {
 
 	// kopiujemy image z ostatnio widzaniego posta, aby mozna bylo go wyswietlic w Edit -> preview
 	const image = req.session.post?.image
+	console.log(req.body)
 
 	req.session.preview = {
 		author: req.user,
@@ -227,7 +233,10 @@ function passPostPreview(req, res) {
 		tags: req.body.tags,
 	}
 
-	req.session.preview.tags = req.body.tags.split(',')
+	console.log(req.session.preview.tags, req.session.preview.tags.length)
+
+	if (req.session.preview.tags.length > 0)
+		req.session.preview.tags = req.body.tags.split(',')
 
 	return res.redirect('/preview')
 }
@@ -247,33 +256,36 @@ async function postPost(req, res) {
 	const POST_PREVIEW_TAGS =
 		POST_PREVIEW?.tags?.length > 0 ? POST_PREVIEW?.tags : null
 
-	let post
-	let imageSrcPath
+	let post, imageSrcPath, newFilename, fileExt
 
-	const fileExt = path.extname(req.file.originalname)
-	const newFilename = `${LAST_ID + 1}-${
-		new Date().toISOString().split('T')[0]
-	}${fileExt}` // returns id-yyyy-mm-dd
+	if (IMAGE_PROVIDED) {
+		fileExt = path.extname(req.file.originalname)
+		newFilename = `${LAST_ID + 1}-${
+			new Date().toISOString().split('T')[0]
+		}${fileExt}` // returns id-yyyy-mm-dd
+
+		// multer & sharp  (.jpeg, .png chyba nie dzialaja dla buforów)
+		const compressedImage = await sharp(req.file.buffer)
+			.resize({ width: 1280, withoutEnlargement: true, force: false })
+			.jpeg({ quality: 80, proggresive: true, force: false })
+			.png({ quality: 80, compressionLevel: 3, force: false })
+			.toBuffer() // default
+		const result = await uploadFile(compressedImage, newFilename)
+	}
 
 	if (!req.is('multipart/form-data')) {
+		newFilename = `${req.params.id}-${
+			new Date().toISOString().split('T')[0]
+		}`
+
 		/// TYLKO DLA POST PREVIEW  -  inny formularz z preview.ejs
 		if (PREVIEW_IMAGE_PROVIDED) {
-			const filePath = await storeImage(
+			newFilename = await storeImage(
 				req.body.img_data,
 				POST_PREVIEW.filename,
 				newFilename
 			) // automatically adds extension
-			const index = filePath.indexOf('public')
-			imageSrcPath = filePath.slice(index)
 		}
-	}
-
-	if (IMAGE_PROVIDED) {
-		// multer & sharp
-		const compressedImage = await sharp(req.file.buffer)
-			.jpeg({ quality: 80 })
-			.toBuffer() // default
-		const result = await uploadFile(compressedImage, newFilename)
 	}
 
 	if (Object.keys(POST_PREVIEW).length > 0) {
@@ -284,7 +296,7 @@ async function postPost(req, res) {
 			title: POST_PREVIEW.title,
 			body: POST_PREVIEW.body,
 			author: req.user,
-			image: imageSrcPath,
+			image: newFilename,
 			tags: POST_PREVIEW_TAGS || undefined,
 		})
 	} else {
@@ -320,54 +332,67 @@ async function editPost(req, res) {
 	const IMAGE_PROVIDED = !!req.file
 	const POST_TAGS =
 		req.body?.tags?.length > 0 ? req.body.tags.split(',') : req.body.tags
-	const POST_PREVIEW_TAGS =
-		POST_PREVIEW?.tags?.length > 0
-			? POST_PREVIEW?.tags.split(',')
-			: POST_PREVIEW?.tags
 
-	const newFilename = `${req.params.id}-${
-		new Date().toISOString().split('T')[0]
-	}` // returns id-yyyy-mm-dd
-	let imageSrcPath
+	const POST_PREVIEW_TAGS = POST_PREVIEW.tags
+
+	let fileExt, newFilename
+
+	if (IMAGE_PROVIDED) {
+		// TYLKO DLA MULTERA (bezposredni upload)
+		fileExt = path.extname(req.file.originalname)
+		newFilename = `${req.params.id}-${
+			new Date().toISOString().split('T')[0]
+		}${fileExt}` // returns id-yyyy-mm-dd
+	}
+
 	if (!req.is('multipart/form-data')) {
 		/// TYLKO DLA POST PREVIEW
+		newFilename = `${req.params.id}-${
+			new Date().toISOString().split('T')[0]
+		}`
+
 		if (PREVIEW_IMAGE_PROVIDED) {
 			// JESLI WSTAWIMY NOWE ZDJECIE I WCISNIEMY PREVIEW (storeImage & canvas client-side)
-			const filePath = await storeImage(
+			newFilename = await storeImage(
 				req.body.img_data,
 				POST_PREVIEW.filename,
 				newFilename
 			)
-			const index = filePath.indexOf('public')
-			imageSrcPath = filePath.slice(index) // public/assetts/uploads...
 
-			if (imageSrcPath !== req.session.post.image) {
-				await deleteOldFile(req.session.post.image)
+			if (newFilename !== req.session.post.image) {
+				await deleteFile(req.session.post.image)
 			}
 		}
 	}
 
 	if (IMAGE_PROVIDED) {
 		// JESLI WSTAWIMY NOWE ZDJECIE  (multer & sharp)
-		imageSrcPath = await renameFile(req.file, newFilename)
-		const index = imageSrcPath.indexOf('public') // musi byc, ze względów na problem w przegladarkach (blocked:other)
-		imageSrcPath = imageSrcPath.slice(index)
+		const compressedImage = await sharp(req.file.buffer)
+			.resize({ width: 1280, withoutEnlargement: true, force: false })
+			.jpeg({ quality: 80, proggresive: true, force: false })
+			.png({ quality: 80, compressionLevel: 2, force: false })
+			.toBuffer() // default
 
-		if (imageSrcPath !== req.session.post.image) {
-			/// usun stare zdjecie (rename nie nadpisuje plikow, jesli maja inne rozszerzenia)
-			await deleteOldFile(req.session.post.image)
+		if (newFilename !== req.session.post.image) {
+			await deleteFile(req.session.post.image)
 		}
+		await uploadFile(compressedImage, newFilename)
+
+		// if (imageSrcPath !== req.session.post.image) {
+		// 	/// usun stare zdjecie (rename nie nadpisuje plikow, jesli maja inne rozszerzenia)
+		// 	await deleteOldFile(req.session.post.image)
+		// }
 	}
 
 	if (Object.keys(POST_PREVIEW).length > 0) {
-		// Tylko jesli wstawiamy bezposrednio po preview
+		// Tylko jesli wstawiamy po preview
 		await Post.updateOne(
 			{ id: req.params.id },
 			{
 				title: POST_PREVIEW.title,
 				body: POST_PREVIEW.body,
 				edited_by: req.user,
-				image: imageSrcPath,
+				image: newFilename,
 				tags: POST_PREVIEW_TAGS || undefined,
 			}
 		)
@@ -378,7 +403,7 @@ async function editPost(req, res) {
 				title: req.body.title,
 				body: req.body.body,
 				edited_by: req.user,
-				image: imageSrcPath ?? undefined,
+				image: newFilename ?? undefined,
 				tags: POST_TAGS || undefined,
 			}
 		)
@@ -393,10 +418,13 @@ async function deletePost(req, res) {
 	const post = await Post.findOneAndDelete({ id: req.params.id }).exec()
 	if (!post) {
 		throw new Error('Nie ma posta o takim ID!')
-	} else {
-		req.flash('logInfo', 'usunieto post:', post.title)
-		console.log('usunieto post o id: ', post.id)
 	}
+
+	await deleteFile(post.image)
+
+	req.flash('logInfo', 'Usunąłeś/aś post:', post.title)
+	console.log('usunieto post o id: ', post.id)
+
 	return res.redirect('/')
 }
 

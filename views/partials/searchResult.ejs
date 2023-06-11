@@ -1,6 +1,6 @@
 <div class="search-result">
     <a href="/<%= post.id %>">
-        <img onerror="this.onerror=null; this.src='/assets/nophoto.png'; this.alt = 'No Photo Available'"  id="img-preview" src="<%= post.image %>" alt="Post image" />
+        <a class="post-img" href="/<%= post.id %>"><img onerror="this.onerror=null; this.src='/assets/nophoto.png'; this.alt = 'No Photo Available'"  id="img-preview" src="https://fragfeed-bucket.s3.eu-central-1.amazonaws.com/<%= post.image %>" alt="Post image" />
         <div class='flex-c fs-small text'>
             <strong><%= post.title %></strong>
             <em><%= date.toLocaleString('pl', {

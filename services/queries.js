@@ -1,6 +1,14 @@
 const Post = require('../models/Post')
 const User = require('../models/user')
 
+async function getOnePost(filter = { visible: true }, skip) {
+	return await Post.findOne(filter)
+		.skip(skip)
+		.populate('author', '-password')
+		.populate('edited_by', '-password')
+		.exec()
+}
+
 async function getAllPosts(query) {
 	const regex = new RegExp(query)
 	const posts = await Post.find({
@@ -131,6 +139,7 @@ async function getLikedPostsPopulatedService(likedPostsArr) {
 }
 
 module.exports = {
+	getOnePost,
 	getAllPosts,
 	getAllLikedPostsService,
 	getPosts,

@@ -32,6 +32,10 @@
 		<%- include('./partials/toast', {msg: messages.error || messages.message || msg}) %>
 		<script defer>
 			document.getElementById('logo').style.marginBottom = '5px';
+			previewBtn.addEventListener('click', ev => {
+				localStorage.setItem('title', title.value)
+				localStorage.setItem('body', body.value)
+			})
 		</script>
 	</body>
 </html>

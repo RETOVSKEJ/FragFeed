@@ -14,6 +14,7 @@
 	</div>
 	<% if(locals.urlPath == "/preview"){ %>
 	<img
+		style="max-height: 500px; background: #000; object-fit: contain;";
 		id="img-preview"
 		src="<%= post.image %>"
 		alt="Uploaded Image preview"
@@ -27,7 +28,7 @@
 	</script>
 	<% } else { %>
 	<% if(post.image) { %>
-		<a class="post-img" href="/<%= post.id %>"><img onerror="this.onerror=null; this.src='/assets/nophoto.png'; this.alt = 'No Photo Available'"  id="img-preview" src="<%= post.image %>" alt="Post image" />
+		<a class="post-img" href="/<%= post.id %>"><img onerror="this.onerror=null; this.src='/assets/nophoto.png'; this.alt = 'No Photo Available'"  id="img-preview" src="https://fragfeed-bucket.s3.eu-central-1.amazonaws.com/<%= post.image %>" alt="Post image" />
 	<% } else { %>
 		<a class="post-img" href="/<%= post.id %>"><img id="img-preview" src="/assets/nophoto.png" alt="No Photo available" />
 	<% }} %>

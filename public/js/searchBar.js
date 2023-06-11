@@ -53,7 +53,7 @@ document.addEventListener('custom:fetchLoaded', (ev) => {
 				}
 				const elem = `<div class="search-result">
 					<a href="/${posts[i].id}">
-					<img onerror="this.onerror=null; this.src='/assets/nophoto.png'; this.alt = 'No Photo Available'"  id="img-preview" src=${imgSrc} alt="Post image" />
+					<img onerror="this.onerror=null; this.src='/assets/nophoto.png'; this.alt = 'No Photo Available'"  id="img-preview" src=https://fragfeed-bucket.s3.eu-central-1.amazonaws.com/${imgSrc} alt="Post image" />
 						<div class='flex-c fs-small'>
 							<strong>${title}</strong>
 							<em>${date.toLocaleString('pl', options)}</em>
