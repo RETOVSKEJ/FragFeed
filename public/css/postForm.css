@@ -85,8 +85,11 @@ main {
   -webkit-box-shadow: var(--shadow);
           box-shadow: var(--shadow);
   border-radius: 12px;
-  -o-object-fit: cover;
-     object-fit: cover;
+  -o-object-fit: contain;
+     object-fit: contain;
+  width: 100%;
+  background-color: black;
+  max-height: min(50vh, 350px);
 }
 
 /* TAGS */

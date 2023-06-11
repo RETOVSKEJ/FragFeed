@@ -23,6 +23,8 @@ MyCustomStorage.prototype._handleFile = function _handleFile(req, file, cb) {
 		const compressedImage = sharp().jpeg({ quality: 80 }) // default
 
 		file.stream.pipe(compressedImage).pipe(outStream)
+		console.log(file.stream)
+
 		outStream.on('error', (err) => {
 			console.error('custom storage write stream error:', err)
 		})

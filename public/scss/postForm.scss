@@ -87,7 +87,10 @@ main {
 	border: 3px solid var(--accent-clr);
 	box-shadow: var(--shadow);
 	border-radius: 12px;
-	object-fit: cover;
+	object-fit: contain;
+	width: 100%;
+	background-color: black;
+	max-height: min(50vh, 350px);
 }
 
 /* TAGS */

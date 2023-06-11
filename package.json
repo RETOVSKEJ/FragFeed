@@ -1,7 +1,9 @@
 {
 	"dependencies": {
+		"@aws-sdk/lib-storage": "^3.350.0",
 		"@sendgrid/mail": "^7.7.0",
 		"assert": "^2.0.0",
+		"aws-sdk": "^2.1395.0",
 		"bcrypt": "^5.1.0",
 		"connect-mongo": "^4.6.0",
 		"cookie-parser": "^1.4.6",

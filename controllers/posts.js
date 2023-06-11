@@ -14,6 +14,7 @@ const {
 	getLikedPostsService,
 	getDislikedPostsService,
 } = require('../services/queries')
+const { uploadFile } = require('../s3')
 
 /// / req.session.preview usuwane w: getPost, getPostForm, getEditForm / ustawiane w:
 /// / req.session.post usuwane w: getHome / ustawiane w: getPost, getEditForm
@@ -265,7 +266,9 @@ async function postPost(req, res) {
 
 	if (IMAGE_PROVIDED) {
 		// multer & sharp
-		const filePath = await renameFile(req.file, newFilename)
+		const result = await uploadFile(req.file, newFilename)
+		const filePath = await renameFile(req.file, newFilename) // TODO do usuniecia po s3
+		console.log(result)
 		const index = filePath.indexOf('public')
 		imageSrcPath = filePath.slice(index)
 	}
