@@ -13,7 +13,7 @@
 	height: fit-content;
 	background-color: rgba(0, 0, 0, 0.2);
 	border-radius: 8px;
-	backdrop-filter: saturate(170%);
+	backdrop-filter: saturate(160%);
 	box-shadow: 0 0 20px 1px rgba(0, 0, 0, 0.5);
 }
 
@@ -58,7 +58,7 @@
 	}
 }
 
-@media (min-width: 621px) and (max-width: 1040px) {
+@media (min-width: 641px) and (max-width: 1040px) {
 	.sidebar {
 		height: var(--sidebar-tablet-height);
 		align-self: start;
@@ -70,20 +70,21 @@
 		z-index: 550;
 		font-size: 16px;
 		padding: 0.5rem;
+		margin-right: 0;
 
 		> *:hover {
-			filter: brightness(1.22);
+			filter: brightness(1.2);
 		}
 	}
 }
 
-@media (min-width: 621px) and (max-width: 666px) {
+@media (min-width: 641px) and (max-width: 666px) {
 	.sidebar {
 		gap: 0.25rem;
 	}
 }
 
-@media (max-width: 620px) {
+@media (max-width: 640px) {
 	.sidebar {
 		display: none;
 	}

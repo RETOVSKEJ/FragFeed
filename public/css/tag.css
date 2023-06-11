@@ -15,7 +15,7 @@
   position: sticky;
 }
 
-@media (max-width: 621px) {
+@media (max-width: 641px) {
   main {
     grid-template-rows: 40px 1fr;
   }
@@ -29,7 +29,7 @@
     margin-top: -0.75rem;
   }
 }
-@media (min-width: 621px) and (max-width: 1040px) {
+@media (min-width: 641px) and (max-width: 1040px) {
   main {
     grid-template-rows: var(--sidebar-tablet-height) 40px 1fr;
     grid-auto-rows: 1fr;

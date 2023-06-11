@@ -22,6 +22,7 @@
 		box-shadow: var(--shadow-btn);
 		overflow: hidden;
 		height: 235px;
+		background-color: var(--third-clr);
 	}
 
 	.hot-post__title {
@@ -51,9 +52,19 @@
 	}
 }
 
-@media (min-width: 621px) and (max-width: 1040px) {
+@media (min-width: 1041px) and (max-width: 1200px) {
+	main {
+		grid-template-columns: 240px 1fr 360px !important;
+	}
+	.hot-wrapper {
+		margin-left: 3rem;
+	}
+}
+
+@media (min-width: 641px) and (max-width: 1040px) {
 	.hot-wrapper {
 		margin-left: 1rem;
+		margin-right: 0.5rem;
 
 		img {
 			top: 0;
@@ -61,7 +72,7 @@
 	}
 }
 
-@media (max-width: 620px) {
+@media (max-width: 640px) {
 	.hot-wrapper {
 		display: none;
 	}

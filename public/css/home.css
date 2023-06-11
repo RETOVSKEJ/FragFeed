@@ -67,10 +67,10 @@ main {
     display: none;
   }
 }
-@media (min-width: 621px) and (max-width: 1040px) {
+@media (min-width: 641px) and (max-width: 1040px) {
   main {
     margin-top: var(--navbar-height);
-    grid-template-columns: 1fr 260px;
+    grid-template-columns: 1fr 250px;
     grid-template-rows: var(--sidebar-tablet-height) 1fr;
     gap: 1rem;
     padding-top: 0;
@@ -80,7 +80,7 @@ main {
     grid-row: 2;
   }
 }
-@media (max-width: 620px) {
+@media (max-width: 640px) {
   main {
     grid-template-columns: 1fr;
     margin-inline: 0.5rem;

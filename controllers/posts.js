@@ -256,7 +256,7 @@ async function postPost(req, res) {
 	const POST_PREVIEW_TAGS =
 		POST_PREVIEW?.tags?.length > 0 ? POST_PREVIEW?.tags : null
 
-	let post, imageSrcPath, newFilename, fileExt
+	let post, newFilename, fileExt
 
 	if (IMAGE_PROVIDED) {
 		fileExt = path.extname(req.file.originalname)
@@ -274,12 +274,12 @@ async function postPost(req, res) {
 	}
 
 	if (!req.is('multipart/form-data')) {
-		newFilename = `${req.params.id}-${
-			new Date().toISOString().split('T')[0]
-		}`
-
 		/// TYLKO DLA POST PREVIEW  -  inny formularz z preview.ejs
 		if (PREVIEW_IMAGE_PROVIDED) {
+			newFilename = `${req.params.id}-${
+				new Date().toISOString().split('T')[0]
+			}`
+
 			newFilename = await storeImage(
 				req.body.img_data,
 				POST_PREVIEW.filename,
@@ -347,12 +347,12 @@ async function editPost(req, res) {
 
 	if (!req.is('multipart/form-data')) {
 		/// TYLKO DLA POST PREVIEW
-		newFilename = `${req.params.id}-${
-			new Date().toISOString().split('T')[0]
-		}`
-
 		if (PREVIEW_IMAGE_PROVIDED) {
 			// JESLI WSTAWIMY NOWE ZDJECIE I WCISNIEMY PREVIEW (storeImage & canvas client-side)
+			newFilename = `${req.params.id}-${
+				new Date().toISOString().split('T')[0]
+			}`
+
 			newFilename = await storeImage(
 				req.body.img_data,
 				POST_PREVIEW.filename,

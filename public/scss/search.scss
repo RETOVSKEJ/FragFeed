@@ -20,7 +20,7 @@ main {
 	}
 }
 
-@media (min-width: 621px) and (max-width: 1040px) {
+@media (min-width: 641px) and (max-width: 1040px) {
 	main {
 		grid-template-rows: unset;
 	}
@@ -38,7 +38,7 @@ main {
 	}
 }
 
-@media (max-width: 620px) {
+@media (max-width: 640px) {
 	body {
 		overflow: auto;
 	}

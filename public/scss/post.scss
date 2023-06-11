@@ -10,7 +10,7 @@ main {
 	margin-top: var(--navbar-height);
 }
 
-@media (min-width: 621px) and (max-width: 1040px) {
+@media (min-width: 641px) and (max-width: 1040px) {
 	main {
 		padding-top: 0;
 		grid-template-columns: 1fr 0.5fr;
@@ -22,9 +22,12 @@ main {
 	}
 }
 
-@media (max-width: 620px) {
+@media (max-width: 640px) {
 	body {
 		overflow: auto;
+	}
+	.post-wrapper {
+		padding-inline: 0.4rem;
 	}
 
 	main {

@@ -233,7 +233,7 @@ nav .login-info .pc {
     display: none;
   }
 }
-@media (max-width: 620px) {
+@media (max-width: 640px) {
   nav {
     -webkit-box-pack: justify;
         -ms-flex-pack: justify;

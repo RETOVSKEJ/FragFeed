@@ -54,13 +54,6 @@ if (window.EJSpost) {
 // 	form.setAttribute('enctype', 'multipart/form-data')
 // })
 
-previewBtn.addEventListener('click', (ev) => {
-	localStorage.setItem('title', title.value)
-	localStorage.setItem('body', body.value)
-	form.setAttribute('action', '/preview')
-	form.setAttribute('enctype', 'application/x-www-form-urlencoded')
-})
-
 form.addEventListener('submit', (ev) => {
 	ev.preventDefault()
 	if (tagsToSubmit.length > 0) {

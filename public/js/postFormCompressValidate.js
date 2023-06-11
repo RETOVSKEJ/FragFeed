@@ -12,6 +12,11 @@ const sendBtn = document.getElementById('sendBtn')
 const title = document.getElementById('title')
 const body = document.getElementById('body')
 
+previewBtn.addEventListener('click', (ev) => {
+	form.setAttribute('action', '/preview')
+	form.setAttribute('enctype', 'application/x-www-form-urlencoded')
+})
+
 form.addEventListener('submit', validate)
 title.addEventListener('input', updateSendBtn)
 body.addEventListener('input', updateSendBtn)
@@ -50,8 +55,10 @@ function validate(ev) {
 		preview.prepend(infoMsg)
 	}
 
-	localStorage.removeItem('title')
-	localStorage.removeItem('body')
+	if (ev.submitter.id === 'sendBtn') {
+		localStorage.removeItem('title')
+		localStorage.removeItem('body')
+	}
 }
 
 function previewImg(ev) {

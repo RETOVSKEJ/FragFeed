@@ -133,7 +133,7 @@ main {
   background-color: transparent;
 }
 
-@media (min-width: 621px) and (max-width: 1040px) {
+@media (min-width: 641px) and (max-width: 1040px) {
   main {
     grid-template-columns: 1fr 0.5fr;
   }
@@ -145,7 +145,7 @@ main {
     margin-inline: 5vw;
   }
 }
-@media (max-width: 620px) {
+@media (max-width: 640px) {
   body {
     overflow: auto;
   }

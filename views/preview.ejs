@@ -37,7 +37,7 @@
 							Edytuj Post
 						</button>
 						<% } else { %>
-						<button type="submit">Dodaj Post</button>
+						<button onclick="this.disabled = true" id="sendBtnPreview" type="submit">Dodaj Post</button>
 						<% } %>
 					</form>
 					<%- include('./partials/postComponent') %>
@@ -46,7 +46,7 @@
 			</main>
 			<%- include('./partials/toast', {msg: messages.error || messages.message || msg}) %>
 			<%- include('./partials/footer') %>
-			<script defer>
+			<script>
 				document.getElementById('logo').style.marginBottom = '6px'
 				document.querySelector('.post-likes__count').style.display = 'none'
 				document.getElementById('post-likes').style.display = 'none'
@@ -54,6 +54,8 @@
 				if (img.src == null || img.src == location.href){
 					img.setAttribute('src', "/assets/nophoto.png")
 				}
+				sendBtn.removeAttribute('disabled')
+				previewBtn.removeAttribute('disabled')
 			</script>
 	</body>
 </html>
