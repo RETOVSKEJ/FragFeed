@@ -1,18 +1,18 @@
-<div class="post" data-atr="<%= post.id %>">
-	<div class="post-top">
-		<a href="<%= post.id %>"><h5 class="post-title"><%= post.title %></h5></a>
-	<div class="post-author-div">
-		<p class="post-author">
-			<strong>Autor:</strong> <a class="author" href="/users/<%= post.author.nick %>"> <%= post.author.nick %></a> 
-			<em class="post-date"><%= post.createdAtString %></em>
-		</p>
-		<p class="post-author">
-			<% if(post.edited_by){ %>Edytowane przez:<a class="author" href="/users/<%= post.edited_by.nick %>"> <%= post.edited_by.nick %></a>
-			<em class="post-date"><%= post.updatedAtString %><%}%></em>
-		</p>
-	</div>
-	</div>
 	<% if(locals.urlPath == "/preview"){ %>
+		<div class="post">
+			<div class="post-top">
+				<h5 class="post-title"><%= post.title %></h5>
+				<div class="post-author-div">
+					<p class="post-author">
+						<strong>Autor:</strong> <a class="author" href="/users/<%= post.author.nick %>"> <%= post.author.nick %></a> 
+						<em class="post-date"><%= post.createdAtString %></em>
+					</p>
+					<p class="post-author">
+						<% if(post.edited_by){ %>Edytowane przez:<a class="author" href="/users/<%= post.edited_by.nick %>"> <%= post.edited_by.nick %></a>
+						<em class="post-date"><%= post.updatedAtString %><%}%></em>
+					</p>
+				</div>
+			</div>
 	<img
 		style="max-height: 500px; background: #000; object-fit: contain;";
 		id="img-preview"
@@ -27,6 +27,20 @@
 		}
 	</script>
 	<% } else { %>
+	<div class="post" data-atr="<%= post.id %>">
+		<div class="post-top">
+			<a href="<%= post.id %>"><h5 class="post-title"><%= post.title %></h5></a>
+			<div class="post-author-div">
+				<p class="post-author">
+					<strong>Autor:</strong> <a class="author" href="/users/<%= post.author.nick %>"> <%= post.author.nick %></a> 
+					<em class="post-date"><%= post.createdAtString %></em>
+				</p>
+				<p class="post-author">
+					<% if(post.edited_by){ %>Edytowane przez:<a class="author" href="/users/<%= post.edited_by.nick %>"> <%= post.edited_by.nick %></a>
+					<em class="post-date"><%= post.updatedAtString %><%}%></em>
+				</p>
+			</div>
+		</div>
 	<% if(post.image) { %>
 		<a class="post-img" href="/<%= post.id %>"><img onerror="this.onerror=null; this.src='/assets/nophoto.png'; this.alt = 'No Photo Available'"  id="img-preview" src="https://fragfeed-bucket.s3.eu-central-1.amazonaws.com/<%= post.image %>" alt="Post image" />
 	<% } else { %>

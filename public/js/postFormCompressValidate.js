@@ -12,6 +12,8 @@ const sendBtn = document.getElementById('sendBtn')
 const title = document.getElementById('title')
 const body = document.getElementById('body')
 
+updateSendBtn()
+
 previewBtn.addEventListener('click', (ev) => {
 	form.setAttribute('action', '/preview')
 	form.setAttribute('enctype', 'application/x-www-form-urlencoded')
