@@ -2,6 +2,10 @@ const multer = require('multer')
 const pathModule = require('path')
 const fs = require('fs')
 const sharp = require('sharp')
+const { uploadFile } = require('../s3')
+
+const storage = multer.memoryStorage()
+const uploadMemory = multer({ storage: storage })
 
 // MULTER customStorage REQUIERES TO HANDLE 2 functions:
 // _handleFile and _removeFile
@@ -59,7 +63,7 @@ const uploadCompressedDisk = multer({
 	limits: { fileSize: 5_100_000 },
 }) // jesli przekroczymy, wyskoczy sharp Error: VipsJpeg:
 
-module.exports = { uploadCompressedDisk, storeImage }
+module.exports = { uploadMemory, uploadCompressedDisk, storeImage }
 
 ///
 /// HELPER FUNCTIONS
@@ -104,6 +108,7 @@ function storeBase64inBuffer(data, uploadedFilename) {
 
 async function storeBufferinFile(buffer, FilePath) {
 	try {
+		await uploadFile()
 		await fs.promises.writeFile(FilePath, buffer)
 		console.log('IMAGE BUFFER STORED')
 		return true

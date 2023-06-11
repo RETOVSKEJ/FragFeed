@@ -24,7 +24,10 @@ const {
 	getFetchPosts,
 } = require('../controllers/home')
 const { catchAsync } = require('../middleware/errors')
-const { uploadCompressedDisk } = require('../middleware/imageHandler')
+const {
+	uploadCompressedDisk,
+	uploadMemory,
+} = require('../middleware/imageHandler')
 const {
 	authUser,
 	notAuthUser,
@@ -62,7 +65,7 @@ router
 		authUser,
 		catchAsync(canEditPost),
 		postingLimiter,
-		uploadCompressedDisk.single('image'),
+		uploadMemory.single('image'),
 		catchAsync(editPost)
 	)
 
@@ -73,7 +76,7 @@ router
 		authUser,
 		catchAsync(canAddPost),
 		postingLimiter,
-		uploadCompressedDisk.single('image'),
+		uploadMemory.single('image'),
 		catchAsync(postPost)
 	)
 

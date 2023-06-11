@@ -1,5 +1,6 @@
 const Joi = require('joi')
 const fs = require('fs')
+const sharp = require('sharp')
 const path = require('path')
 const { storeImage } = require('../middleware/imageHandler')
 const { checkAdminVip } = require('../middleware/utils')
@@ -14,7 +15,7 @@ const {
 	getLikedPostsService,
 	getDislikedPostsService,
 } = require('../services/queries')
-const { uploadFile } = require('../s3')
+const { uploadFile, getImage } = require('../s3')
 
 /// / req.session.preview usuwane w: getPost, getPostForm, getEditForm / ustawiane w:
 /// / req.session.post usuwane w: getHome / ustawiane w: getPost, getEditForm
@@ -34,6 +35,7 @@ async function getPost(req, res) {
 		.populate('author', '-password')
 		.populate('edited_by', '-password')
 		.exec()
+	post.image = await getImage(post.image)
 
 	if (!post) {
 		res.status(400)
@@ -247,9 +249,11 @@ async function postPost(req, res) {
 
 	let post
 	let imageSrcPath
+
+	const fileExt = path.extname(req.file.originalname)
 	const newFilename = `${LAST_ID + 1}-${
 		new Date().toISOString().split('T')[0]
-	}` // returns id-yyyy-mm-dd
+	}${fileExt}` // returns id-yyyy-mm-dd
 
 	if (!req.is('multipart/form-data')) {
 		/// TYLKO DLA POST PREVIEW  -  inny formularz z preview.ejs
@@ -266,11 +270,10 @@ async function postPost(req, res) {
 
 	if (IMAGE_PROVIDED) {
 		// multer & sharp
-		const result = await uploadFile(req.file, newFilename)
-		const filePath = await renameFile(req.file, newFilename) // TODO do usuniecia po s3
-		console.log(result)
-		const index = filePath.indexOf('public')
-		imageSrcPath = filePath.slice(index)
+		const compressedImage = await sharp(req.file.buffer)
+			.jpeg({ quality: 80 })
+			.toBuffer() // default
+		const result = await uploadFile(compressedImage, newFilename)
 	}
 
 	if (Object.keys(POST_PREVIEW).length > 0) {
@@ -291,7 +294,7 @@ async function postPost(req, res) {
 			title: req.body.title,
 			body: req.body.body,
 			author: req.user,
-			image: imageSrcPath ?? undefined,
+			image: newFilename ?? undefined,
 			tags: POST_TAGS || undefined,
 		})
 	}
@@ -461,3 +464,5 @@ async function deleteOldFile(filePath) {
 		console.error('deleteOldFile() error: ', err)
 	}
 }
+
+async function deleteFromS3(filename) {} // TODO do zrobienia

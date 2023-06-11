@@ -15,7 +15,7 @@
 	<% if(locals.urlPath == "/preview"){ %>
 	<img
 		id="img-preview"
-		src="https://fragfeed-bucket.s3.eu-central-1.amazonaws.com/<%= post.image %>"
+		src="<%= post.image %>"
 		alt="Uploaded Image preview"
 	/>
 	<script defer>
@@ -27,7 +27,7 @@
 	</script>
 	<% } else { %>
 	<% if(post.image) { %>
-		<a class="post-img" href="/<%= post.id %>"><img src="https://fragfeed-bucket.s3.eu-central-1.amazonaws.com/<%= post.image %>" alt="Post image" />
+		<a class="post-img" href="/<%= post.id %>"><img onerror="this.onerror=null; this.src='/assets/nophoto.png'; this.alt = 'No Photo Available'"  id="img-preview" src="<%= post.image %>" alt="Post image" />
 	<% } else { %>
 		<a class="post-img" href="/<%= post.id %>"><img id="img-preview" src="/assets/nophoto.png" alt="No Photo available" />
 	<% }} %>
