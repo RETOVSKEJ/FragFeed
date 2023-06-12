@@ -15,7 +15,8 @@ const {
 } = require('../controllers/users')
 const { authUser, notAuthUser } = require('../middleware/permissions')
 
-router.route('/').get(catchAsync(getUsers)).post(authUser, catchAsync(postUser))
+// TEMPORARILY OFF
+// router.route('/').get(catchAsync(getUsers)).post(authUser, catchAsync(postUser))
 
 router
 	.route('/:nick')

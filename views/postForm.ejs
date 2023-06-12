@@ -2,7 +2,13 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Document</title>
+		<% if (urlPath.includes('/edit')) { %>
+		<title>Edytuj Post</title>
+		<meta name="description" content="Formularz do edycji starego posta, widocznego dla wszystkich! Wstaw zdjęcie i napisz to co chcesz nam przekazać">
+		<% } else { %>
+		<title>Nowy Post</title>
+		<meta name="description" content="Formularz do stworzenia nowego posta, widocznego dla wszystkich! Wstaw zdjęcie i napisz to co chcesz nam przekazać">
+		<% } %>
 		<script src="/js/postFormCompressValidate.js" defer></script>
 		<script src="/js/postFormTags.js" defer></script>
 		<script src="/js/searchBar.js" defer></script>
