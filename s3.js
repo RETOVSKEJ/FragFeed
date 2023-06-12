@@ -22,7 +22,7 @@ const s3 = new S3Client({
 })
 
 // uploads a file to s3
-// file = multer file
+// file = multer file  (IT HAS TO BE memoryStorage() to have access to file.buffer)
 
 const ObjectParams = {
 	Bucket: bucketName,
