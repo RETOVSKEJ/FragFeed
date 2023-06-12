@@ -37,13 +37,17 @@
 	}
 
 	img {
-		width: 100%;
-		max-width: 100%;
+		width: 130%;
+		object-position: -40px 0px;
+		max-width: initial;
 		background-color: var(--third-clr);
 		padding-inline: 1px;
 		position: relative;
-		top: -11%;
 		z-index: 5;
+	}
+
+	img[src='/assets/nophoto.png'] {
+		top: -11%;
 	}
 
 	.hot-post__likes {
