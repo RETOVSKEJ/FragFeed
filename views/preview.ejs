@@ -9,6 +9,7 @@
 		<link rel="stylesheet" href="/css/post.css" />
 		<link rel="stylesheet" href="/css/hotPostsMediaQueries.css" />
 		<script src="/js/toast.js" defer></script>
+		<script src="/js/preview.js" defer></script>
 		<script src="/js/searchBar.js" defer></script>
 		<script src="/js/sidebars.js" defer></script>
 		<script src="/js/newsletterModal.js" defer></script>
@@ -21,8 +22,9 @@
 				<%- include('./partials/sidebar') %>
 				<div style="max-width: 1150px;" class="preview">
 					<h2 class="page-heading">Podgląd</h2>
-					<form class="buttons" style="display: flex; flex-direction: row; justify-content: flex-end; gap: 1rem;" action="/new" method="POST">
-						<button type="button" onclick="history.back()">Cofnij</button>
+					<form id="formPreview" class="buttons" style="display: flex; flex-direction: row; justify-content: flex-end; gap: 1rem;" action="/new" method="POST">
+						<button type="button" onclick="history.back(); sendBtn.removeAttribute('disabled');
+						previewBtn.removeAttribute('disabled');">Cofnij</button>
 						<input type="hidden" id="img_data" name="img_data" />
 						<script>
 							// FOR storingImage on the server with storeImage
@@ -31,13 +33,14 @@
 						</script>
 						<% if (referer.includes('/edit')) { %>
 						<button
+							id="editBtnPreview"
 							type="submit"
 							formaction="/<%= post_id %>/edit?_method=PATCH"
 						>
 							Edytuj Post
 						</button>
 						<% } else { %>
-						<button onclick="this.disabled = true" id="sendBtnPreview" type="submit">Dodaj Post</button>
+						<button id="sendBtnPreview" type="submit">Dodaj Post</button>
 						<% } %>
 					</form>
 					<%- include('./partials/postComponent') %>
@@ -54,8 +57,6 @@
 				if (img.src == null || img.src == location.href){
 					img.setAttribute('src', "/assets/nophoto.png")
 				}
-				sendBtn.removeAttribute('disabled')
-				previewBtn.removeAttribute('disabled')
 			</script>
 	</body>
 </html>

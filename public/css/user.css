@@ -110,6 +110,14 @@ main {
       align-self: center;
 }
 
+@media (min-width: 1041px) and (max-width: 1200px) {
+  main {
+    grid-template-columns: 1fr !important;
+    margin-top: 0;
+    margin-bottom: 0;
+    height: 100vh;
+  }
+}
 @media (max-width: 1041px) {
   body {
     overflow: hidden;

@@ -5,7 +5,6 @@ const {
 	GetObjectCommand,
 	DeleteObjectCommand,
 } = require('@aws-sdk/client-s3')
-const { getSignedUrl } = require('@aws-sdk/s3-request-presigner')
 const fs = require('fs')
 const pathModule = require('path')
 

@@ -12,9 +12,11 @@ const sendBtn = document.getElementById('sendBtn')
 const title = document.getElementById('title')
 const body = document.getElementById('body')
 
-updateSendBtn()
-
 previewBtn.addEventListener('click', (ev) => {
+	sendBtn.removeAttribute('disabled')
+	previewBtn.removeAttribute('disabled')
+	sendBtn.classList.remove('disabled')
+	previewBtn.classList.remove('disabled')
 	form.setAttribute('action', '/preview')
 	form.setAttribute('enctype', 'application/x-www-form-urlencoded')
 })
@@ -25,13 +27,14 @@ body.addEventListener('input', updateSendBtn)
 
 function updateSendBtn() {
 	if (title.value.length < 5 || body.value.length < 15) {
-		sendBtn.disabled = true
-		previewBtn.disabled = true
+		console.log('test2')
+		sendBtn.setAttribute('disabled', 'true')
+		previewBtn.setAttribute('disabled', 'true')
 		sendBtn.classList.add('disabled')
 		previewBtn.classList.add('disabled')
 	} else {
-		sendBtn.disabled = false
-		previewBtn.disabled = false
+		sendBtn.removeAttribute('disabled')
+		previewBtn.removeAttribute('disabled')
 		sendBtn.classList.remove('disabled')
 		previewBtn.classList.remove('disabled')
 	}

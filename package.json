@@ -1,7 +1,6 @@
 {
 	"dependencies": {
 		"@aws-sdk/lib-storage": "^3.350.0",
-		"@aws-sdk/s3-request-presigner": "^3.350.0",
 		"@sendgrid/mail": "^7.7.0",
 		"assert": "^2.0.0",
 		"aws-sdk": "^2.1395.0",
