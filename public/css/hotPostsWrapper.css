@@ -63,8 +63,8 @@
 }
 
 @media (min-width: 1041px) and (max-width: 1200px) {
-  main {
-    grid-template-columns: 240px 1fr 360px !important;
+  .main {
+    grid-template-columns: 240px 1fr 360px;
   }
   .hot-wrapper {
     margin-left: 3rem;

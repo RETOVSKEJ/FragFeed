@@ -18,7 +18,7 @@
 		<body>
 			<%- include('./partials/navbar') %>
 			<!--  TODO MIEJSCE NA UI HANDLE EJS-->
-			<main>
+			<main class="main">
 				<%- include('./partials/sidebar') %>
 				<div style="max-width: 1150px;" class="preview">
 					<h2 class="page-heading">Podgląd</h2>
@@ -50,7 +50,6 @@
 			<%- include('./partials/toast', {msg: messages.error || messages.message || msg}) %>
 			<%- include('./partials/footer') %>
 			<script>
-				document.getElementById('logo').style.marginBottom = '6px'
 				document.querySelector('.post-likes__count').style.display = 'none'
 				document.getElementById('post-likes').style.display = 'none'
 				const img = document.getElementById('img-preview')
